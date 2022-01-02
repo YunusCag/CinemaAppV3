@@ -12,8 +12,8 @@ import javax.inject.Inject
 class GetTopRatedMovies @Inject constructor(
     private val repository: MovieRepository
 ) {
-    operator fun invoke(
-        page:Int,
+    suspend operator fun invoke(
+        page:Int=1,
         genreIds: List<Int>?,
     ): Flow<Resource<MovieResponse>> = flow {
         emit(Resource.Loading())

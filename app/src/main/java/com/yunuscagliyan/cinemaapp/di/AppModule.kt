@@ -3,6 +3,8 @@ package com.yunuscagliyan.cinemaapp.di
 import com.yunuscagliyan.cinemaapp.data.remote.api.TheMovieDBService
 import com.yunuscagliyan.cinemaapp.data.remote.url.API_KEY
 import com.yunuscagliyan.cinemaapp.data.remote.url.BASE_URL
+import com.yunuscagliyan.cinemaapp.data.repository.MovieRepositoryImp
+import com.yunuscagliyan.cinemaapp.domain.repository.MovieRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -41,8 +43,8 @@ object AppModule {
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
 
         val httpClient = OkHttpClient.Builder()
-            .addInterceptor(loggingInterceptor)
             .addInterceptor(apiKeyInterceptor)
+            .addInterceptor(loggingInterceptor)
             .connectTimeout(60, TimeUnit.SECONDS)
             .build()
 
@@ -52,5 +54,13 @@ object AppModule {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(TheMovieDBService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideMovieRepository(api: TheMovieDBService): MovieRepository {
+        return MovieRepositoryImp(
+            api = api
+        )
     }
 }

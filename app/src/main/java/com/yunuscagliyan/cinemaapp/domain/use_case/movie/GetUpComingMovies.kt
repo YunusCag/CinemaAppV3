@@ -13,9 +13,9 @@ class GetUpComingMovies @Inject constructor(
     private val repository: MovieRepository,
 ) {
 
-    operator fun invoke(
-        page:Int,
-        genreIds: List<Int>?,
+    suspend operator fun invoke(
+        page:Int=1,
+        genreIds: List<Int>? =null,
     ): Flow<Resource<MovieResponse>> = flow {
         emit(Resource.Loading())
         try {
