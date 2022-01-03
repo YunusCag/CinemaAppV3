@@ -8,18 +8,23 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.ScaleFactor
+import androidx.compose.ui.layout.lerp
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.PagerScope
 import com.google.accompanist.pager.rememberPagerState
 import com.yunuscagliyan.cinemaapp.R
 import com.yunuscagliyan.cinemaapp.data.remote.model.movie.MovieModel
@@ -27,6 +32,10 @@ import com.yunuscagliyan.cinemaapp.data.remote.url.POSTER_IMAGE_URL
 import com.yunuscagliyan.cinemaapp.presentation.common.components.label.MovieRateLabel
 import com.yunuscagliyan.cinemaapp.presentation.common.components.shimmer.AnimatedShimmer
 import com.yunuscagliyan.cinemaapp.presentation.state.NetworkState
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.yield
+import kotlin.math.absoluteValue
+
 
 @ExperimentalCoilApi
 @ExperimentalPagerApi
@@ -77,6 +86,15 @@ fun MovieHorizontalPager(
             NetworkState.Success -> {
                 val pagerState = rememberPagerState()
 
+                LaunchedEffect(key1 = Unit){
+                    while (true){
+                        yield()
+                        delay(2000L)
+                        pagerState.animateScrollToPage(
+                            page = (pagerState.currentPage + 1) % (pagerState.pageCount)
+                        )
+                    }
+                }
                 HorizontalPager(
                     count = movies.size,
                     state = pagerState,
@@ -87,7 +105,8 @@ fun MovieHorizontalPager(
                     ) { index ->
                     val movie = movies[index]
                     MovieHorizontalPage(
-                        movie = movie
+                        movie = movie,
+                        pageOffset = calculateCurrentOffsetForPage(index).absoluteValue
                     )
                 }
             }
@@ -100,9 +119,21 @@ fun MovieHorizontalPager(
 fun MovieHorizontalPage(
     movie: MovieModel?,
     modifier: Modifier = Modifier,
+    pageOffset:Float,
 ) {
     Card(
         modifier = modifier
+            .graphicsLayer {
+                // We animate the scaleX + scaleY, between 85% and 100%
+                lerp(
+                    start = ScaleFactor(0.70f,0.70f),
+                    stop = ScaleFactor(1f,1f),
+                    fraction = 1f - pageOffset.coerceIn(0f, 1f)
+                ).also { scale ->
+                    scaleX = scale.scaleX
+                    scaleY = scale.scaleX
+                }
+            }
             .fillMaxSize()
             .padding(horizontal = 8.dp),
         elevation = 4.dp,
@@ -157,4 +188,9 @@ fun MovieHorizontalPage(
         }
     }
 
+}
+
+@ExperimentalPagerApi
+fun PagerScope.calculateCurrentOffsetForPage(page: Int): Float {
+    return (currentPage + currentPageOffset) - page
 }
