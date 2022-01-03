@@ -10,18 +10,22 @@ import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
+import com.yunuscagliyan.cinemaapp.R
 import com.yunuscagliyan.cinemaapp.data.remote.model.movie.MovieModel
 import com.yunuscagliyan.cinemaapp.data.remote.url.POSTER_IMAGE_URL
 import com.yunuscagliyan.cinemaapp.presentation.common.components.label.MovieRateLabel
+import com.yunuscagliyan.cinemaapp.presentation.common.components.shimmer.AnimatedShimmer
 import com.yunuscagliyan.cinemaapp.presentation.state.NetworkState
 
 @ExperimentalCoilApi
@@ -30,7 +34,7 @@ import com.yunuscagliyan.cinemaapp.presentation.state.NetworkState
 fun MovieHorizontalPager(
     state: NetworkState,
     movies: List<MovieModel?>,
-    title: String = "Up Coming"
+    title: String = stringResource(id = R.string.up_coming_movie_text)
 ) {
     Column {
         Row(
@@ -53,12 +57,22 @@ fun MovieHorizontalPager(
         when (state) {
             is NetworkState.Error -> {
                 Text(
-                    text = state.message ?: "",
-
-                    )
+                    text = state.message
+                        ?: stringResource(id = R.string.common_unknown_error_message),
+                    style = MaterialTheme.typography.h6,
+                )
             }
             NetworkState.Loading -> {
-                CircularProgressIndicator()
+                AnimatedShimmer {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(200.dp)
+                            .padding(8.dp)
+                            .clip(RoundedCornerShape(8.dp))
+                            .background(it)
+                    )
+                }
             }
             NetworkState.Success -> {
                 val pagerState = rememberPagerState()
