@@ -14,7 +14,7 @@ class GetPopularMovies @Inject constructor(
 ) {
     suspend operator fun invoke(
         page:Int=1,
-        genreIds: List<Int>?,
+        genreIds: List<Int>?=null,
     ): Flow<Resource<MovieResponse>> = flow {
         emit(Resource.Loading())
         try {

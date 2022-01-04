@@ -29,6 +29,7 @@ import com.google.accompanist.pager.rememberPagerState
 import com.yunuscagliyan.cinemaapp.R
 import com.yunuscagliyan.cinemaapp.data.remote.model.movie.MovieModel
 import com.yunuscagliyan.cinemaapp.data.remote.url.POSTER_IMAGE_URL
+import com.yunuscagliyan.cinemaapp.presentation.common.components.error.NetworkErrorView
 import com.yunuscagliyan.cinemaapp.presentation.common.components.label.MovieRateLabel
 import com.yunuscagliyan.cinemaapp.presentation.common.components.shimmer.AnimatedShimmer
 import com.yunuscagliyan.cinemaapp.presentation.state.NetworkState
@@ -43,7 +44,8 @@ import kotlin.math.absoluteValue
 fun MovieHorizontalPager(
     state: NetworkState,
     movies: List<MovieModel?>,
-    title: String = stringResource(id = R.string.up_coming_movie_text)
+    title: String = stringResource(id = R.string.up_coming_movie_text),
+    modifier: Modifier = Modifier
 ) {
     Column {
         Row(
@@ -63,54 +65,57 @@ fun MovieHorizontalPager(
                 "arrow"
             )
         }
-        when (state) {
-            is NetworkState.Error -> {
-                Text(
-                    text = state.message
-                        ?: stringResource(id = R.string.common_unknown_error_message),
-                    style = MaterialTheme.typography.h6,
-                )
-            }
-            NetworkState.Loading -> {
-                AnimatedShimmer {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(200.dp)
-                            .padding(8.dp)
-                            .clip(RoundedCornerShape(8.dp))
-                            .background(it)
+        Column(
+            modifier = modifier.height(200.dp)
+
+        ) {
+            when (state) {
+                is NetworkState.Error -> {
+                    NetworkErrorView(
+                        message = state.message
                     )
                 }
-            }
-            NetworkState.Success -> {
-                val pagerState = rememberPagerState()
-
-                LaunchedEffect(key1 = Unit){
-                    while (true){
-                        yield()
-                        delay(2000L)
-                        pagerState.animateScrollToPage(
-                            page = (pagerState.currentPage + 1) % (pagerState.pageCount)
+                NetworkState.Loading -> {
+                    AnimatedShimmer {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(200.dp)
+                                .padding(8.dp)
+                                .clip(RoundedCornerShape(8.dp))
+                                .background(it)
                         )
                     }
                 }
-                HorizontalPager(
-                    count = movies.size,
-                    state = pagerState,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(200.dp),
+                NetworkState.Success -> {
+                    val pagerState = rememberPagerState()
+
+                    LaunchedEffect(key1 = Unit) {
+                        while (true) {
+                            yield()
+                            delay(2000L)
+                            pagerState.animateScrollToPage(
+                                page = (pagerState.currentPage + 1) % (pagerState.pageCount)
+                            )
+                        }
+                    }
+                    HorizontalPager(
+                        count = movies.size,
+                        state = pagerState,
+                        modifier = Modifier
+                            .fillMaxWidth()
 
                     ) { index ->
-                    val movie = movies[index]
-                    MovieHorizontalPage(
-                        movie = movie,
-                        pageOffset = calculateCurrentOffsetForPage(index).absoluteValue
-                    )
+                        val movie = movies[index]
+                        MovieHorizontalPage(
+                            movie = movie,
+                            pageOffset = calculateCurrentOffsetForPage(index).absoluteValue
+                        )
+                    }
                 }
             }
         }
+
     }
 }
 
@@ -119,15 +124,15 @@ fun MovieHorizontalPager(
 fun MovieHorizontalPage(
     movie: MovieModel?,
     modifier: Modifier = Modifier,
-    pageOffset:Float,
+    pageOffset: Float,
 ) {
     Card(
         modifier = modifier
             .graphicsLayer {
                 // We animate the scaleX + scaleY, between 85% and 100%
                 lerp(
-                    start = ScaleFactor(0.70f,0.70f),
-                    stop = ScaleFactor(1f,1f),
+                    start = ScaleFactor(0.70f, 0.70f),
+                    stop = ScaleFactor(1f, 1f),
                     fraction = 1f - pageOffset.coerceIn(0f, 1f)
                 ).also { scale ->
                     scaleX = scale.scaleX
@@ -145,7 +150,7 @@ fun MovieHorizontalPage(
             painter = rememberImagePainter("$POSTER_IMAGE_URL${movie?.backdropPath ?: ""}"),
             contentDescription = movie?.title ?: "",
             modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.FillWidth,
+            contentScale = ContentScale.FillBounds,
         )
         Box(
             modifier = Modifier
