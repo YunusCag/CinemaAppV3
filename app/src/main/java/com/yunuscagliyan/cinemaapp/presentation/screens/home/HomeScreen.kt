@@ -26,17 +26,13 @@ fun HomeScreen(
     navController: NavController,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
-    val upComingState = viewModel.upComingState.value
-    val upComingMovies = viewModel.upComingMovies.value
+    val upComingMovies = viewModel.upComingMovies
 
-    val trendingState = viewModel.trendingState.value
-    val trendingMovies = viewModel.trendingMovies.value
+    val trendingMovies = viewModel.trendingMovies
 
-    val popularState = viewModel.popularState.value
-    val popularMovies = viewModel.popularMovies.value
+    val popularMovies = viewModel.popularMovies
 
-    val topRatedState = viewModel.topRatedState.value
-    val topRatedMovies = viewModel.topRatedMovies.value
+    val topRatedMovies = viewModel.topRatedMovies
 
     Scaffold(
         topBar = { HomeTopBar() },
@@ -46,23 +42,19 @@ fun HomeScreen(
                 .verticalScroll(rememberScrollState())
         ) {
             MovieHorizontalPager(
-                state = upComingState,
                 movies = upComingMovies,
             )
             HorizontalMovieListView(
-                state = trendingState,
                 movies = trendingMovies,
                 title = stringResource(R.string.home_page_trending_title_text),
             )
             Spacer(modifier = Modifier.height(20.dp))
             HorizontalMovieListView(
-                state = popularState,
                 movies = popularMovies,
                 title = stringResource(R.string.home_page_popular_title_text),
             )
             Spacer(modifier = Modifier.height(20.dp))
             HorizontalMovieListView(
-                state = topRatedState,
                 movies = topRatedMovies,
                 title = stringResource(R.string.home_page_top_rated_title_text),
             )

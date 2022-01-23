@@ -20,6 +20,10 @@ import androidx.compose.ui.layout.ScaleFactor
 import androidx.compose.ui.layout.lerp
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.paging.LoadState
+import androidx.paging.PagingData
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -34,6 +38,7 @@ import com.yunuscagliyan.cinemaapp.presentation.common.components.label.MovieRat
 import com.yunuscagliyan.cinemaapp.presentation.common.components.shimmer.AnimatedShimmer
 import com.yunuscagliyan.cinemaapp.presentation.state.NetworkState
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.yield
 import kotlin.math.absoluteValue
 
@@ -42,11 +47,13 @@ import kotlin.math.absoluteValue
 @ExperimentalPagerApi
 @Composable
 fun MovieHorizontalPager(
-    state: NetworkState,
-    movies: List<MovieModel?>,
+    movies: Flow<PagingData<MovieModel>>,
     title: String = stringResource(id = R.string.up_coming_movie_text),
     modifier: Modifier = Modifier
 ) {
+    val lazyMovieItems: LazyPagingItems<MovieModel> = movies.collectAsLazyPagingItems()
+
+
     Column {
         Row(
             modifier = Modifier
@@ -69,47 +76,69 @@ fun MovieHorizontalPager(
             modifier = modifier.height(200.dp)
 
         ) {
-            when (state) {
-                is NetworkState.Error -> {
-                    NetworkErrorView(
-                        message = state.message
+            val pagerState = rememberPagerState()
+
+            LaunchedEffect(key1 = Unit) {
+                while (true) {
+                    yield()
+                    delay(2000L)
+                    pagerState.animateScrollToPage(
+                        page = (pagerState.currentPage + 1) % (pagerState.pageCount)
                     )
                 }
-                NetworkState.Loading -> {
-                    AnimatedShimmer {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(200.dp)
-                                .padding(8.dp)
-                                .clip(RoundedCornerShape(8.dp))
-                                .background(it)
-                        )
-                    }
-                }
-                NetworkState.Success -> {
-                    val pagerState = rememberPagerState()
+            }
+            HorizontalPager(
+                count = lazyMovieItems.itemCount,
+                state = pagerState,
+                modifier = Modifier
+                    .fillMaxWidth()
 
-                    LaunchedEffect(key1 = Unit) {
-                        while (true) {
-                            yield()
-                            delay(2000L)
-                            pagerState.animateScrollToPage(
-                                page = (pagerState.currentPage + 1) % (pagerState.pageCount)
+            ) { index ->
+                val movie = lazyMovieItems[index]
+                MovieHorizontalPage(
+                    movie = movie,
+                    pageOffset = calculateCurrentOffsetForPage(index).absoluteValue
+                )
+            }
+
+            lazyMovieItems.apply {
+                when{
+                    loadState.refresh is LoadState.Loading->{
+                        AnimatedShimmer {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(200.dp)
+                                    .padding(8.dp)
+                                    .clip(RoundedCornerShape(8.dp))
+                                    .background(it)
                             )
                         }
                     }
-                    HorizontalPager(
-                        count = movies.size,
-                        state = pagerState,
-                        modifier = Modifier
-                            .fillMaxWidth()
+                    loadState.refresh is LoadState.Error->{
+                        val errorState=loadState.refresh as LoadState.Error
 
-                    ) { index ->
-                        val movie = movies[index]
-                        MovieHorizontalPage(
-                            movie = movie,
-                            pageOffset = calculateCurrentOffsetForPage(index).absoluteValue
+                        NetworkErrorView(
+                            message = errorState.error.message
+                        )
+                    }
+                    loadState.append is LoadState.Loading->{
+                        AnimatedShimmer {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(200.dp)
+                                    .padding(8.dp)
+                                    .clip(RoundedCornerShape(8.dp))
+                                    .background(it)
+                            )
+                        }
+                    }
+                    loadState.append is LoadState.Error->{
+                        val errorState=loadState.append as LoadState.Error
+
+                        NetworkErrorView(
+                            message = errorState.error.message
                         )
                     }
                 }

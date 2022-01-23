@@ -7,6 +7,7 @@ const val POSTER_IMAGE_URL="https://image.tmdb.org/t/p/w342"
 
 const val API_KEY = "4ceba0985010b11eb871640206d56895"
 
+const val PER_PAGE_ITEM=20
 
 ///paths
 const val GET_UP_COMING_MOVIE = "movie/upcoming"

@@ -16,6 +16,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.paging.LoadState
+import androidx.paging.PagingData
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.yunuscagliyan.cinemaapp.data.remote.model.movie.MovieModel
@@ -23,17 +27,18 @@ import com.yunuscagliyan.cinemaapp.data.remote.url.POSTER_IMAGE_URL
 import com.yunuscagliyan.cinemaapp.presentation.common.components.error.NetworkErrorView
 import com.yunuscagliyan.cinemaapp.presentation.common.components.label.MovieRateLabel
 import com.yunuscagliyan.cinemaapp.presentation.common.components.shimmer.AnimatedShimmer
-import com.yunuscagliyan.cinemaapp.presentation.state.NetworkState
+import kotlinx.coroutines.flow.Flow
 
 
 @ExperimentalCoilApi
 @Composable
 fun HorizontalMovieListView(
-    state: NetworkState,
-    movies: List<MovieModel?>,
+    movies: Flow<PagingData<MovieModel>>,
     title: String,
     modifier: Modifier = Modifier
 ) {
+    val lazyMovieItems: LazyPagingItems<MovieModel> = movies.collectAsLazyPagingItems()
+
     Column {
         Row(
             modifier = Modifier
@@ -51,36 +56,49 @@ fun HorizontalMovieListView(
                 "arrow"
             )
         }
-        Column(
+        Row(
             modifier = modifier
         ) {
-            when (state) {
-                NetworkState.Loading -> {
-                    LazyRow(
-                        modifier = Modifier
-                            .padding(start = 8.dp)
-                    ) {
-                        items(10) {
-                            MovieSmallCardSkeleton()
-                        }
-                    }
-                }
-                is NetworkState.Error -> {
-                    NetworkErrorView(
-                        message = state.message,
+            LazyRow(
+                modifier = Modifier
+                    .padding(start = 8.dp)
+            ) {
+                items(lazyMovieItems.itemCount) { index ->
+                    val movie = lazyMovieItems[index]
+                    MovieSmallCard(
+                        movie = movie
                     )
                 }
-                NetworkState.Success -> {
-                    LazyRow(
-                        modifier = Modifier
-                            .padding(start = 8.dp)
-                    ) {
-                        items(movies.size) { index ->
-                            val movie = movies[index]
-                            MovieSmallCard(
-                                movie = movie
-                            )
+            }
+
+            lazyMovieItems.apply {
+                when{
+                    loadState.refresh is LoadState.Loading->{
+                        LazyRow(
+                            modifier = Modifier
+                                .padding(start = 8.dp)
+                        ) {
+                            items(10) {
+                                MovieSmallCardSkeleton()
+                            }
                         }
+                    }
+                    loadState.refresh is LoadState.Error->{
+                        val errorState=loadState.refresh as LoadState.Error
+
+                        NetworkErrorView(
+                            message = errorState.error.message
+                        )
+                    }
+                    loadState.append is LoadState.Loading->{
+
+                    }
+                    loadState.append is LoadState.Error->{
+                        val errorState=loadState.append as LoadState.Error
+
+                        NetworkErrorView(
+                            message = errorState.error.message
+                        )
                     }
                 }
             }
@@ -106,7 +124,7 @@ fun MovieSmallCard(
                 .clip(RoundedCornerShape(4.dp))
         ) {
             Image(
-                painter = rememberImagePainter("$POSTER_IMAGE_URL${movie?.backdropPath ?: ""}"),
+                painter = rememberImagePainter("$POSTER_IMAGE_URL${movie?.posterPath ?: ""}"),
                 contentDescription = movie?.title ?: "",
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop,
