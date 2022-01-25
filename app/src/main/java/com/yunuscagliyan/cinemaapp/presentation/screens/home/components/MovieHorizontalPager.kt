@@ -36,7 +36,6 @@ import com.yunuscagliyan.cinemaapp.data.remote.url.POSTER_IMAGE_URL
 import com.yunuscagliyan.cinemaapp.presentation.common.components.error.NetworkErrorView
 import com.yunuscagliyan.cinemaapp.presentation.common.components.label.MovieRateLabel
 import com.yunuscagliyan.cinemaapp.presentation.common.components.shimmer.AnimatedShimmer
-import com.yunuscagliyan.cinemaapp.presentation.state.NetworkState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.yield
@@ -54,7 +53,9 @@ fun MovieHorizontalPager(
     val lazyMovieItems: LazyPagingItems<MovieModel> = movies.collectAsLazyPagingItems()
 
 
-    Column {
+    Column(
+        modifier = modifier
+    ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()

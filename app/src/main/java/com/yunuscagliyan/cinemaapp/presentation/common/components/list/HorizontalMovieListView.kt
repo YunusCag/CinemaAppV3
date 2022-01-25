@@ -2,6 +2,7 @@ package com.yunuscagliyan.cinemaapp.presentation.common.components.list
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -24,6 +25,7 @@ import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.yunuscagliyan.cinemaapp.data.remote.model.movie.MovieModel
 import com.yunuscagliyan.cinemaapp.data.remote.url.POSTER_IMAGE_URL
+import com.yunuscagliyan.cinemaapp.presentation.common.components.anim.LoadingAnimation
 import com.yunuscagliyan.cinemaapp.presentation.common.components.error.NetworkErrorView
 import com.yunuscagliyan.cinemaapp.presentation.common.components.label.MovieRateLabel
 import com.yunuscagliyan.cinemaapp.presentation.common.components.shimmer.AnimatedShimmer
@@ -35,6 +37,7 @@ import kotlinx.coroutines.flow.Flow
 fun HorizontalMovieListView(
     movies: Flow<PagingData<MovieModel>>,
     title: String,
+    onTap: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val lazyMovieItems: LazyPagingItems<MovieModel> = movies.collectAsLazyPagingItems()
@@ -43,7 +46,10 @@ fun HorizontalMovieListView(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 8.dp, vertical = 8.dp),
+                .padding(horizontal = 8.dp, vertical = 8.dp)
+                .clickable {
+                    onTap()
+                },
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
@@ -72,8 +78,8 @@ fun HorizontalMovieListView(
             }
 
             lazyMovieItems.apply {
-                when{
-                    loadState.refresh is LoadState.Loading->{
+                when {
+                    loadState.refresh is LoadState.Loading -> {
                         LazyRow(
                             modifier = Modifier
                                 .padding(start = 8.dp)
@@ -83,18 +89,21 @@ fun HorizontalMovieListView(
                             }
                         }
                     }
-                    loadState.refresh is LoadState.Error->{
-                        val errorState=loadState.refresh as LoadState.Error
+                    loadState.refresh is LoadState.Error -> {
+                        val errorState = loadState.refresh as LoadState.Error
 
                         NetworkErrorView(
                             message = errorState.error.message
                         )
                     }
-                    loadState.append is LoadState.Loading->{
-
+                    loadState.append is LoadState.Loading -> {
+                        LoadingAnimation(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        )
                     }
-                    loadState.append is LoadState.Error->{
-                        val errorState=loadState.append as LoadState.Error
+                    loadState.append is LoadState.Error -> {
+                        val errorState = loadState.append as LoadState.Error
 
                         NetworkErrorView(
                             message = errorState.error.message

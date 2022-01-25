@@ -5,6 +5,7 @@ import androidx.paging.PagingState
 import com.yunuscagliyan.cinemaapp.data.remote.enum.MoviePagingType
 import com.yunuscagliyan.cinemaapp.data.remote.model.movie.MovieModel
 import com.yunuscagliyan.cinemaapp.domain.repository.MovieRepository
+import java.lang.Exception
 
 class MoviePagingSource(
     private val repository: MovieRepository,
@@ -20,27 +21,31 @@ class MoviePagingSource(
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MovieModel> {
         val current = params.key ?: 1
-        val response = when (type) {
-            MoviePagingType.UPCOMING -> {
-                repository.getUpComingMovies(current,genreIds)
-            }
-            MoviePagingType.TRENDING ->{
-                repository.getTrendingMovies(current,genreIds)
 
+        return try {
+            val response = when (type) {
+                MoviePagingType.UPCOMING -> {
+                    repository.getUpComingMovies(current,genreIds)
+                }
+                MoviePagingType.TRENDING ->{
+                    repository.getTrendingMovies(current,genreIds)
+
+                }
+                MoviePagingType.POPULAR -> {
+                    repository.getPopularMovies(current,genreIds)
+                }
+                MoviePagingType.TOP_RATED -> {
+                    repository.getTopRatedMovies(current,genreIds)
+                }
             }
-            MoviePagingType.POPULAR -> {
-                repository.getPopularMovies(current,genreIds)
-            }
-            MoviePagingType.TOP_RATED -> {
-                repository.getTopRatedMovies(current,genreIds)
-            }
+            LoadResult.Page(
+                data = response.results.orEmpty(),
+                prevKey = if (current==1) null else current-1,
+                nextKey = if(response.results?.isEmpty()==true)null else current+1
+            )
+        }catch (e:Exception){
+            return LoadResult.Error(e)
         }
-
-        return LoadResult.Page(
-            data = response.results.orEmpty(),
-            prevKey = if (current==1) null else current-1,
-            nextKey = if(response.results?.isEmpty()==true)null else current+1
-        )
     }
 
 }

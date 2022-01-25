@@ -15,7 +15,9 @@ import androidx.navigation.NavController
 import coil.annotation.ExperimentalCoilApi
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.yunuscagliyan.cinemaapp.R
+import com.yunuscagliyan.cinemaapp.domain.enum.MovieListType
 import com.yunuscagliyan.cinemaapp.presentation.common.components.list.HorizontalMovieListView
+import com.yunuscagliyan.cinemaapp.presentation.navigation.Screen
 import com.yunuscagliyan.cinemaapp.presentation.screens.home.components.HomeTopBar
 import com.yunuscagliyan.cinemaapp.presentation.screens.home.components.MovieHorizontalPager
 
@@ -47,16 +49,28 @@ fun HomeScreen(
             HorizontalMovieListView(
                 movies = trendingMovies,
                 title = stringResource(R.string.home_page_trending_title_text),
+                onTap = {
+                    navController
+                        .navigate(Screen.MovieListScreen.route + "/${MovieListType.TRENDING.index}")
+                }
             )
             Spacer(modifier = Modifier.height(20.dp))
             HorizontalMovieListView(
                 movies = popularMovies,
                 title = stringResource(R.string.home_page_popular_title_text),
+                onTap = {
+                    navController
+                        .navigate(Screen.MovieListScreen.route + "/${MovieListType.POPULAR.index}")
+                }
             )
             Spacer(modifier = Modifier.height(20.dp))
             HorizontalMovieListView(
                 movies = topRatedMovies,
                 title = stringResource(R.string.home_page_top_rated_title_text),
+                onTap = {
+                    navController
+                        .navigate(Screen.MovieListScreen.route + "/${MovieListType.TOP_RATED.index}")
+                }
             )
             Spacer(modifier = Modifier.height(20.dp))
         }
