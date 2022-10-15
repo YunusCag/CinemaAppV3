@@ -8,6 +8,7 @@ plugins {
 android {
     namespace ModuleConfig.appModuleNamesSpace
     defaultConfig {
+        compileSdk AppConfig.compileSdk
         minSdk AppConfig.minSdk
         targetSdk AppConfig.targetSdk
         versionCode AppConfig.versionCode
