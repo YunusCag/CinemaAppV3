@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 rootProject.name = "CinemaApp"
 include ':app'
 include ':core'
+include ':features:splash'

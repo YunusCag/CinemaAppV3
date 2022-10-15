@@ -1,5 +1,1 @@
 apply from: '../scripts/common.gradle'
-
-android {
-    namespace ModuleConfig.coreModuleNamespace
-}
