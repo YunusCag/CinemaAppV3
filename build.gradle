@@ -1,6 +1,10 @@
 buildscript {
-    ext {
-        compose_ui_version = '1.1.1'
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath(Build.hiltAndroidGradlePlugin)
     }
 }// Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
