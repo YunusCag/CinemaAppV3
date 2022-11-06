@@ -11,8 +11,6 @@ R
 "features/splash/proguard-rules.pro,8/2/8234aa7ff4f831807cc653fefb1f3da50e27f66c
 J
 features/splash/.gitignore,c/a/ca6845f1b31f72bc34e0feda9e4f1d12c7d48217
-P
- app/src/main/AndroidManifest.xml,8/c/8c55c3ccc257e5907959013f99656e4c8ec3903e
 Q
 !core/src/main/AndroidManifest.xml,a/e/ae00e14a93cb05cbe86f462a3bad74d51f6b1afc
 \
