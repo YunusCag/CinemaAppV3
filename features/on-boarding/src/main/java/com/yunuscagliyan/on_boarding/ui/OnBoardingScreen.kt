@@ -14,15 +14,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
-import com.yunuscagliyan.core.ui.navigation.Screen
 import com.yunuscagliyan.on_boarding.viewmodel.OnBoardingViewModel
 
 
 @Composable
 fun OnBoardingScreen(
-    navController: NavController,
     viewModel: OnBoardingViewModel = hiltViewModel(),
+    onNavigate: () -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -35,7 +33,7 @@ fun OnBoardingScreen(
                 .size(120.dp)
                 .clickable {
                     viewModel.saveShowShouldPreference()
-                    navController.navigate(Screen.Home.route)
+                    onNavigate()
                 },
             imageVector = Icons.Default.Email,
             contentDescription = null,

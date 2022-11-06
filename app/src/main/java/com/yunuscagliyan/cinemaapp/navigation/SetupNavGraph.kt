@@ -20,17 +20,29 @@ fun SetupNavGraph(navController: NavHostController) {
         startDestination = Screen.Splash.route
     ) {
         composable(route = Screen.Splash.route) {
-            SplashScreen(navController = navController)
-        }
-        composable(route = Screen.Home.route) {
-            Box(modifier = Modifier
-                .background(Color.Gray)
-                .fillMaxSize()) {
+            SplashScreen() { shouldShowOnBoarding ->
+                navController.popBackStack()
+                if (shouldShowOnBoarding) {
+                    navController.navigate(Screen.OnBoarding.route)
+                } else {
+                    navController.navigate(Screen.Home.route)
+                }
 
             }
         }
         composable(route = Screen.OnBoarding.route) {
-            OnBoardingScreen(navController = navController)
+            OnBoardingScreen() {
+                navController.navigate(Screen.Home.route)
+            }
+        }
+        composable(route = Screen.Home.route) {
+            Box(
+                modifier = Modifier
+                    .background(Color.Gray)
+                    .fillMaxSize()
+            ) {
+
+            }
         }
     }
 

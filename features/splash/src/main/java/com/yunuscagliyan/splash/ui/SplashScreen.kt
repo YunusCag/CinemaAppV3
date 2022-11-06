@@ -11,8 +11,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,15 +19,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
-import com.yunuscagliyan.core.ui.navigation.Screen
 import com.yunuscagliyan.splash.viewmodel.SplashViewModel
 import kotlinx.coroutines.delay
 
 @Composable
 fun SplashScreen(
-    navController: NavController,
-    viewModel: SplashViewModel = hiltViewModel()
+    viewModel: SplashViewModel = hiltViewModel(),
+    onNavigatePage: (Boolean) -> Unit
 ) {
     var startAnimation by remember { mutableStateOf(false) }
     val state = viewModel.state
@@ -44,12 +40,7 @@ fun SplashScreen(
     LaunchedEffect(key1 = true) {
         startAnimation = true
         delay(4000)
-        navController.popBackStack()
-        if (state.shouldShowOnBoarding) {
-            navController.navigate(Screen.OnBoarding.route)
-        } else {
-            navController.navigate(Screen.Home.route)
-        }
+        onNavigatePage(state.shouldShowOnBoarding)
     }
 
     AnimatedSplash(alphaAnim.value)
