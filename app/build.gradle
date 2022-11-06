@@ -68,6 +68,7 @@ dependencies {
 
     api project(Modules.core)
     api project(Modules.splash)
+    api project(Modules.onBoarding)
 
 
     testImplementation(Testing.junit4)
