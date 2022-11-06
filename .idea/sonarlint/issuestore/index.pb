@@ -1,0 +1,23 @@
+
+R
+"buildSrc/src/main/java/AndroidX.kt,5/b/5b6514c230c5fecbcf2cb3a57826f66cc28d9b36
+A
+gradle.properties,2/a/2afbb999f001938c88fa43fc2ef52abf0f8213e4
+?
+settings.gradle,0/5/05efc8b1657769a27696d478ded1e95f38737233
+R
+"features/splash/consumer-rules.pro,3/e/3eaafc46a8406a7e517f7efc319de5a0aa214dc2
+R
+"features/splash/proguard-rules.pro,8/2/8234aa7ff4f831807cc653fefb1f3da50e27f66c
+J
+features/splash/.gitignore,c/a/ca6845f1b31f72bc34e0feda9e4f1d12c7d48217
+P
+ app/src/main/AndroidManifest.xml,8/c/8c55c3ccc257e5907959013f99656e4c8ec3903e
+Q
+!core/src/main/AndroidManifest.xml,a/e/ae00e14a93cb05cbe86f462a3bad74d51f6b1afc
+\
+,features/splash/src/main/AndroidManifest.xml,c/8/c8ccf6d21b21c471d21349910c5d1f6466ac3e7a
+ˆ
+Xfeatures/splash/src/androidTest/java/com/yunuscagliyan/splash/ExampleInstrumentedTest.kt,e/5/e5656182793eadadfc81b714f4191c53d86a87b6
+y
+Ifeatures/splash/src/test/java/com/yunuscagliyan/splash/ExampleUnitTest.kt,b/3/b366a409d40a9e2bc43d354ea5deb666bd93b772

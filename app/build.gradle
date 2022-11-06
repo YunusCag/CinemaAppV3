@@ -28,7 +28,7 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion '1.1.1'
+        kotlinCompilerExtensionVersion Compose.composeCompilerVersion
     }
     packagingOptions {
         resources {
@@ -65,6 +65,9 @@ dependencies {
     kapt(Room.roomCompiler)
     implementation(Room.roomKtx)
     implementation(Room.roomRuntime)
+
+    api project(Modules.core)
+    api project(Modules.splash)
 
 
     testImplementation(Testing.junit4)

@@ -8,12 +8,15 @@ apply from: '../../scripts/common.gradle'
 
 android {
     composeOptions {
-        kotlinCompilerExtensionVersion = Compose.composeVersion
+        kotlinCompilerExtensionVersion = Compose.composeCompilerVersion
+    }
+    buildFeatures {
+        compose true
     }
 }
 
 dependencies {
-    api project(":core")
+    api project(Modules.core)
 
     implementation Compose.compiler
     implementation Compose.ui
