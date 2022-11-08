@@ -1,4 +1,4 @@
-package com.yunuscagliyan.core.ui.navigation
+package com.yunuscagliyan.core.navigation
 
 sealed class Screen(val route: String) {
     object Splash : Screen("splash_screen")

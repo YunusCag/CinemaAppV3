@@ -6,12 +6,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.navigation.compose.NavHost
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.yunuscagliyan.core.ui.navigation.Screen
-import com.yunuscagliyan.on_boarding.ui.OnBoardingScreen
-import com.yunuscagliyan.splash.ui.SplashScreen
+import com.yunuscagliyan.core.navigation.Screen
+import com.yunuscagliyan.on_boarding.ui.OnBoardingPage
+import com.yunuscagliyan.splash.ui.SplashPage
 
 @Composable
 fun SetupNavGraph(navController: NavHostController) {
@@ -20,18 +20,17 @@ fun SetupNavGraph(navController: NavHostController) {
         startDestination = Screen.Splash.route
     ) {
         composable(route = Screen.Splash.route) {
-            SplashScreen() { shouldShowOnBoarding ->
+            SplashPage() { shouldShowOnBoarding ->
                 navController.popBackStack()
                 if (shouldShowOnBoarding) {
                     navController.navigate(Screen.OnBoarding.route)
                 } else {
                     navController.navigate(Screen.Home.route)
                 }
-
             }
         }
         composable(route = Screen.OnBoarding.route) {
-            OnBoardingScreen() {
+            OnBoardingPage() {
                 navController.navigate(Screen.Home.route)
             }
         }

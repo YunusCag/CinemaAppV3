@@ -23,7 +23,7 @@ import com.yunuscagliyan.splash.viewmodel.SplashViewModel
 import kotlinx.coroutines.delay
 
 @Composable
-fun SplashScreen(
+fun SplashPage(
     viewModel: SplashViewModel = hiltViewModel(),
     onNavigatePage: (Boolean) -> Unit
 ) {

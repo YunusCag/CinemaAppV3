@@ -17,6 +17,7 @@ android {
 
 dependencies {
     api project(Modules.core)
+    api project(Modules.core_ui)
 
     implementation Compose.compiler
     implementation Compose.ui

@@ -18,7 +18,7 @@ import com.yunuscagliyan.on_boarding.viewmodel.OnBoardingViewModel
 
 
 @Composable
-fun OnBoardingScreen(
+fun OnBoardingPage(
     viewModel: OnBoardingViewModel = hiltViewModel(),
     onNavigate: () -> Unit
 ) {
