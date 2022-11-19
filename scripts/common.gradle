@@ -36,5 +36,7 @@ android {
     dependencies {
         kapt DaggerHilt.hiltCompiler
         implementation DaggerHilt.hiltAndroid
+
+        implementation Timber.timber
     }
 }

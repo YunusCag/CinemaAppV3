@@ -20,6 +20,8 @@ dependencies {
 
     api project(Modules.core)
 
+    implementation Kotlin.kotlin
+
     implementation Compose.compiler
     implementation Compose.ui
     implementation Compose.uiToolingPreview

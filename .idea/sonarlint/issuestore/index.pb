@@ -17,10 +17,6 @@ y
 Ifeatures/splash/src/test/java/com/yunuscagliyan/splash/ExampleUnitTest.kt,b/3/b366a409d40a9e2bc43d354ea5deb666bd93b772
 R
 "buildSrc/src/main/java/Retrofit.kt,6/c/6ccbf65f6ff4383cfd2f83fe446d5a681ff7187b
-P
- buildSrc/src/main/java/Kotlin.kt,d/c/dcc2864be7131e2d7177579fd7f5053c7cd2c9a0
-E
-scripts/common.gradle,5/9/59925d04cd09908e22f3cf247313726d6cd1e0b2
 S
 #buildSrc/src/main/java/AppConfig.kt,a/f/afbe0c8e034c515e4cd2282931468bc45a8cbd10
 O
@@ -29,8 +25,6 @@ I
 buildSrc/build.gradle.kts,d/9/d90b697280fada81e52ec92d24725920f1cb087b
 \
 ,.idea/inspectionProfiles/Project_Default.xml,4/9/496a238a6afa168dbaf6efd37bb459331589579c
-Q
-!buildSrc/src/main/java/Compose.kt,d/0/d0ccf9538eee5aa412ee83d4a2133a6f31f5b98e
 i
 9core/src/main/java/com/yunuscagliyan/core/di/AppModule.kt,1/b/1b67db39ea13b6af36232d5327abcea31b164787
 €
@@ -53,12 +47,6 @@ W
 bfeatures/on-boarding/src/androidTest/java/com/yunuscagliyan/on_boarding/ExampleInstrumentedTest.kt,5/f/5fe414212bb2bdfcd59c50e4a3604b313cdc51e2
 ƒ
 Sfeatures/on-boarding/src/test/java/com/yunuscagliyan/on_boarding/ExampleUnitTest.kt,6/2/62daf46850762f0b48e9f2273531d8f462781d32
-‘
-afeatures/on-boarding/src/main/java/com/yunuscagliyan/on_boarding/viewmodel/OnBoardingViewModel.kt,d/3/d3a4d3b69de3136527b8e74162a77c0c61688c16
-r
-Bapp/src/main/java/com/yunuscagliyan/cinemaapp/CinemaApplication.kt,e/6/e65d62a16cb4831f746751b234bc368564c9d186
-ƒ
-Sfeatures/splash/src/main/java/com/yunuscagliyan/splash/viewmodel/SplashViewModel.kt,5/3/5350cbd2e6c561db83597bef490db3f555eab721
 
 Ofeatures/splash/src/main/java/com/yunuscagliyan/splash/viewmodel/SplashState.kt,5/c/5c649d06b675a0ebc007d4c7cb831bd540062729
 G
@@ -73,8 +61,6 @@ A
 settings.gradle,0/5/05efc8b1657769a27696d478ded1e95f38737233
 B
 core-ui/.gitignore,b/f/bf75b369ab0db76008d5204585e8595734c4fd18
-D
-core-ui/build.gradle,3/a/3ae0a4263c99394950628414c4d85478364f7ded
 F
 scripts/feature.gradle,4/8/483c94c737310188c8245b7dcaa242b08037ead3
 J
@@ -105,14 +91,3 @@ u
 Efeatures/home/src/test/java/com/yunuscagliyan/home/ExampleUnitTest.kt,7/2/726cd60e123b2269611bf4fd91cfa540080c9985
 n
 >core/src/main/java/com/yunuscagliyan/core/navigation/Screen.kt,0/9/096d3970741cc87df7e29290c6fdc5653c907949
-:
-
-.gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302
-Q
-!buildSrc/src/main/java/Modules.kt,c/b/cb9e50bf2267dfa8f788615fdefe24c787975087
-y
-Iapp/src/main/java/com/yunuscagliyan/cinemaapp/navigation/SetupNavGraph.kt,a/2/a2260e17d863f390f109d8b6ccc0c7d072e75542
-y
-Ifeatures/splash/src/main/java/com/yunuscagliyan/splash/ui/SplashScreen.kt,0/5/05bb3428253ce9f06100d240b10262585748838c
-‡
-Wfeatures/on-boarding/src/main/java/com/yunuscagliyan/on_boarding/ui/OnBoardingScreen.kt,d/6/d6a4a145a0cc98a8f3cbca96ff6b854b24a1892e

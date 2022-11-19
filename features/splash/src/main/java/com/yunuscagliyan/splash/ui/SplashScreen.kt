@@ -1,6 +1,5 @@
 package com.yunuscagliyan.splash.ui
 
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
@@ -16,64 +15,54 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.yunuscagliyan.core.navigation.Screen
+import com.yunuscagliyan.core_ui.navigation.CoreScreen
 import com.yunuscagliyan.splash.viewmodel.SplashViewModel
-import kotlinx.coroutines.delay
 
-@Composable
-fun SplashPage(
-    viewModel: SplashViewModel = hiltViewModel(),
-    onNavigatePage: (Boolean) -> Unit
-) {
-    var startAnimation by remember { mutableStateOf(false) }
-    val state = viewModel.state
 
-    val alphaAnim = animateFloatAsState(
-        targetValue = if (startAnimation) 1f else 0f,
-        animationSpec = tween(
-            delayMillis = 3000
+object SplashScreen:CoreScreen<SplashViewModel>{
+    override val route: String
+        get() = Screen.Splash.route
+
+    @Composable
+    override fun viewModel(): SplashViewModel= hiltViewModel()
+
+    @Composable
+    override fun Content(viewModel: SplashViewModel) {
+        var startAnimation by remember { mutableStateOf(false) }
+
+        val alphaAnim = animateFloatAsState(
+            targetValue = if (startAnimation) 1f else 0f,
+            animationSpec = tween(
+                delayMillis = 3000
+            )
         )
-    )
 
-    LaunchedEffect(key1 = true) {
-        startAnimation = true
-        delay(4000)
-        onNavigatePage(state.shouldShowOnBoarding)
+        LaunchedEffect(key1 = true) {
+            startAnimation = true
+        }
+
+        AnimatedSplash(alphaAnim.value)
     }
 
-    AnimatedSplash(alphaAnim.value)
-
-}
-
-@Composable
-private fun AnimatedSplash(alpha: Float) {
-    Box(
-        modifier = Modifier
-            .background(if (isSystemInDarkTheme()) Color.Black else Color.Blue)
-            .fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Icon(
+    @Composable
+    private fun AnimatedSplash(alpha: Float) {
+        Box(
             modifier = Modifier
-                .size(120.dp)
-                .alpha(alpha = alpha),
-            imageVector = Icons.Default.Email,
-            contentDescription = null,
-            tint = Color.White
-        )
+                .background(if (isSystemInDarkTheme()) Color.Black else Color.Blue)
+                .fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(
+                modifier = Modifier
+                    .size(120.dp)
+                    .alpha(alpha = alpha),
+                imageVector = Icons.Default.Email,
+                contentDescription = null,
+                tint = Color.White
+            )
+        }
     }
-}
-
-@Composable
-@Preview
-fun SplashScreenPreview() {
-    AnimatedSplash(alpha = 1f)
-}
-
-@Composable
-@Preview(uiMode = UI_MODE_NIGHT_YES)
-fun SplashScreenDarkPreview() {
-    AnimatedSplash(alpha = 1f)
 }

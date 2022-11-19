@@ -66,10 +66,13 @@ dependencies {
     implementation(Room.roomKtx)
     implementation(Room.roomRuntime)
 
+    implementation Timber.timber
+
     api project(Modules.core)
     api project(Modules.core_ui)
     api project(Modules.splash)
     api project(Modules.onBoarding)
+    api project(Modules.home)
 
 
     testImplementation(Testing.junit4)
