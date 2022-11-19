@@ -67,6 +67,7 @@ dependencies {
     implementation(Room.roomRuntime)
 
     api project(Modules.core)
+    api project(Modules.core_ui)
     api project(Modules.splash)
     api project(Modules.onBoarding)
 

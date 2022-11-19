@@ -1,11 +1,11 @@
-package com.yunuscagliyan.cinemaapp
+package com.yunuscagliyan.cinemaapp.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.navigation.compose.rememberNavController
 import com.yunuscagliyan.cinemaapp.navigation.SetupNavGraph
-import com.yunuscagliyan.cinemaapp.ui.theme.CinemaAppTheme
+import com.yunuscagliyan.core_ui.theme.CinemaAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 
