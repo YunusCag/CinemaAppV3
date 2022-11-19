@@ -18,9 +18,22 @@ android {
     }
 
     buildTypes {
+        def localProperties = new Properties()
+        localProperties.load(new FileInputStream(rootProject.file("local.properties")))
+
+        debug {
+            buildConfigField("String", "API_KEY", localProperties["API_KEY"])
+            buildConfigField("String", "BASE_URL", localProperties["BASE_URL"])
+            buildConfigField("String", "POSTER_BASE_URL", localProperties["POSTER_BASE_URL"])
+        }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            buildConfigField("String", "API_KEY", localProperties["API_KEY"])
+            buildConfigField("String", "BASE_URL", localProperties["BASE_URL"])
+            buildConfigField("String", "POSTER_BASE_URL", localProperties["POSTER_BASE_URL"])
         }
     }
     compileOptions {

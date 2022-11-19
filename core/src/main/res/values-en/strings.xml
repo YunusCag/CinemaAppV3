@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_http_error">An unexpected error occurred</string>
+    <string name="common_no_connection">Could not reach server. Check your internet connection.</string>
+</resources>

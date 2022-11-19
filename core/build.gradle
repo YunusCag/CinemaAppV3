@@ -1,1 +1,11 @@
 apply from: '../scripts/common.gradle'
+
+dependencies {
+    implementation Compose.runtime
+    implementation Retrofit.okHttp
+    implementation Retrofit.retrofit
+    implementation Retrofit.okHttpLoggingInterceptor
+    implementation Retrofit.moshiConverter
+    implementation Retrofit.moshiKotlin
+    implementation Retrofit.moshiConverter
+}

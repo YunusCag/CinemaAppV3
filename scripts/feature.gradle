@@ -29,6 +29,11 @@ dependencies {
     implementation Compose.viewModelCompose
     implementation Compose.activityCompose
 
+    implementation Retrofit.okHttp
+    implementation Retrofit.retrofit
+    implementation Retrofit.okHttpLoggingInterceptor
+    implementation Retrofit.moshiConverter
+
     kapt DaggerHilt.hiltCompiler
     implementation DaggerHilt.hiltAndroid
 }
