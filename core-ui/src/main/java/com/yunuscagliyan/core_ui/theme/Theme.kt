@@ -10,6 +10,8 @@ private val DarkColorPalette = darkColors(
     primary = EbonyClay,
     primaryVariant = Firefly,
     secondary = Amaranth,
+    background = Gunmetal,
+
 )
 
 private val LightColorPalette = lightColors(

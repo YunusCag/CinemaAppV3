@@ -85,8 +85,6 @@ p
 @app/src/main/java/com/yunuscagliyan/cinemaapp/ui/MainActivity.kt,1/d/1d84de3727037128d04d759ded4f02b21383d6cf
 m
 =core-ui/src/main/java/com/yunuscagliyan/core_ui/theme/Type.kt,a/a/aa8fa68242a2eb11da247fa6b32ef85bba111e5a
-~
-Ncore-ui/src/main/java/com/yunuscagliyan/core_ui/components/main/MainUIFrame.kt,d/1/d108e42e0966ef50f8a9565c08358a720738c15b
 Q
 !buildSrc/src/main/java/Testing.kt,3/b/3b29b036070306646d6e9146faba75d9cf46a956
 N

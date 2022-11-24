@@ -83,7 +83,7 @@ fun MovieHorizontalPager(
                 while (true) {
                     yield()
                     delay(2000L)
-                    if(lazyMovieItems.itemCount>pagerState.currentPage){
+                    if (pagerState.pageCount > pagerState.currentPage) {
                         pagerState.animateScrollToPage(
                             page = (pagerState.currentPage + 1) % (pagerState.pageCount)
                         )
@@ -105,8 +105,8 @@ fun MovieHorizontalPager(
             }
 
             lazyMovieItems.apply {
-                when{
-                    loadState.refresh is LoadState.Loading->{
+                when {
+                    loadState.refresh is LoadState.Loading -> {
                         AnimatedShimmer {
                             Box(
                                 modifier = Modifier
@@ -118,14 +118,14 @@ fun MovieHorizontalPager(
                             )
                         }
                     }
-                    loadState.refresh is LoadState.Error->{
-                        val errorState=loadState.refresh as LoadState.Error
+                    loadState.refresh is LoadState.Error -> {
+                        val errorState = loadState.refresh as LoadState.Error
 
                         NetworkErrorView(
                             message = errorState.error.message
                         )
                     }
-                    loadState.append is LoadState.Loading->{
+                    loadState.append is LoadState.Loading -> {
                         AnimatedShimmer {
                             Box(
                                 modifier = Modifier
@@ -137,8 +137,8 @@ fun MovieHorizontalPager(
                             )
                         }
                     }
-                    loadState.append is LoadState.Error->{
-                        val errorState=loadState.append as LoadState.Error
+                    loadState.append is LoadState.Error -> {
+                        val errorState = loadState.append as LoadState.Error
 
                         NetworkErrorView(
                             message = errorState.error.message

@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil.annotation.ExperimentalCoilApi
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.yunuscagliyan.core.navigation.Screen
 import com.yunuscagliyan.core_ui.components.list.HorizontalMovieListView
@@ -26,7 +27,7 @@ object MainScreen : CoreScreen<MainViewModel> {
     @Composable
     override fun viewModel(): MainViewModel = hiltViewModel()
 
-    @OptIn(ExperimentalPagerApi::class)
+    @OptIn(ExperimentalPagerApi::class, ExperimentalCoilApi::class)
     @Composable
     override fun Content(viewModel: MainViewModel) {
         MainUIFrame(

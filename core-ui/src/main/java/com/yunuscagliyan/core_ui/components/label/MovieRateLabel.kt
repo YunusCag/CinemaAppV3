@@ -15,8 +15,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.yunuscagliyan.core.util.Constants.DoubleFormatterUtil.DECIMAL_ONE
 import com.yunuscagliyan.core.util.Constants.StringParameter.RATE_LABEL
-import com.yunuscagliyan.core_ui.theme.yellow500
+import com.yunuscagliyan.core_ui.theme.yellow700
 
 @Composable
 fun MovieRateLabel(
@@ -26,7 +27,7 @@ fun MovieRateLabel(
     Box(
         modifier = modifier
             .padding(horizontal = 8.dp, vertical = 4.dp)
-            .background(yellow500.copy(alpha = 0.8f), shape = RoundedCornerShape(4.dp)),
+            .background(yellow700.copy(alpha = 0.8f), shape = RoundedCornerShape(4.dp)),
         contentAlignment = Alignment.Center,
     ) {
         Text(
@@ -38,7 +39,7 @@ fun MovieRateLabel(
                         fontSize = 14.sp,
                     )
                 ) {
-                    append("${voteAverage ?: 0}")
+                    append(DECIMAL_ONE.format(voteAverage ?: 0))
 
                 }
                 withStyle(

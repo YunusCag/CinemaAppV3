@@ -11,6 +11,11 @@ object Constants {
         const val RATE_LABEL = "/10"
     }
 
+    object DoubleFormatterUtil{
+        const val DECIMAL_ONE="%.1f"
+        const val DECIMAL_TWO="%.2f"
+    }
+
     object NetworkUtil {
         const val UPCOMING_MOVIES_URL = "movie/upcoming"
         const val POPULAR_MOVIES_URL = "movie/popular"
