@@ -2,6 +2,7 @@ apply from: '../scripts/common.gradle'
 
 dependencies {
     implementation Compose.runtime
+    implementation Compose.paging
     implementation Retrofit.okHttp
     implementation Retrofit.retrofit
     implementation Retrofit.okHttpLoggingInterceptor

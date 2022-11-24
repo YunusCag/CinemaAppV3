@@ -2,4 +2,10 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="common_http_error">Beklenmeyen bir hata oldu.</string>
     <string name="common_no_connection">Servera bağlanılamadı. Lütfen internet bağlantınızı kontrol ediniz.</string>
+
+    <!--Home Page-->
+    <string name="up_coming_movie_text">Yakında Sinemalarda</string>
+    <string name="home_page_trending_title_text">Trend</string>
+    <string name="home_page_popular_title_text">Popüler</string>
+    <string name="home_page_top_rated_title_text">En Çok Oy Alanlar</string>
 </resources>

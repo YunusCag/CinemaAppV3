@@ -28,6 +28,10 @@ dependencies {
     implementation Compose.navigation
     implementation Compose.viewModelCompose
     implementation Compose.activityCompose
+    implementation Compose.paging
+
+    implementation Coil.coilCompose
+    implementation Google.accompanistPager
 
     implementation Retrofit.okHttp
     implementation Retrofit.retrofit
