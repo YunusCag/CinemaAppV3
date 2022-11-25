@@ -17,7 +17,9 @@ import com.yunuscagliyan.core_ui.components.list.HorizontalMovieListView
 import com.yunuscagliyan.core_ui.components.main.MainUIFrame
 import com.yunuscagliyan.core_ui.navigation.CoreScreen
 import com.yunuscagliyan.core.R
+import com.yunuscagliyan.core_ui.components.header.SimpleTopBar
 import com.yunuscagliyan.core_ui.components.pager.MovieHorizontalPager
+import com.yunuscagliyan.core_ui.theme.CinemaAppTheme
 import com.yunuscagliyan.home.viewmodel.main.MainViewModel
 
 object MainScreen : CoreScreen<MainViewModel> {
@@ -87,10 +89,8 @@ object MainScreen : CoreScreen<MainViewModel> {
 
     @Composable
     private fun TopBar() {
-        TopAppBar(
-            title = {
-                Text("Home Page")
-            },
+        SimpleTopBar(
+            title = stringResource(id = R.string.home_page_top_bar_title),
         )
     }
 }

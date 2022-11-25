@@ -4,6 +4,7 @@
     <string name="common_no_connection">Servera bağlanılamadı. Lütfen internet bağlantınızı kontrol ediniz.</string>
 
     <!--Home Page-->
+    <string name="home_page_top_bar_title">Anasayfa</string>
     <string name="up_coming_movie_text">Yakında Sinemalarda</string>
     <string name="home_page_trending_title_text">Trend</string>
     <string name="home_page_popular_title_text">Popüler</string>

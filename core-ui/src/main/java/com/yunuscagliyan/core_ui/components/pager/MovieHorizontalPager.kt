@@ -41,6 +41,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.yield
 import kotlin.math.absoluteValue
 import com.yunuscagliyan.core.R
+import com.yunuscagliyan.core_ui.theme.CinemaAppColors
+import com.yunuscagliyan.core_ui.theme.CinemaAppTheme
 
 @ExperimentalCoilApi
 @ExperimentalPagerApi
@@ -65,7 +67,8 @@ fun MovieHorizontalPager(
         ) {
             Text(
                 text = title,
-                style = MaterialTheme.typography.h5
+                style = CinemaAppTheme.typography.title,
+                color = CinemaAppTheme.colors.textPrimary
             )
 
             Icon(
@@ -205,9 +208,8 @@ private fun MovieHorizontalPage(
             ) {
                 Text(
                     text = movie?.title ?: "",
-                    style = MaterialTheme.typography.body1.copy(
-                        color = Color.White,
-                    ),
+                    style = CinemaAppTheme.typography.normalText,
+                    color = CinemaAppTheme.colors.whiteColor
                 )
             }
         }

@@ -29,6 +29,7 @@ import com.yunuscagliyan.core_ui.components.image.AppImage
 import com.yunuscagliyan.core_ui.components.label.MovieRateLabel
 import com.yunuscagliyan.core_ui.components.loading.LoadingView
 import com.yunuscagliyan.core_ui.components.shimmer.AnimatedShimmer
+import com.yunuscagliyan.core_ui.theme.CinemaAppTheme
 import kotlinx.coroutines.flow.Flow
 
 @ExperimentalCoilApi
@@ -56,11 +57,13 @@ fun HorizontalMovieListView(
         ) {
             Text(
                 text = title,
-                style = MaterialTheme.typography.h5
+                style = CinemaAppTheme.typography.title,
+                color = CinemaAppTheme.colors.textPrimary
             )
             Icon(
                 Icons.Default.KeyboardArrowRight,
-                "arrow"
+                null,
+                tint = CinemaAppTheme.colors.textPrimary
             )
         }
         Row(
@@ -130,6 +133,7 @@ private fun MovieSmallCard(
     ) {
         Card(
             modifier = Modifier
+                .fillMaxWidth()
                 .height(150.dp)
                 .clip(RoundedCornerShape(4.dp))
         ) {
@@ -147,13 +151,16 @@ private fun MovieSmallCard(
             }
 
         }
+        Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = movie?.title ?: "",
-            style = MaterialTheme.typography.body2,
+            style = CinemaAppTheme.typography.normalText,
+            color = CinemaAppTheme.colors.textPrimary,
             maxLines = 2,
             textAlign = TextAlign.Center,
             overflow = TextOverflow.Ellipsis,
-            modifier = Modifier.height(30.dp)
+            modifier = Modifier
+                .fillMaxWidth()
         )
     }
 }

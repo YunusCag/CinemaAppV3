@@ -6,6 +6,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.yunuscagliyan.core.R
+import com.yunuscagliyan.core_ui.theme.CinemaAppTheme
 
 @Composable
 fun NetworkErrorView(
@@ -14,7 +15,8 @@ fun NetworkErrorView(
     Column {
         Text(
             text = message ?: stringResource(id = R.string.common_http_error),
-            style = MaterialTheme.typography.h6,
+            style = CinemaAppTheme.typography.normalText,
+
         )
     }
 }
