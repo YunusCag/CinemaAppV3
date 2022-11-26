@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -29,6 +30,7 @@ import com.yunuscagliyan.core_ui.components.image.AppImage
 import com.yunuscagliyan.core_ui.components.label.MovieRateLabel
 import com.yunuscagliyan.core_ui.components.loading.LoadingView
 import com.yunuscagliyan.core_ui.components.shimmer.AnimatedShimmer
+import com.yunuscagliyan.core_ui.extension.noRippleClickable
 import com.yunuscagliyan.core_ui.theme.CinemaAppTheme
 import kotlinx.coroutines.flow.Flow
 
@@ -48,10 +50,10 @@ fun HorizontalMovieListView(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 8.dp, vertical = 12.dp)
-                .clickable {
+                .noRippleClickable {
                     onTap()
-                },
+                }
+                .padding(horizontal = 8.dp, vertical = 12.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
@@ -137,8 +139,10 @@ private fun MovieSmallCard(
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(150.dp)
-                .clip(RoundedCornerShape(4.dp))
+                .height(150.dp),
+            shape = CinemaAppTheme.shapes.defaultSmallShape,
+            backgroundColor = Color.Unspecified,
+            elevation = 0.dp
         ) {
             AppImage(
                 modifier = Modifier.fillMaxSize(),
@@ -148,7 +152,9 @@ private fun MovieSmallCard(
 
             Box(
                 contentAlignment = Alignment.BottomEnd,
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.Transparent)
             ) {
                 MovieRateLabel(voteAverage = movie?.voteAverage)
             }

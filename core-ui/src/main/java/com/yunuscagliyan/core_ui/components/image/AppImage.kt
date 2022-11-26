@@ -1,6 +1,7 @@
 package com.yunuscagliyan.core_ui.components.image
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.CircularProgressIndicator
@@ -9,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImagePainter
@@ -37,11 +39,18 @@ fun AppImage(
         )
     when (painter.state) {
         is AsyncImagePainter.State.Error -> {
-            NetworkErrorView(message = stringResource(id = R.string.common_http_error))
+            Image(
+                painter = painterResource(id = R.drawable.ic_replay),
+                contentDescription = null,
+                modifier = modifier
+                    .background(CinemaAppTheme.colors.background),
+                contentScale = contentScale,
+            )
         }
         is AsyncImagePainter.State.Loading -> {
             Box(
-                modifier = modifier,
+                modifier = modifier
+                    .background(CinemaAppTheme.colors.background),
                 contentAlignment = Alignment.Center
             ) {
                 CircularProgressIndicator(

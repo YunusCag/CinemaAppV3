@@ -43,6 +43,9 @@ object HomeScreen : CoreScreen<HomeViewModel>() {
         ) {
             MovieHorizontalPager(
                 movies = upComingMovies,
+                onTap = {
+
+                }
             )
 
             HorizontalMovieListView(

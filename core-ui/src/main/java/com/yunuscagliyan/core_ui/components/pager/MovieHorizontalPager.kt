@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowRight
@@ -31,19 +30,19 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerScope
 import com.google.accompanist.pager.rememberPagerState
+import com.yunuscagliyan.core.R
 import com.yunuscagliyan.core.data.remote.model.movie.MovieModel
+import com.yunuscagliyan.core.util.Constants.DurationUTil.HOME_AUTO_SCROLL_DURATION
 import com.yunuscagliyan.core_ui.components.error.NetworkErrorView
 import com.yunuscagliyan.core_ui.components.image.AppImage
 import com.yunuscagliyan.core_ui.components.label.MovieRateLabel
 import com.yunuscagliyan.core_ui.components.shimmer.AnimatedShimmer
+import com.yunuscagliyan.core_ui.extension.noRippleClickable
+import com.yunuscagliyan.core_ui.theme.CinemaAppTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.yield
 import kotlin.math.absoluteValue
-import com.yunuscagliyan.core.R
-import com.yunuscagliyan.core.util.Constants.DurationUTil.HOME_AUTO_SCROLL_DURATION
-import com.yunuscagliyan.core_ui.theme.CinemaAppColors
-import com.yunuscagliyan.core_ui.theme.CinemaAppTheme
 
 @ExperimentalCoilApi
 @ExperimentalPagerApi
@@ -51,7 +50,8 @@ import com.yunuscagliyan.core_ui.theme.CinemaAppTheme
 fun MovieHorizontalPager(
     movies: Flow<PagingData<MovieModel>>,
     title: String = stringResource(id = R.string.up_coming_movie_text),
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onTap: () -> Unit,
 ) {
     val lazyMovieItems: LazyPagingItems<MovieModel> = movies.collectAsLazyPagingItems()
 
@@ -62,6 +62,9 @@ fun MovieHorizontalPager(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
+                .noRippleClickable {
+                    onTap()
+                }
                 .padding(horizontal = 8.dp, vertical = 8.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
@@ -177,9 +180,8 @@ private fun MovieHorizontalPage(
             .fillMaxSize()
             .padding(horizontal = 8.dp),
         elevation = 4.dp,
-        shape = RoundedCornerShape(
-            8.dp
-        ),
+        shape = CinemaAppTheme.shapes.defaultMediumShape,
+        backgroundColor = Color.Unspecified,
     ) {
         AppImage(
             modifier = Modifier.fillMaxSize(),

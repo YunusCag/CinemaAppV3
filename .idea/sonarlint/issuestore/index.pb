@@ -143,8 +143,6 @@ Qfeatures/home/src/main/java/com/yunuscagliyan/home/data/source/MovieDataSource.
 Ocore/src/main/java/com/yunuscagliyan/core/data/remote/model/movie/MovieModel.kt,2/c/2c494e4e54aa19eec8bb767abba21ed7a7da6c02
 
 Ofeatures/home/src/main/java/com/yunuscagliyan/home/data/enum/MoviePagingType.kt,4/2/42c732eac2027b52ac590d9a9667d95719570016
-x
-Hcore-ui/src/main/java/com/yunuscagliyan/core_ui/theme/CinemaAppShapes.kt,7/1/71f9577e23e9a07e5fe5b0f4e5e695579b74e137
 |
 Lcore-ui/src/main/java/com/yunuscagliyan/core_ui/theme/CinemaAppTypography.kt,c/2/c2015a13c795d1789076342cee5aa7ae2c3c6ac3
 ‚
