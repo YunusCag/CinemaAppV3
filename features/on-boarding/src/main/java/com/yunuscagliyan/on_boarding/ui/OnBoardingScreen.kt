@@ -14,14 +14,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.yunuscagliyan.core.navigation.Screen
+import com.yunuscagliyan.core.navigation.RootScreenRoute
 import com.yunuscagliyan.core_ui.navigation.CoreScreen
 import com.yunuscagliyan.on_boarding.viewmodel.OnBoardingViewModel
 
 
-object OnBoardingScreen : CoreScreen<OnBoardingViewModel> {
+object OnBoardingScreen : CoreScreen<OnBoardingViewModel>() {
     override val route: String
-        get() = Screen.OnBoarding.route
+        get() = RootScreenRoute.OnBoarding.route
 
     @Composable
     override fun viewModel(): OnBoardingViewModel = hiltViewModel()

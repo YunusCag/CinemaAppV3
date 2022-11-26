@@ -14,6 +14,7 @@ import com.yunuscagliyan.core_ui.theme.CinemaAppTheme
 fun MainUIFrame(
     modifier: Modifier = Modifier,
     topBar: @Composable () -> Unit = {},
+    bottomBar: @Composable () -> Unit = {},
     backgroundColor: Brush = Brush.horizontalGradient(
         listOf(
             CinemaAppTheme.colors.primary,
@@ -23,14 +24,14 @@ fun MainUIFrame(
     content: @Composable (PaddingValues) -> Unit,
 ) {
 
-    CinemaAppTheme{
+    CinemaAppTheme {
         Scaffold(
             modifier = modifier
                 .fillMaxSize()
                 .statusBarsPadding(),
             topBar = topBar,
-            backgroundColor = CinemaAppTheme.colors.background,
-
+            bottomBar = bottomBar,
+            backgroundColor = CinemaAppTheme.colors.background
         ) { paddingValues ->
             content(paddingValues)
         }

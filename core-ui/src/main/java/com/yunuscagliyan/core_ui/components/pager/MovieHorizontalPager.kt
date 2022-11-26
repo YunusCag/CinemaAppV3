@@ -85,7 +85,7 @@ fun MovieHorizontalPager(
             LaunchedEffect(key1 = Unit) {
                 while (true) {
                     yield()
-                    delay(2000L)
+                    delay(4000L)
                     if (pagerState.pageCount > pagerState.currentPage) {
                         pagerState.animateScrollToPage(
                             page = (pagerState.currentPage + 1) % (pagerState.pageCount)
@@ -114,7 +114,7 @@ fun MovieHorizontalPager(
                             Box(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .height(200.dp)
+                                    .height(250.dp)
                                     .padding(8.dp)
                                     .clip(RoundedCornerShape(8.dp))
                                     .background(it)

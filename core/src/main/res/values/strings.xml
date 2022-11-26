@@ -9,4 +9,10 @@
     <string name="home_page_trending_title_text">Trend</string>
     <string name="home_page_popular_title_text">Popüler</string>
     <string name="home_page_top_rated_title_text">En Çok Oy Alanlar</string>
+
+    <!--- Favourite Page -->
+    <string name="favourite_page_top_bar_title">Favoriler</string>
+
+    <!--- Settings Page -->
+    <string name="settings_page_top_bar_title">Ayarlar</string>
 </resources>

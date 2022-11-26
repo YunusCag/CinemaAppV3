@@ -1,7 +1,7 @@
 package com.yunuscagliyan.on_boarding.viewmodel
 
 import com.yunuscagliyan.core.data.local.preference.Preferences
-import com.yunuscagliyan.core.navigation.Screen
+import com.yunuscagliyan.core.navigation.RootScreenRoute
 import com.yunuscagliyan.core_ui.event.CoreEvent
 import com.yunuscagliyan.core_ui.navigation.Routes
 import com.yunuscagliyan.core_ui.viewmodel.CoreViewModel
@@ -17,7 +17,7 @@ class OnBoardingViewModel @Inject constructor(
         sendEvent(
             CoreEvent.Navigation(
                 Routes.NavigateToRoute(
-                    Screen.Home.route
+                    RootScreenRoute.Main.route
                 )
             )
         )

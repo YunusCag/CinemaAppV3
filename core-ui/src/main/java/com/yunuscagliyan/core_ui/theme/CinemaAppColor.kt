@@ -75,7 +75,6 @@ private interface AppColor {
 }
 
 object AppCustomLightColors : AppColor {
-
     override val colorPrimary = Color(0xFF0A1823)
     override val colorPrimaryDark = Color(0xFF0A1823)
     override val colorSecondary = Color(0xFFE82251)

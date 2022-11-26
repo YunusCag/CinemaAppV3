@@ -8,23 +8,26 @@ import com.yunuscagliyan.core_ui.event.CoreEvent
 import com.yunuscagliyan.core_ui.viewmodel.CoreViewModel
 import kotlinx.coroutines.flow.collectLatest
 
-interface CoreScreen<T : CoreViewModel> {
-    val route: String
+abstract class CoreScreen<T : CoreViewModel> {
+    var navController: NavHostController? = null
+    abstract val route: String
 
 
     fun getArguments(): List<NamedNavArgument> = emptyList()
     fun getDeepLinks(): List<NavDeepLink> = emptyList()
 
     @Composable
-    fun viewModel(): T
+    abstract fun viewModel(): T
 
     @Composable
-    fun Content(viewModel: T)
+    abstract fun Content(viewModel: T)
 
     fun composable(
         builder: NavGraphBuilder,
         navHostController: NavHostController
     ) {
+        this.navController = navHostController
+
         builder.composable(route, getArguments(), getDeepLinks()) {
             val viewModel = viewModel()
 

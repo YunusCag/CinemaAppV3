@@ -43,12 +43,12 @@ fun HorizontalMovieListView(
     val lazyMovieItems: LazyPagingItems<MovieModel> = movies.collectAsLazyPagingItems()
 
     Column(
-        modifier = modifier
+        modifier = modifier,
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 8.dp, vertical = 8.dp)
+                .padding(horizontal = 8.dp, vertical = 12.dp)
                 .clickable {
                     onTap()
                 },
@@ -62,13 +62,16 @@ fun HorizontalMovieListView(
             )
             Icon(
                 Icons.Default.KeyboardArrowRight,
-                null,
+                contentDescription = null,
+                modifier = Modifier
+                    .size(24.dp),
                 tint = CinemaAppTheme.colors.textPrimary
             )
         }
         Row(
             modifier = modifier
                 .fillMaxWidth()
+                .height(220.dp)
         ) {
             LazyRow(
                 modifier = Modifier

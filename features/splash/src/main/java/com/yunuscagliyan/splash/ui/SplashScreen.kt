@@ -17,17 +17,17 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.yunuscagliyan.core.navigation.Screen
+import com.yunuscagliyan.core.navigation.RootScreenRoute
 import com.yunuscagliyan.core_ui.navigation.CoreScreen
 import com.yunuscagliyan.splash.viewmodel.SplashViewModel
 
 
-object SplashScreen:CoreScreen<SplashViewModel>{
+object SplashScreen : CoreScreen<SplashViewModel>() {
     override val route: String
-        get() = Screen.Splash.route
+        get() = RootScreenRoute.Splash.route
 
     @Composable
-    override fun viewModel(): SplashViewModel= hiltViewModel()
+    override fun viewModel(): SplashViewModel = hiltViewModel()
 
     @Composable
     override fun Content(viewModel: SplashViewModel) {
