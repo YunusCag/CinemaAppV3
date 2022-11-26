@@ -56,6 +56,7 @@ dependencies {
 
     implementation(Google.material)
     implementation(Coil.coilCompose)
+    implementation Google.accompanistNavigationAnimation
 
     implementation(Retrofit.okHttp)
     implementation(Retrofit.retrofit)

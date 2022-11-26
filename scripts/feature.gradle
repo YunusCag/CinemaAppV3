@@ -32,6 +32,7 @@ dependencies {
 
     implementation Coil.coilCompose
     implementation Google.accompanistPager
+    implementation Google.accompanistNavigationAnimation
 
     implementation Retrofit.okHttp
     implementation Retrofit.retrofit

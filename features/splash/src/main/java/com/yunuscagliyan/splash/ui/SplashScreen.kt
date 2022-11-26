@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.yunuscagliyan.core.navigation.RootScreenRoute
+import com.yunuscagliyan.core.util.Constants.DurationUTil.SPLASH_DURATION
 import com.yunuscagliyan.core_ui.navigation.CoreScreen
 import com.yunuscagliyan.splash.viewmodel.SplashViewModel
 
@@ -36,7 +37,7 @@ object SplashScreen : CoreScreen<SplashViewModel>() {
         val alphaAnim = animateFloatAsState(
             targetValue = if (startAnimation) 1f else 0f,
             animationSpec = tween(
-                delayMillis = 3000
+                delayMillis = SPLASH_DURATION
             )
         )
 

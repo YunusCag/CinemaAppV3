@@ -73,8 +73,6 @@ r
 Bcore-ui/src/test/java/com/yunuscagliyan/core_ui/ExampleUnitTest.kt,4/f/4fb54a75b4c88275b4cdf96fcced826c3f73c9aa
 u
 Efeatures/home/src/test/java/com/yunuscagliyan/home/ExampleUnitTest.kt,7/2/726cd60e123b2269611bf4fd91cfa540080c9985
-p
-@app/src/main/java/com/yunuscagliyan/cinemaapp/ui/MainActivity.kt,1/d/1d84de3727037128d04d759ded4f02b21383d6cf
 Q
 !buildSrc/src/main/java/Testing.kt,3/b/3b29b036070306646d6e9146faba75d9cf46a956
 N
@@ -89,8 +87,6 @@ z
 Jcore-ui/src/main/java/com/yunuscagliyan/core_ui/viewmodel/CoreViewModel.kt,0/7/07ff9c79d44993c3ee2915cc51cbc3ca4cb0f29f
 P
  buildSrc/src/main/java/Kotlin.kt,d/c/dcc2864be7131e2d7177579fd7f5053c7cd2c9a0
-„
-Tcore-ui/src/main/java/com/yunuscagliyan/core_ui/navigation/RouteNavigationOptions.kt,f/f/ff764ac602142fa2be72ef36ccb9550329ccb08d
 |
 Lcore-ui/src/main/java/com/yunuscagliyan/core_ui/navigation/RouteNavigator.kt,d/1/d198ca39ab0dcfe794ee1bdc95a2c4d4dea8c4de
 t
@@ -123,8 +119,6 @@ Lcore-ui/src/main/java/com/yunuscagliyan/core_ui/extension/UITextExtension.kt,3
 Score/src/main/java/com/yunuscagliyan/core/data/remote/response/MovieListResponse.kt,3/9/39053896b375c701cb1c73066680c5a849b2af04
 n
 >core/src/main/java/com/yunuscagliyan/core/di/RetrofitModule.kt,b/a/baad495640e17871ff7d1fd5cc195c9d4ef8b83b
-@
-app/build.gradle,f/4/f4a01d6a4fcb971362ec00a83903fd3902f52164
 v
 Fcore/src/main/java/com/yunuscagliyan/core/domain/CoreRequestUseCase.kt,1/8/183e18282cdfc24cac936f917b15205bfb95625e
 A
@@ -149,16 +143,10 @@ Qfeatures/home/src/main/java/com/yunuscagliyan/home/data/source/MovieDataSource.
 Ocore/src/main/java/com/yunuscagliyan/core/data/remote/model/movie/MovieModel.kt,2/c/2c494e4e54aa19eec8bb767abba21ed7a7da6c02
 
 Ofeatures/home/src/main/java/com/yunuscagliyan/home/data/enum/MoviePagingType.kt,4/2/42c732eac2027b52ac590d9a9667d95719570016
-k
-;core/src/main/java/com/yunuscagliyan/core/util/Constants.kt,1/3/137655406edab38ced52746802f8c5a1f93f9f03
-D
-core-ui/build.gradle,3/a/3ae0a4263c99394950628414c4d85478364f7ded
 x
 Hcore-ui/src/main/java/com/yunuscagliyan/core_ui/theme/CinemaAppShapes.kt,7/1/71f9577e23e9a07e5fe5b0f4e5e695579b74e137
 |
 Lcore-ui/src/main/java/com/yunuscagliyan/core_ui/theme/CinemaAppTypography.kt,c/2/c2015a13c795d1789076342cee5aa7ae2c3c6ac3
-P
- buildSrc/src/main/java/Google.kt,f/0/f0fc9040d2e8d50946b86097caff15f8ea9cac66
 ‚
 Rcore-ui/src/main/java/com/yunuscagliyan/core_ui/components/label/MovieRateLabel.kt,7/0/7050f04dfaad9587ed829845e98235bb6fefd039
 „

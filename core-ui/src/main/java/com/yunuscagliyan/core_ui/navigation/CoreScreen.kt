@@ -1,20 +1,24 @@
 package com.yunuscagliyan.core_ui.navigation
 
+import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.*
 import androidx.navigation.*
-import androidx.navigation.compose.composable
+import com.google.accompanist.navigation.animation.composable
 import com.yunuscagliyan.core_ui.event.CoreEvent
 import com.yunuscagliyan.core_ui.viewmodel.CoreViewModel
 import kotlinx.coroutines.flow.collectLatest
+
 
 abstract class CoreScreen<T : CoreViewModel> {
     var navController: NavHostController? = null
     abstract val route: String
 
 
-    fun getArguments(): List<NamedNavArgument> = emptyList()
-    fun getDeepLinks(): List<NavDeepLink> = emptyList()
+    open fun getArguments(): List<NamedNavArgument> = emptyList()
+    open fun getDeepLinks(): List<NavDeepLink> = emptyList()
 
     @Composable
     abstract fun viewModel(): T
@@ -22,13 +26,18 @@ abstract class CoreScreen<T : CoreViewModel> {
     @Composable
     abstract fun Content(viewModel: T)
 
+    @OptIn(ExperimentalAnimationApi::class)
     fun composable(
         builder: NavGraphBuilder,
-        navHostController: NavHostController
+        navHostController: NavHostController,
     ) {
         this.navController = navHostController
 
-        builder.composable(route, getArguments(), getDeepLinks()) {
+        builder.composable(
+            route,
+            getArguments(),
+            getDeepLinks(),
+        ) {
             val viewModel = viewModel()
 
             LaunchedEffect(Unit) {

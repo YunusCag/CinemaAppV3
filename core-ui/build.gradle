@@ -37,6 +37,7 @@ dependencies {
     implementation Coil.coilCompose
     implementation Google.accompanistPager
     implementation Google.accompanistSystemUIController
+    implementation Google.accompanistNavigationAnimation
 
     kapt DaggerHilt.hiltCompiler
     implementation DaggerHilt.hiltAndroid

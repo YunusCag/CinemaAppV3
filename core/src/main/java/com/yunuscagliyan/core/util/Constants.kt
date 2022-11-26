@@ -11,9 +11,15 @@ object Constants {
         const val RATE_LABEL = "/10"
     }
 
-    object DoubleFormatterUtil{
-        const val DECIMAL_ONE="%.1f"
-        const val DECIMAL_TWO="%.2f"
+    object DoubleFormatterUtil {
+        const val DECIMAL_ONE = "%.1f"
+        const val DECIMAL_TWO = "%.2f"
+    }
+
+    object DurationUTil {
+        const val TRANSITION_DURATION = 500
+        const val SPLASH_DURATION = 4000
+        const val HOME_AUTO_SCROLL_DURATION = 8000
     }
 
     object NetworkUtil {

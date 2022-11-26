@@ -41,6 +41,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.yield
 import kotlin.math.absoluteValue
 import com.yunuscagliyan.core.R
+import com.yunuscagliyan.core.util.Constants.DurationUTil.HOME_AUTO_SCROLL_DURATION
 import com.yunuscagliyan.core_ui.theme.CinemaAppColors
 import com.yunuscagliyan.core_ui.theme.CinemaAppTheme
 
@@ -77,15 +78,14 @@ fun MovieHorizontalPager(
             )
         }
         Column(
-            modifier = modifier.height(200.dp)
-
+            modifier = modifier.height(250.dp)
         ) {
             val pagerState = rememberPagerState()
 
             LaunchedEffect(key1 = Unit) {
                 while (true) {
                     yield()
-                    delay(4000L)
+                    delay(HOME_AUTO_SCROLL_DURATION.toLong())
                     if (pagerState.pageCount > pagerState.currentPage) {
                         pagerState.animateScrollToPage(
                             page = (pagerState.currentPage + 1) % (pagerState.pageCount)

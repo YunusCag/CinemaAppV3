@@ -3,6 +3,7 @@ package com.yunuscagliyan.splash.viewmodel
 import androidx.lifecycle.viewModelScope
 import com.yunuscagliyan.core.data.local.preference.Preferences
 import com.yunuscagliyan.core.navigation.RootScreenRoute
+import com.yunuscagliyan.core.util.Constants.DurationUTil.SPLASH_DURATION
 import com.yunuscagliyan.core_ui.event.CoreEvent
 import com.yunuscagliyan.core_ui.navigation.RouteNavigationOptions
 import com.yunuscagliyan.core_ui.navigation.Routes
@@ -25,7 +26,7 @@ class SplashViewModel @Inject constructor(
         val shouldShow = preferences.shouldShowOnBoard
 
         viewModelScope.launch {
-            delay(4000L)
+            delay(SPLASH_DURATION.toLong())
             sendEvent(
                 CoreEvent.Navigation(
                     Routes.NavigateToRoute(

@@ -1,6 +1,10 @@
 package com.yunuscagliyan.home.ui.pages.main
 
 import androidx.annotation.StringRes
+import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
@@ -24,12 +28,15 @@ import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.navigation.animation.AnimatedNavHost
+import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.yunuscagliyan.core.R
 import com.yunuscagliyan.core.navigation.MainScreenRoute
 import com.yunuscagliyan.core.navigation.RootScreenRoute
+import com.yunuscagliyan.core.util.Constants
 import com.yunuscagliyan.core_ui.components.header.SimpleTopBar
 import com.yunuscagliyan.core_ui.components.main.MainUIFrame
 import com.yunuscagliyan.core_ui.components.ripple.NoRippleInteractionSource
@@ -47,9 +54,10 @@ object MainScreen : CoreScreen<MainViewModel>() {
     @Composable
     override fun viewModel(): MainViewModel = hiltViewModel()
 
+    @OptIn(ExperimentalAnimationApi::class)
     @Composable
     override fun Content(viewModel: MainViewModel) {
-        val bottomBarNavController = rememberNavController()
+        val bottomBarNavController = rememberAnimatedNavController()
         MainUIFrame(
             topBar = {
                 TopBar(
@@ -92,14 +100,51 @@ object MainScreen : CoreScreen<MainViewModel>() {
         )
     }
 
+    @OptIn(ExperimentalAnimationApi::class)
     @Composable
     private fun SetUpNavGraph(
         bottomBarNavController: NavHostController,
         rootNavHostController: NavHostController
     ) {
-        NavHost(
+        AnimatedNavHost(
             navController = bottomBarNavController,
             startDestination = MainScreenRoute.Home.route,
+            enterTransition = {
+                slideIntoContainer(
+                    AnimatedContentScope.SlideDirection.Left,
+                    animationSpec = tween(
+                        Constants.DurationUTil.TRANSITION_DURATION,
+                        easing = LinearEasing
+                    )
+                )
+            },
+            exitTransition = {
+                slideOutOfContainer(
+                    AnimatedContentScope.SlideDirection.Left,
+                    animationSpec = tween(
+                        Constants.DurationUTil.TRANSITION_DURATION,
+                        easing = LinearEasing
+                    )
+                )
+            },
+            popEnterTransition = {
+                slideIntoContainer(
+                    AnimatedContentScope.SlideDirection.Right,
+                    animationSpec = tween(
+                        Constants.DurationUTil.TRANSITION_DURATION,
+                        easing = LinearEasing
+                    )
+                )
+            },
+            popExitTransition = {
+                slideOutOfContainer(
+                    AnimatedContentScope.SlideDirection.Right,
+                    animationSpec = tween(
+                        Constants.DurationUTil.TRANSITION_DURATION,
+                        easing = LinearEasing
+                    )
+                )
+            }
         ) {
             HomeScreen.composable(
                 this,

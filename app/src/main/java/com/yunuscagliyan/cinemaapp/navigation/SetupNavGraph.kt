@@ -1,22 +1,54 @@
 package com.yunuscagliyan.cinemaapp.navigation
 
+import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
+import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.yunuscagliyan.core.navigation.RootScreenRoute
+import com.yunuscagliyan.core.util.Constants
+import com.yunuscagliyan.core.util.Constants.DurationUTil.TRANSITION_DURATION
+import com.yunuscagliyan.core_ui.navigation.NavigationAnimDirection
 import com.yunuscagliyan.home.ui.pages.main.MainScreen
 import com.yunuscagliyan.on_boarding.ui.OnBoardingScreen
 import com.yunuscagliyan.splash.ui.SplashScreen
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun SetupNavGraph(navController: NavHostController) {
-    NavHost(
+    AnimatedNavHost(
         navController = navController,
-        startDestination = RootScreenRoute.Splash.route
+        startDestination = RootScreenRoute.Splash.route,
+        enterTransition = {
+            slideIntoContainer(
+                AnimatedContentScope.SlideDirection.Left,
+                animationSpec = tween(TRANSITION_DURATION, easing = LinearEasing)
+            )
+        },
+        exitTransition = {
+            slideOutOfContainer(
+                AnimatedContentScope.SlideDirection.Left,
+                animationSpec = tween(TRANSITION_DURATION, easing = LinearEasing)
+            )
+        },
+        popEnterTransition = {
+            slideIntoContainer(
+                AnimatedContentScope.SlideDirection.Right,
+                animationSpec = tween(TRANSITION_DURATION, easing = LinearEasing)
+            )
+        },
+        popExitTransition = {
+            slideOutOfContainer(
+                AnimatedContentScope.SlideDirection.Right,
+                animationSpec = tween(TRANSITION_DURATION, easing = LinearEasing)
+            )
+        }
     ) {
         SplashScreen.composable(
             this,
-            navController
+            navController,
         )
         OnBoardingScreen.composable(
             this,
@@ -24,7 +56,7 @@ fun SetupNavGraph(navController: NavHostController) {
         )
         MainScreen.composable(
             this,
-            navController
+            navController,
         )
     }
 
