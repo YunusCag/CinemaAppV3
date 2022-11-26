@@ -36,17 +36,9 @@ fun AppImage(
                 .data("${BuildConfig.POSTER_BASE_URL}${url ?: EMPTY_STRING}")
                 .size(Size.ORIGINAL)
                 .build(),
+            error = painterResource(id = R.drawable.ic_replay)
         )
     when (painter.state) {
-        is AsyncImagePainter.State.Error -> {
-            Image(
-                painter = painterResource(id = R.drawable.ic_replay),
-                contentDescription = null,
-                modifier = modifier
-                    .background(CinemaAppTheme.colors.background),
-                contentScale = contentScale,
-            )
-        }
         is AsyncImagePainter.State.Loading -> {
             Box(
                 modifier = modifier
@@ -77,5 +69,4 @@ fun AppImage(
             )
         }
     }
-
 }
