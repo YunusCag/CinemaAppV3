@@ -6,9 +6,9 @@
     <!--Home Page-->
     <string name="home_page_top_bar_title">Homepage</string>
     <string name="up_coming_movie_text">Box Office Movies</string>
-    <string name="home_page_trending_title_text">Trending</string>
-    <string name="home_page_popular_title_text">Popular</string>
-    <string name="home_page_top_rated_title_text">Top Rated</string>
+    <string name="trending_title_text">Trending</string>
+    <string name="popular_title_text">Popular</string>
+    <string name="top_rated_title_text">Top Rated</string>
 
     <!--- Favourite Page -->
     <string name="favourite_page_top_bar_title">Favourites</string>

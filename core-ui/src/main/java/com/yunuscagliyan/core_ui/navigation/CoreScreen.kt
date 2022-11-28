@@ -1,11 +1,12 @@
 package com.yunuscagliyan.core_ui.navigation
 
-import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.*
-import androidx.navigation.*
+import androidx.compose.runtime.LaunchedEffect
+import androidx.navigation.NamedNavArgument
+import androidx.navigation.NavDeepLink
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.composable
 import com.yunuscagliyan.core_ui.event.CoreEvent
 import com.yunuscagliyan.core_ui.viewmodel.CoreViewModel

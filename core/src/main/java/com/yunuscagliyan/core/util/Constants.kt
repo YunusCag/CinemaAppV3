@@ -39,4 +39,8 @@ object Constants {
     object PaginationUtil {
         const val PER_PAGE_ITEM = 20
     }
+
+    object NavigationArgumentKey {
+        const val LIST_TYPE_KEY = "list_type"
+    }
 }

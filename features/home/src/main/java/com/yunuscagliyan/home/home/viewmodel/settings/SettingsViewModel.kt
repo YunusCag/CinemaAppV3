@@ -1,4 +1,4 @@
-package com.yunuscagliyan.home.viewmodel.settings
+package com.yunuscagliyan.home.home.viewmodel.settings
 
 import com.yunuscagliyan.core_ui.viewmodel.CoreViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel

@@ -1,4 +1,4 @@
-package com.yunuscagliyan.home.ui.pages.settings
+package com.yunuscagliyan.home.home.ui.pages.settings
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -9,7 +9,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.yunuscagliyan.core.navigation.MainScreenRoute
 import com.yunuscagliyan.core_ui.navigation.CoreScreen
-import com.yunuscagliyan.home.viewmodel.settings.SettingsViewModel
+import com.yunuscagliyan.home.home.viewmodel.settings.SettingsViewModel
 
 object SettingsScreen : CoreScreen<SettingsViewModel>() {
     override val route: String

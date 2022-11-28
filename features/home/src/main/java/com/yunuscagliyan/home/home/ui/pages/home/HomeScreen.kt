@@ -1,4 +1,4 @@
-package com.yunuscagliyan.home.ui.pages.home
+package com.yunuscagliyan.home.home.ui.pages.home
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -14,9 +14,9 @@ import com.yunuscagliyan.core_ui.components.list.HorizontalMovieListView
 import com.yunuscagliyan.core_ui.navigation.CoreScreen
 import com.yunuscagliyan.core.R
 import com.yunuscagliyan.core.navigation.MainScreenRoute
-import com.yunuscagliyan.core_ui.components.header.SimpleTopBar
 import com.yunuscagliyan.core_ui.components.pager.MovieHorizontalPager
-import com.yunuscagliyan.home.viewmodel.home.HomeViewModel
+import com.yunuscagliyan.home.data.enum.MoviePagingType
+import com.yunuscagliyan.home.home.viewmodel.home.HomeViewModel
 
 object HomeScreen : CoreScreen<HomeViewModel>() {
     override val route: String
@@ -44,31 +44,39 @@ object HomeScreen : CoreScreen<HomeViewModel>() {
             MovieHorizontalPager(
                 movies = upComingMovies,
                 onTap = {
-
+                    viewModel.navigateList(
+                        pagingType = MoviePagingType.UPCOMING
+                    )
                 }
             )
 
             HorizontalMovieListView(
                 movies = trendingMovies,
-                title = stringResource(R.string.home_page_trending_title_text),
+                title = stringResource(R.string.trending_title_text),
                 onTap = {
-
+                    viewModel.navigateList(
+                        pagingType = MoviePagingType.TRENDING
+                    )
                 },
             )
             Spacer(modifier = Modifier.height(8.dp))
             HorizontalMovieListView(
                 movies = popularMovies,
-                title = stringResource(R.string.home_page_popular_title_text),
+                title = stringResource(R.string.popular_title_text),
                 onTap = {
-
+                    viewModel.navigateList(
+                        pagingType = MoviePagingType.POPULAR
+                    )
                 }
             )
             Spacer(modifier = Modifier.height(8.dp))
             HorizontalMovieListView(
                 movies = topRatedMovies,
-                title = stringResource(R.string.home_page_top_rated_title_text),
+                title = stringResource(R.string.top_rated_title_text),
                 onTap = {
-
+                    viewModel.navigateList(
+                        pagingType = MoviePagingType.TOP_RATED
+                    )
                 }
             )
             Spacer(

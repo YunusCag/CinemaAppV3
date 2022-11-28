@@ -1,4 +1,4 @@
-package com.yunuscagliyan.home.ui.pages.main
+package com.yunuscagliyan.home.home.ui.pages.main
 
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedContentScope
@@ -28,9 +28,7 @@ import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.yunuscagliyan.core.R
@@ -42,10 +40,10 @@ import com.yunuscagliyan.core_ui.components.main.MainUIFrame
 import com.yunuscagliyan.core_ui.components.ripple.NoRippleInteractionSource
 import com.yunuscagliyan.core_ui.navigation.CoreScreen
 import com.yunuscagliyan.core_ui.theme.CinemaAppTheme
-import com.yunuscagliyan.home.ui.pages.favourite.FavouriteScreen
-import com.yunuscagliyan.home.ui.pages.home.HomeScreen
-import com.yunuscagliyan.home.ui.pages.settings.SettingsScreen
-import com.yunuscagliyan.home.viewmodel.main.MainViewModel
+import com.yunuscagliyan.home.home.ui.pages.favourite.FavouriteScreen
+import com.yunuscagliyan.home.home.ui.pages.home.HomeScreen
+import com.yunuscagliyan.home.home.ui.pages.settings.SettingsScreen
+import com.yunuscagliyan.home.home.viewmodel.main.MainViewModel
 
 object MainScreen : CoreScreen<MainViewModel>() {
     override val route: String
