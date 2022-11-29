@@ -7,6 +7,7 @@ object Compose {
     private const val activityComposeVersion = "1.4.0"
     private const val lifecycleVersion = "2.4.0"
     private const val pagingVersion="1.0.0-alpha17"
+    private const val constraintLayoutVersion="1.0.1"
 
     const val ui = "androidx.compose.ui:ui:$composeVersion"
     const val uiToolingPreview="androidx.compose.ui:ui-tooling-preview:$composeVersion"
@@ -18,6 +19,7 @@ object Compose {
     const val activityCompose = "androidx.activity:activity-compose:$activityComposeVersion"
     const val viewModelCompose = "androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycleVersion"
     const val paging="androidx.paging:paging-compose:$pagingVersion"
+    const val constraintLayout="androidx.constraintlayout:constraintlayout-compose:$constraintLayoutVersion"
     const val composeUnitTest="androidx.compose.ui:ui-test-junit4:$composeUITooling"
     const val composeDebugTest="androidx.compose.ui:ui-tooling:$composeUITooling"
     const val composeDebugTestManifest="androidx.compose.ui:ui-test-manifest:$composeUITooling"

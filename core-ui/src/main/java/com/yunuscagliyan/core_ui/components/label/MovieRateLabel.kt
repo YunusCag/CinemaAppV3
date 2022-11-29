@@ -24,8 +24,8 @@ fun MovieRateLabel(
 ) {
     Box(
         modifier = modifier
-            .padding(horizontal = 8.dp, vertical = 4.dp)
-            .background(yellow700.copy(alpha = 0.8f), shape = RoundedCornerShape(4.dp)),
+            .background(CinemaAppTheme.colors.accent.copy(alpha = 0.8f), shape = CinemaAppTheme.shapes.defaultSmallShape)
+            .padding(horizontal = 4.dp, vertical = 2.dp),
         contentAlignment = Alignment.Center,
     ) {
         Text(

@@ -29,6 +29,7 @@ dependencies {
     implementation Compose.viewModelCompose
     implementation Compose.activityCompose
     implementation Compose.paging
+    implementation Compose.constraintLayout
 
     implementation Coil.coilCompose
     implementation Google.accompanistPager

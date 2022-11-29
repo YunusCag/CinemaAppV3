@@ -44,6 +44,8 @@ private val DarkColorPalette = CinemaAppColors(
     blackColor = AppCustomDarkColors.colorBlack,
     background = AppCustomDarkColors.colorBackground,
     textPrimary = AppCustomDarkColors.colorTextPrimary,
+    secondaryGray = AppCustomDarkColors.colorSecondaryGray,
+    card = AppCustomDarkColors.colorCard,
     isDark = true
 )
 
@@ -56,6 +58,8 @@ private val LightColorPalette = CinemaAppColors(
     blackColor = AppCustomLightColors.colorBlack,
     background = AppCustomLightColors.colorBackground,
     textPrimary = AppCustomLightColors.colorTextPrimary,
+    secondaryGray = AppCustomLightColors.colorSecondaryGray,
+    card = AppCustomLightColors.colorCard,
     isDark = false
 )
 
@@ -78,7 +82,7 @@ fun CinemaAppTheme(
         darkIcons = false
     )
     systemUiController.setNavigationBarColor(
-        color =colors.background,
+        color = colors.background,
         darkIcons = !darkTheme
     )
 

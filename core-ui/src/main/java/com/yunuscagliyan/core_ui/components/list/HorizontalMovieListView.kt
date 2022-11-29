@@ -156,7 +156,11 @@ private fun MovieSmallCard(
                     .fillMaxSize()
                     .background(Color.Transparent)
             ) {
-                MovieRateLabel(voteAverage = movie?.voteAverage)
+                MovieRateLabel(
+                    voteAverage = movie?.voteAverage,
+                    modifier = Modifier
+                        .padding(vertical = 4.dp, horizontal = 8.dp),
+                )
             }
 
         }

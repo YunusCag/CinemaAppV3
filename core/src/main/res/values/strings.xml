@@ -3,6 +3,7 @@
     <string name="common_http_error">Beklenmeyen bir hata oldu.</string>
     <string name="common_no_connection">Servera bağlanılamadı. Lütfen internet bağlantınızı kontrol ediniz.</string>
 
+    <string name="common_back_button_description">Geri</string>
     <!--Home Page-->
     <string name="home_page_top_bar_title">Anasayfa</string>
     <string name="up_coming_movie_text">Yakında Sinemalarda</string>

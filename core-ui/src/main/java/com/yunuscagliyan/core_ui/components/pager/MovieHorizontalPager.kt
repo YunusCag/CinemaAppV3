@@ -91,7 +91,7 @@ fun MovieHorizontalPager(
                     delay(HOME_AUTO_SCROLL_DURATION.toLong())
                     if (pagerState.pageCount > pagerState.currentPage) {
                         pagerState.animateScrollToPage(
-                            page = (pagerState.currentPage + 1) % (pagerState.pageCount)
+                            page = (pagerState.currentPage + 1) % (pagerState.pageCount),
                         )
                     }
                 }
@@ -100,13 +100,16 @@ fun MovieHorizontalPager(
                 count = lazyMovieItems.itemCount,
                 state = pagerState,
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
+                contentPadding = PaddingValues(
+                    horizontal = 8.dp
+                )
 
             ) { index ->
                 val movie = lazyMovieItems[index]
                 MovieHorizontalPage(
                     movie = movie,
-                    pageOffset = calculateCurrentOffsetForPage(index).absoluteValue
+                    pageOffset = calculateCurrentOffsetForPage(index).absoluteValue,
                 )
             }
 
@@ -169,17 +172,16 @@ private fun MovieHorizontalPage(
             .graphicsLayer {
                 // We animate the scaleX + scaleY, between 85% and 100%
                 lerp(
-                    start = ScaleFactor(0.70f, 0.70f),
+                    start = ScaleFactor(0.65f, 0.85f),
                     stop = ScaleFactor(1f, 1f),
                     fraction = 1f - pageOffset.coerceIn(0f, 1f)
                 ).also { scale ->
                     scaleX = scale.scaleX
                     scaleY = scale.scaleX
                 }
-            }
-            .fillMaxSize()
-            .padding(horizontal = 8.dp),
-        elevation = 4.dp,
+                alpha =  1f - pageOffset.coerceIn(0f, 1f)
+            },
+        elevation = 0.dp,
         shape = CinemaAppTheme.shapes.defaultMediumShape,
         backgroundColor = Color.Unspecified,
     ) {

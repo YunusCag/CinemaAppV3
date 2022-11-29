@@ -8,6 +8,7 @@ import androidx.paging.cachedIn
 import com.yunuscagliyan.core.data.remote.model.movie.MovieModel
 import com.yunuscagliyan.core.util.Constants.NavigationArgumentKey.LIST_TYPE_KEY
 import com.yunuscagliyan.core_ui.viewmodel.CoreViewModel
+import com.yunuscagliyan.home.data.enum.MovieListGridColumn
 import com.yunuscagliyan.home.data.enum.MoviePagingType
 import com.yunuscagliyan.home.domain.GetMovieListByType
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -39,5 +40,11 @@ class MovieListViewModel @Inject constructor(
         movies = getMovieListByType(
             type = listType
         ).cachedIn(viewModelScope)
+    }
+
+    fun changeColumnCount(column: MovieListGridColumn) {
+        state.value = state.value.copy(
+            columnCount = column
+        )
     }
 }

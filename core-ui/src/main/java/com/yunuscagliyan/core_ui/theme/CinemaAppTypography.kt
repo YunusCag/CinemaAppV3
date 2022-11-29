@@ -14,7 +14,7 @@ import com.yunuscagliyan.core.R
 data class CinemaAppTypography(
     val materialTypography: Typography
 ) {
-    val headline: TextStyle
+    val headline1: TextStyle
         @Composable
         get() {
             return TextStyle(
@@ -22,6 +22,16 @@ data class CinemaAppTypography(
                 fontWeight = FontWeight.Bold,
                 fontSize = 22.sp,
                 lineHeight = 32.sp,
+            )
+        }
+    val headline2: TextStyle
+        @Composable
+        get() {
+            return TextStyle(
+                fontFamily = CinemaAppFontFamily.OpenSans,
+                fontWeight = FontWeight.SemiBold,
+                fontSize = 20.sp,
+                lineHeight = 28.sp,
             )
         }
 
@@ -35,6 +45,7 @@ data class CinemaAppTypography(
                 lineHeight = 26.sp,
             )
         }
+
     val subTitle: TextStyle
         @Composable
         get() {
