@@ -3,7 +3,6 @@ package com.yunuscagliyan.core_ui.components.label
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -15,7 +14,6 @@ import androidx.compose.ui.unit.dp
 import com.yunuscagliyan.core.util.Constants.DoubleFormatterUtil.DECIMAL_ONE
 import com.yunuscagliyan.core.util.Constants.StringParameter.RATE_LABEL
 import com.yunuscagliyan.core_ui.theme.CinemaAppTheme
-import com.yunuscagliyan.core_ui.theme.yellow700
 
 @Composable
 fun MovieRateLabel(

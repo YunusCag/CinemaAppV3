@@ -17,6 +17,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.PagingData
+import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.yunuscagliyan.core.data.remote.model.movie.MovieModel
 import com.yunuscagliyan.core.util.Constants.StringParameter.EMPTY_STRING
@@ -34,12 +35,12 @@ import kotlinx.coroutines.flow.Flow
 @Composable
 fun MovieGridView(
     modifier: Modifier = Modifier,
-    moviesFlow: Flow<PagingData<MovieModel>>,
+    movies: LazyPagingItems<MovieModel>,
     column: MovieListGridColumn,
     onMovieTap: (MovieModel?) -> Unit
 ) {
-    val movies = moviesFlow.collectAsLazyPagingItems()
-    Column {
+    Column(
+    ) {
         LazyVerticalStaggeredGrid(
             columns = StaggeredGridCells.Fixed(column.columnCount),
             modifier = modifier,
@@ -63,16 +64,23 @@ fun MovieGridView(
         movies.apply {
             when {
                 loadState.refresh is LoadState.Loading -> {
+                    val isSingleItem = column == MovieListGridColumn.SINGLE_ITEM
                     LazyVerticalStaggeredGrid(
-                        columns = StaggeredGridCells.Adaptive(minSize = 150.dp),
-                        modifier = modifier,
+                        columns = StaggeredGridCells.Fixed(column.columnCount),
+                        modifier = Modifier.fillMaxSize(),
+                        verticalArrangement = Arrangement.spacedBy(if (isSingleItem) 12.dp else 0.dp),
+                        horizontalArrangement = Arrangement.spacedBy(if (isSingleItem) 8.dp else 0.dp),
                     ) {
                         items(30) {
                             AnimatedShimmer {
                                 Box(
                                     modifier = Modifier
+                                        .fillMaxWidth()
                                         .heightIn(min = 150.dp)
-                                        .background(it),
+                                        .background(
+                                            it,
+                                            shape = if (isSingleItem) CinemaAppTheme.shapes.defaultSmallShape else CinemaAppTheme.shapes.nonShape
+                                        ),
                                 )
                             }
                         }

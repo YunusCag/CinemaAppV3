@@ -1,13 +1,12 @@
 package com.yunuscagliyan.home.movie_list.ui
 
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -17,6 +16,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.yunuscagliyan.core.navigation.RootScreenRoute
 import com.yunuscagliyan.core_ui.components.header.SimpleTopBar
 import com.yunuscagliyan.core_ui.components.main.MainUIFrame
@@ -27,8 +27,10 @@ import com.yunuscagliyan.core_ui.components.ripple.NoRippleInteractionSource
 import com.yunuscagliyan.core_ui.theme.CinemaAppTheme
 import com.yunuscagliyan.home.data.enum.MovieListGridColumn
 import com.yunuscagliyan.home.data.enum.MoviePagingType
+import com.yunuscagliyan.home.movie_list.ui.components.GenreListRow
 import com.yunuscagliyan.home.movie_list.ui.components.MovieGridView
 import com.yunuscagliyan.home.movie_list.viewmodel.MovieListViewModel
+import timber.log.Timber
 
 
 object MovieListScreen : CoreScreen<MovieListViewModel>() {
@@ -50,8 +52,11 @@ object MovieListScreen : CoreScreen<MovieListViewModel>() {
     @Composable
     override fun Content(viewModel: MovieListViewModel) {
         val state by viewModel.state
-        val movies = viewModel.movies
-
+        val movies = viewModel.movies.collectAsLazyPagingItems()
+        LaunchedEffect(key1 = state.genreList) {
+            Timber.e("TTT Refresh called.")
+            movies.refresh()
+        }
 
         MainUIFrame(
             topBar = {
@@ -63,13 +68,29 @@ object MovieListScreen : CoreScreen<MovieListViewModel>() {
                 )
             }
         ) {
-            MovieGridView(
+            Column(
                 modifier = Modifier
-                    .fillMaxSize(),
-                moviesFlow = movies,
-                column = state.columnCount
-            ) { movie ->
+                    .fillMaxSize()
+                    .padding()
+                    .navigationBarsPadding()
+            ) {
+                Spacer(modifier = Modifier.height(8.dp))
+                GenreListRow(
+                    genres = state.genreList,
+                    selectedIds = state.selectedGenreIds,
+                    onSelected = { genre, isSelected ->
+                        viewModel.onGenreClick(genre, isSelected)
+                    }
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                MovieGridView(
+                    modifier = Modifier
+                        .weight(1f),
+                    movies = movies,
+                    column = state.columnCount
+                ) { movie ->
 
+                }
             }
         }
     }

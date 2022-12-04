@@ -1,6 +1,8 @@
 package com.yunuscagliyan.home.data.source
 
+import androidx.paging.PagingState
 import com.yunuscagliyan.core.data.paging.BaseMovieDataSource
+import com.yunuscagliyan.core.data.remote.model.movie.MovieModel
 import com.yunuscagliyan.core.data.remote.response.MovieListResponse
 import com.yunuscagliyan.home.data.enum.MoviePagingType
 import com.yunuscagliyan.home.service.HomeService
@@ -44,5 +46,4 @@ class MovieDataSource(
             )
         }
     }
-
 }

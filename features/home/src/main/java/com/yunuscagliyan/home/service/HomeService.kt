@@ -1,7 +1,9 @@
 package com.yunuscagliyan.home.service
 
+import com.yunuscagliyan.core.data.remote.response.GenreListResponse
 import com.yunuscagliyan.core.data.remote.response.MovieListResponse
 import com.yunuscagliyan.core.util.Constants
+import com.yunuscagliyan.core.util.Constants.NetworkUtil.GENRE_LIST_MOVIES_URL
 import com.yunuscagliyan.core.util.Constants.NetworkUtil.POPULAR_MOVIES_URL
 import com.yunuscagliyan.core.util.Constants.NetworkUtil.TOP_RATED_MOVIES_URL
 import com.yunuscagliyan.core.util.Constants.NetworkUtil.TRENDING_MOVIES_URL
@@ -41,4 +43,11 @@ interface HomeService {
         @Query(Constants.NetworkQueryParamKey.region) region: String?,
         @Query(Constants.NetworkQueryParamKey.withGenres) genreIds: List<Int>?,
     ): MovieListResponse
+
+    @GET(GENRE_LIST_MOVIES_URL)
+    suspend fun getMovieGenreList(
+        @Query(Constants.NetworkQueryParamKey.language) lang: String
+    ): GenreListResponse
+
+
 }

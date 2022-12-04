@@ -20,6 +20,7 @@ object Constants {
         const val TRANSITION_DURATION = 500
         const val SPLASH_DURATION = 4000
         const val HOME_AUTO_SCROLL_DURATION = 8000
+        const val DEFAULT_ANIMATION_DURATION = 100
     }
 
     object NetworkUtil {
@@ -27,6 +28,7 @@ object Constants {
         const val POPULAR_MOVIES_URL = "movie/popular"
         const val TRENDING_MOVIES_URL = "trending/movie/day"
         const val TOP_RATED_MOVIES_URL = "movie/top_rated"
+        const val GENRE_LIST_MOVIES_URL = "genre/movie/list"
     }
 
     object NetworkQueryParamKey {
@@ -34,6 +36,13 @@ object Constants {
         const val language = "language"
         const val region = "region"
         const val withGenres = "with_genres"
+    }
+
+    object LanguageUtil {
+        const val EN_US = "en-US"//USA
+        const val TR_TR = "tr-TR"//Turkey
+        const val JA_JR = "ja-JR"//Japanese
+
     }
 
     object PaginationUtil {
