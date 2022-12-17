@@ -1,13 +1,12 @@
 package com.yunuscagliyan.core_ui.components.list
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowRight
@@ -37,10 +36,11 @@ import kotlinx.coroutines.flow.Flow
 @ExperimentalCoilApi
 @Composable
 fun HorizontalMovieListView(
+    modifier: Modifier = Modifier,
     movies: Flow<PagingData<MovieModel>>,
     title: String,
-    onTap: () -> Unit,
-    modifier: Modifier = Modifier
+    onMovieTap: (MovieModel?) -> Unit,
+    onListTap: () -> Unit,
 ) {
     val lazyMovieItems: LazyPagingItems<MovieModel> = movies.collectAsLazyPagingItems()
 
@@ -51,7 +51,7 @@ fun HorizontalMovieListView(
             modifier = Modifier
                 .fillMaxWidth()
                 .noRippleClickable {
-                    onTap()
+                    onListTap()
                 }
                 .padding(horizontal = 8.dp, vertical = 12.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -82,7 +82,10 @@ fun HorizontalMovieListView(
                 items(lazyMovieItems.itemCount) { index ->
                     val movie = lazyMovieItems[index]
                     MovieSmallCard(
-                        movie = movie
+                        movie = movie,
+                        onTap = {
+                            onMovieTap(movie)
+                        }
                     )
                 }
             }
@@ -125,10 +128,12 @@ fun HorizontalMovieListView(
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @ExperimentalCoilApi
 @Composable
 private fun MovieSmallCard(
     movie: MovieModel?,
+    onTap: () -> Unit
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -142,7 +147,8 @@ private fun MovieSmallCard(
                 .height(150.dp),
             shape = CinemaAppTheme.shapes.defaultSmallShape,
             backgroundColor = Color.Unspecified,
-            elevation = 0.dp
+            elevation = 0.dp,
+            onClick = onTap
         ) {
             AppImage(
                 modifier = Modifier.fillMaxSize(),

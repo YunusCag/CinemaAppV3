@@ -87,10 +87,9 @@ object MovieListScreen : CoreScreen<MovieListViewModel>() {
                     modifier = Modifier
                         .weight(1f),
                     movies = movies,
-                    column = state.columnCount
-                ) { movie ->
-
-                }
+                    column = state.columnCount,
+                    onMovieTap = viewModel::onMovieTap
+                )
             }
         }
     }

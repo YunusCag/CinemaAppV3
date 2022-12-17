@@ -74,6 +74,7 @@ dependencies {
     api project(Modules.splash)
     api project(Modules.onBoarding)
     api project(Modules.home)
+    api project(Modules.movieDetail)
 
 
     testImplementation(Testing.junit4)

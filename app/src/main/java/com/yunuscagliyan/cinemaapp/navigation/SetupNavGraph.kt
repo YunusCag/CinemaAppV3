@@ -13,6 +13,7 @@ import com.yunuscagliyan.core.util.Constants.DurationUTil.TRANSITION_DURATION
 import com.yunuscagliyan.core_ui.navigation.NavigationAnimDirection
 import com.yunuscagliyan.home.home.ui.pages.main.MainScreen
 import com.yunuscagliyan.home.movie_list.ui.MovieListScreen
+import com.yunuscagliyan.movie_detail.ui.MovieDetailScreen
 import com.yunuscagliyan.on_boarding.ui.OnBoardingScreen
 import com.yunuscagliyan.splash.ui.SplashScreen
 
@@ -60,6 +61,10 @@ fun SetupNavGraph(navController: NavHostController) {
             navController,
         )
         MovieListScreen.composable(
+            this,
+            navController
+        )
+        MovieDetailScreen.composable(
             this,
             navController
         )

@@ -45,4 +45,16 @@ class HomeViewModel @Inject constructor(
             )
         )
     }
+
+    fun onMovieTap(movieModel: MovieModel?) {
+        movieModel?.id?.let { id ->
+            sendEvent(
+                CoreEvent.Navigation(
+                    Routes.NavigateToRoute(
+                        pageRoute = RootScreenRoute.MovieDetail.navigate(id)
+                    )
+                )
+            )
+        }
+    }
 }

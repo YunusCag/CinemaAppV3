@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -51,7 +52,8 @@ fun MovieHorizontalPager(
     movies: Flow<PagingData<MovieModel>>,
     title: String = stringResource(id = R.string.up_coming_movie_text),
     modifier: Modifier = Modifier,
-    onTap: () -> Unit,
+    onMovieTap: (MovieModel?) -> Unit,
+    onListTap: () -> Unit,
 ) {
     val lazyMovieItems: LazyPagingItems<MovieModel> = movies.collectAsLazyPagingItems()
 
@@ -63,7 +65,7 @@ fun MovieHorizontalPager(
             modifier = Modifier
                 .fillMaxWidth()
                 .noRippleClickable {
-                    onTap()
+                    onListTap()
                 }
                 .padding(horizontal = 8.dp, vertical = 8.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -110,6 +112,9 @@ fun MovieHorizontalPager(
                 MovieHorizontalPage(
                     movie = movie,
                     pageOffset = calculateCurrentOffsetForPage(index).absoluteValue,
+                    onTap = {
+                        onMovieTap(movie)
+                    }
                 )
             }
 
@@ -160,12 +165,14 @@ fun MovieHorizontalPager(
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @ExperimentalCoilApi
 @Composable
 private fun MovieHorizontalPage(
     movie: MovieModel?,
     modifier: Modifier = Modifier,
     pageOffset: Float,
+    onTap: () -> Unit,
 ) {
     Card(
         modifier = modifier
@@ -179,11 +186,12 @@ private fun MovieHorizontalPage(
                     scaleX = scale.scaleX
                     scaleY = scale.scaleX
                 }
-                alpha =  1f - pageOffset.coerceIn(0f, 1f)
+                alpha = 1f - pageOffset.coerceIn(0f, 1f)
             },
         elevation = 0.dp,
         shape = CinemaAppTheme.shapes.defaultMediumShape,
         backgroundColor = Color.Unspecified,
+        onClick = onTap
     ) {
         AppImage(
             modifier = Modifier.fillMaxSize(),

@@ -7,8 +7,11 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.yunuscagliyan.core.data.remote.model.genre.GenreModel
 import com.yunuscagliyan.core.data.remote.model.movie.MovieModel
+import com.yunuscagliyan.core.navigation.RootScreenRoute
 import com.yunuscagliyan.core.util.Constants.NavigationArgumentKey.LIST_TYPE_KEY
 import com.yunuscagliyan.core.util.Resource
+import com.yunuscagliyan.core_ui.event.CoreEvent
+import com.yunuscagliyan.core_ui.navigation.Routes
 import com.yunuscagliyan.core_ui.viewmodel.CoreViewModel
 import com.yunuscagliyan.home.data.enum.MovieListGridColumn
 import com.yunuscagliyan.home.data.enum.MoviePagingType
@@ -101,5 +104,17 @@ class MovieListViewModel @Inject constructor(
             selectedGenreIds = ids
         )
         getMovies()
+    }
+
+    fun onMovieTap(movieModel: MovieModel?) {
+        movieModel?.id?.let { id ->
+            sendEvent(
+                CoreEvent.Navigation(
+                    Routes.NavigateToRoute(
+                        pageRoute = RootScreenRoute.MovieDetail.navigate(id)
+                    )
+                )
+            )
+        }
     }
 }

@@ -29,6 +29,7 @@ object Constants {
         const val TRENDING_MOVIES_URL = "trending/movie/day"
         const val TOP_RATED_MOVIES_URL = "movie/top_rated"
         const val GENRE_LIST_MOVIES_URL = "genre/movie/list"
+        const val MOVIE_DETAIL_URL = "movie/{movie_id}"
     }
 
     object NetworkQueryParamKey {
@@ -36,6 +37,7 @@ object Constants {
         const val language = "language"
         const val region = "region"
         const val withGenres = "with_genres"
+        const val movieId = "movie_id"
     }
 
     object LanguageUtil {
@@ -51,5 +53,6 @@ object Constants {
 
     object NavigationArgumentKey {
         const val LIST_TYPE_KEY = "list_type"
+        const val MOVIE_ID_KEY = "movie_id"
     }
 }

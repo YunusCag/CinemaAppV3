@@ -43,7 +43,8 @@ object HomeScreen : CoreScreen<HomeViewModel>() {
         ) {
             MovieHorizontalPager(
                 movies = upComingMovies,
-                onTap = {
+                onMovieTap = viewModel::onMovieTap,
+                onListTap = {
                     viewModel.navigateList(
                         pagingType = MoviePagingType.UPCOMING
                     )
@@ -53,7 +54,8 @@ object HomeScreen : CoreScreen<HomeViewModel>() {
             HorizontalMovieListView(
                 movies = trendingMovies,
                 title = stringResource(R.string.trending_title_text),
-                onTap = {
+                onMovieTap = viewModel::onMovieTap,
+                onListTap = {
                     viewModel.navigateList(
                         pagingType = MoviePagingType.TRENDING
                     )
@@ -63,7 +65,8 @@ object HomeScreen : CoreScreen<HomeViewModel>() {
             HorizontalMovieListView(
                 movies = popularMovies,
                 title = stringResource(R.string.popular_title_text),
-                onTap = {
+                onMovieTap = viewModel::onMovieTap,
+                onListTap = {
                     viewModel.navigateList(
                         pagingType = MoviePagingType.POPULAR
                     )
@@ -73,7 +76,8 @@ object HomeScreen : CoreScreen<HomeViewModel>() {
             HorizontalMovieListView(
                 movies = topRatedMovies,
                 title = stringResource(R.string.top_rated_title_text),
-                onTap = {
+                onMovieTap = viewModel::onMovieTap,
+                onListTap = {
                     viewModel.navigateList(
                         pagingType = MoviePagingType.TOP_RATED
                     )

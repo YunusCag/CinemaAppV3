@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.material.Card
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -49,7 +50,10 @@ fun MovieGridView(
                 val movie = movies[index]
                 if (column == MovieListGridColumn.SINGLE_ITEM) {
                     MovieGridItemLarge(
-                        model = movie
+                        model = movie,
+                        onTap = {
+                            onMovieTap(movie)
+                        }
                     )
                 } else {
                     MovieGridItemSmall(
@@ -129,9 +133,11 @@ private fun MovieGridItemSmall(
     )
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MovieGridItemLarge(
-    model: MovieModel?
+    model: MovieModel?,
+    onTap: () -> Unit
 ) {
     val imageWidth = 140.dp
     Box(
@@ -152,7 +158,8 @@ fun MovieGridItemLarge(
                 .padding(top = 24.dp),
             shape = CinemaAppTheme.shapes.defaultSmallShape,
             backgroundColor = CinemaAppTheme.colors.card,
-            elevation = 4.dp
+            elevation = 4.dp,
+            onClick = onTap
         ) {
             Column(
                 modifier = Modifier

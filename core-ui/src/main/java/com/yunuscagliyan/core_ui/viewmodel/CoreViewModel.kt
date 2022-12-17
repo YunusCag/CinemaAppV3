@@ -1,5 +1,7 @@
 package com.yunuscagliyan.core_ui.viewmodel
 
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yunuscagliyan.core_ui.event.CoreEvent
@@ -29,5 +31,9 @@ open class CoreViewModel @Inject constructor(
                 Routes.PopBack
             )
         )
+    }
+
+    fun<T> setState(state: MutableState<T>, stateInvoke: T.() -> T) {
+        state.value = stateInvoke.invoke(state.value)
     }
 }
