@@ -16,4 +16,12 @@
 
     <!--- Settings Page -->
     <string name="settings_page_top_bar_title">Settings</string>
+
+    <!--- Movie Detail-->
+    <string name="movie_detail_country">Country :</string>
+    <string name="movie_detail_genre">Genre :</string>
+    <string name="movie_detail_budget">Budget :</string>
+    <string name="movie_detail_currency">$</string>
+    <string name="movie_detail_revenue">Revenue :</string>
+    <string name="movie_detail_release_date">Release Date :</string>
 </resources>

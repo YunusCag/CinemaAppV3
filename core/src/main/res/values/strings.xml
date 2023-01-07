@@ -16,4 +16,12 @@
 
     <!--- Settings Page -->
     <string name="settings_page_top_bar_title">Ayarlar</string>
+
+    <!--- Movie Detail-->
+    <string name="movie_detail_country">Ülke :</string>
+    <string name="movie_detail_genre">Tür :</string>
+    <string name="movie_detail_budget">Bütçe :</string>
+    <string name="movie_detail_currency">$</string>
+    <string name="movie_detail_revenue">Hasılat :</string>
+    <string name="movie_detail_release_date">Vizyon Tarihi :</string>
 </resources>

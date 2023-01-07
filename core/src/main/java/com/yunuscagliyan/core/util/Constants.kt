@@ -23,6 +23,11 @@ object Constants {
         const val DEFAULT_ANIMATION_DURATION = 100
     }
 
+    object DateFormatUtil{
+        const val yyyyMMdd="yyyy-MM-dd"
+        const val ddMMMMyyyy="dd MMMM yyyy"
+    }
+
     object NetworkUtil {
         const val UPCOMING_MOVIES_URL = "movie/upcoming"
         const val POPULAR_MOVIES_URL = "movie/popular"
