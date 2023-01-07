@@ -35,6 +35,7 @@ import com.yunuscagliyan.core_ui.components.header.SimpleTopBar
 import com.yunuscagliyan.core_ui.components.image.AppImage
 import com.yunuscagliyan.core_ui.components.main.MainUIFrame
 import com.yunuscagliyan.core_ui.components.ripple.NoRippleInteractionSource
+import com.yunuscagliyan.core_ui.components.shimmer.AnimatedShimmer
 import com.yunuscagliyan.core_ui.extension.formatDate
 import com.yunuscagliyan.core_ui.navigation.CoreScreen
 import com.yunuscagliyan.core_ui.theme.CinemaAppTheme
@@ -82,16 +83,23 @@ object MovieDetailScreen : CoreScreen<MovieDetailViewModel>() {
                         },
                     )
                     Spacer(modifier = Modifier.height(12.dp))
-                    TopSection(
-                        state = state
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    state.movieDetailResponse?.overview?.let { overview ->
-                        Overview(
-                            overview = overview
+                    if (state.movieDetailLoading) {
+                        TopSectionShimmer()
+                    } else {
+                        TopSection(
+                            state = state
                         )
                     }
-
+                    Spacer(modifier = Modifier.height(8.dp))
+                    if (state.movieDetailLoading) {
+                        OverviewShimmer()
+                    } else {
+                        state.movieDetailResponse?.overview?.let { overview ->
+                            Overview(
+                                overview = overview
+                            )
+                        }
+                    }
                 }
                 TopBar(
                     scrollValue = {
@@ -156,21 +164,85 @@ object MovieDetailScreen : CoreScreen<MovieDetailViewModel>() {
         scrollValue: () -> Int,
         scrollMaxValue: () -> Int,
     ) {
-        Box(
+        if (state.movieDetailLoading) {
+            AnimatedShimmer {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(250.dp)
+                        .background(it)
+                )
+
+            }
+        } else {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(250.dp)
+                    .graphicsLayer {
+                        alpha = 1f - ((scrollValue().toFloat() / scrollMaxValue()) * 1.5f)
+                        translationY = 0.5f * scrollValue()
+                    },
+            ) {
+                AppImage(
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    url = state.movieDetailResponse?.backdropPath,
+                    description = state.movieDetailResponse?.title,
+                    contentScale = ContentScale.Crop
+                )
+            }
+        }
+    }
+
+    @Composable
+    private fun TopSectionShimmer() {
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(250.dp)
-                .graphicsLayer {
-                    alpha = 1f - ((scrollValue().toFloat() / scrollMaxValue()) * 1.5f)
-                    translationY = 0.5f * scrollValue()
-                },
+                .padding(
+                    horizontal = 16.dp
+                )
         ) {
-            AppImage(
+            AnimatedShimmer { shimmerBrush ->
+                Box(
+                    modifier = Modifier
+                        .width(150.dp)
+                        .height(150.dp)
+                        .background(shimmerBrush, shape = CinemaAppTheme.shapes.medium),
+                )
+                Spacer(modifier = Modifier.width(12.dp))
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            horizontal = 16.dp
+                        )
+                ) {
+                    repeat(5) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(20.dp)
+                                .background(shimmerBrush, shape = CinemaAppTheme.shapes.small),
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                    }
+                }
+            }
+        }
+
+    }
+
+    @Composable
+    private fun OverviewShimmer() {
+        AnimatedShimmer { shimmerBrush ->
+            Box(
                 modifier = Modifier
-                    .fillMaxSize(),
-                url = state.movieDetailResponse?.backdropPath,
-                description = state.movieDetailResponse?.title,
-                contentScale = ContentScale.Crop
+                    .fillMaxWidth()
+                    .height(150.dp)
+                    .padding(horizontal = 16.dp)
+                    .background(shimmerBrush, shape = CinemaAppTheme.shapes.small),
             )
         }
     }
