@@ -1,7 +1,9 @@
 package com.yunuscagliyan.movie_detail.service
 
+import com.yunuscagliyan.core.data.remote.response.CastCrewResponse
 import com.yunuscagliyan.core.data.remote.response.MovieDetailResponse
 import com.yunuscagliyan.core.util.Constants
+import com.yunuscagliyan.core.util.Constants.NetworkUtil.MOVIE_CREDIT_URL
 import com.yunuscagliyan.core.util.Constants.NetworkUtil.MOVIE_DETAIL_URL
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -14,5 +16,11 @@ interface MovieDetailService {
         @Path(Constants.NetworkQueryParamKey.movieId) movieId: Int,
         @Query(Constants.NetworkQueryParamKey.language) language: String
     ): MovieDetailResponse
+
+    @GET(MOVIE_CREDIT_URL)
+    suspend fun getMovieCastCrew(
+        @Path(Constants.NetworkQueryParamKey.movieId) movieId: Int,
+        @Query(Constants.NetworkQueryParamKey.language) language: String
+    ): CastCrewResponse
 
 }

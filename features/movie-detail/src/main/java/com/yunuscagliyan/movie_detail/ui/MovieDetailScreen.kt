@@ -1,7 +1,9 @@
 package com.yunuscagliyan.movie_detail.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Card
@@ -26,7 +28,9 @@ import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import com.yunuscagliyan.core.R
+import com.yunuscagliyan.core.data.remote.model.cast.CastModel
 import com.yunuscagliyan.core.data.remote.model.country.ProductionCountryModel
+import com.yunuscagliyan.core.data.remote.model.crew.CrewModel
 import com.yunuscagliyan.core.data.remote.model.genre.GenreModel
 import com.yunuscagliyan.core.navigation.RootScreenRoute
 import com.yunuscagliyan.core.util.Constants.NavigationArgumentKey.MOVIE_ID_KEY
@@ -39,6 +43,7 @@ import com.yunuscagliyan.core_ui.components.shimmer.AnimatedShimmer
 import com.yunuscagliyan.core_ui.extension.formatDate
 import com.yunuscagliyan.core_ui.navigation.CoreScreen
 import com.yunuscagliyan.core_ui.theme.CinemaAppTheme
+import com.yunuscagliyan.movie_detail.ui.components.*
 import com.yunuscagliyan.movie_detail.viewmodel.MovieDetailState
 import com.yunuscagliyan.movie_detail.viewmodel.MovieDetailViewModel
 import java.lang.Float.min
@@ -100,6 +105,17 @@ object MovieDetailScreen : CoreScreen<MovieDetailViewModel>() {
                             )
                         }
                     }
+                    Cast(
+                        isLoading = state.castLoading,
+                        cast = state.cast,
+                        viewModel = viewModel
+                    )
+                    Spacer(modifier = Modifier.height(12.dp))
+                    Crew(
+                        isLoading = state.castLoading,
+                        crew = state.crew
+                    )
+                    Spacer(modifier = Modifier.height(32.dp))
                 }
                 TopBar(
                     scrollValue = {
@@ -159,287 +175,121 @@ object MovieDetailScreen : CoreScreen<MovieDetailViewModel>() {
     }
 
     @Composable
-    private fun ParallaxHeader(
-        state: MovieDetailState,
-        scrollValue: () -> Int,
-        scrollMaxValue: () -> Int,
+    private fun Cast(
+        cast: List<CastModel>,
+        isLoading: Boolean,
+        viewModel: MovieDetailViewModel
     ) {
-        if (state.movieDetailLoading) {
-            AnimatedShimmer {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(250.dp)
-                        .background(it)
-                )
-
-            }
-        } else {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(250.dp)
-                    .graphicsLayer {
-                        alpha = 1f - ((scrollValue().toFloat() / scrollMaxValue()) * 1.5f)
-                        translationY = 0.5f * scrollValue()
-                    },
-            ) {
-                AppImage(
-                    modifier = Modifier
-                        .fillMaxSize(),
-                    url = state.movieDetailResponse?.backdropPath,
-                    description = state.movieDetailResponse?.title,
-                    contentScale = ContentScale.Crop
-                )
-            }
-        }
-    }
-
-    @Composable
-    private fun TopSectionShimmer() {
-        Row(
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(
-                    horizontal = 16.dp
-                )
         ) {
-            AnimatedShimmer { shimmerBrush ->
-                Box(
-                    modifier = Modifier
-                        .width(150.dp)
-                        .height(150.dp)
-                        .background(shimmerBrush, shape = CinemaAppTheme.shapes.medium),
-                )
-                Spacer(modifier = Modifier.width(12.dp))
-                Column(
+            Spacer(modifier = Modifier.height(12.dp))
+            Text(
+                text = stringResource(id = R.string.movie_detail_cast),
+                style = CinemaAppTheme.typography.normalText,
+                color = CinemaAppTheme.colors.secondary,
+                modifier = Modifier
+                    .padding(
+                        horizontal = 16.dp
+                    )
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            if (isLoading) {
+                Row(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(
-                            horizontal = 16.dp
+                            start = 16.dp
                         )
+                        .horizontalScroll(rememberScrollState()),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    repeat(5) {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(20.dp)
-                                .background(shimmerBrush, shape = CinemaAppTheme.shapes.small),
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
+                    repeat(10) {
+                        ProfileShimmer()
+                    }
+                }
+            } else {
+                LazyRow(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(250.dp),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    contentPadding = PaddingValues(
+                        start = 16.dp
+                    )
+                ) {
+                    items(cast.size) { index ->
+                        val castModel = cast[index]
+                        ProfileView(
+                            profilePath = castModel.profilePath,
+                            title = castModel.name,
+                            description = castModel.character
+                        ) {
+                            viewModel.onCastClick(castModel)
+                        }
                     }
                 }
             }
         }
-
     }
 
     @Composable
-    private fun OverviewShimmer() {
-        AnimatedShimmer { shimmerBrush ->
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(150.dp)
-                    .padding(horizontal = 16.dp)
-                    .background(shimmerBrush, shape = CinemaAppTheme.shapes.small),
-            )
-        }
-    }
-
-    @Composable
-    private fun TopSection(
-        state: MovieDetailState
+    private fun Crew(
+        crew: List<CrewModel>,
+        isLoading: Boolean
     ) {
-        Row(
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(IntrinsicSize.Min)
-                .padding(
-                    horizontal = 16.dp
-                )
         ) {
-            Card(
+            Spacer(modifier = Modifier.height(12.dp))
+            Text(
+                text = stringResource(id = R.string.movie_detail_crew),
+                style = CinemaAppTheme.typography.normalText,
+                color = CinemaAppTheme.colors.secondary,
                 modifier = Modifier
-                    .width(150.dp)
-                    .fillMaxHeight(),
-                shape = CinemaAppTheme.shapes.medium,
-            ) {
-                AppImage(
-                    modifier = Modifier.fillMaxSize(),
-                    url = state.movieDetailResponse?.posterPath,
-                    description = state.movieDetailResponse?.title
-                )
-            }
-            Spacer(modifier = Modifier.width(12.dp))
-            Column {
-                Text(
-                    text = state.movieDetailResponse?.title ?: EMPTY_STRING,
-                    style = CinemaAppTheme.typography.subTitle,
-                    color = CinemaAppTheme.colors.textPrimary
-                )
-                Spacer(modifier = Modifier.height(2.dp))
-                Text(
-                    text = state.movieDetailResponse?.originalTitle ?: EMPTY_STRING,
-                    style = CinemaAppTheme.typography.smallText1,
-                    color = CinemaAppTheme.colors.secondaryGray
-                )
-                state.movieDetailResponse?.productionCountries?.let { countries ->
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Label(
-                            label = stringResource(id = R.string.movie_detail_country)
+                    .padding(
+                        horizontal = 16.dp
+                    )
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            if (isLoading) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            start = 16.dp
                         )
-                        Spacer(modifier = Modifier.width(4.dp))
-                        Text(
-                            text = getCountriesListText(countries),
-                            style = CinemaAppTheme.typography.smallText2,
-                            color = CinemaAppTheme.colors.textPrimary
-                        )
+                        .horizontalScroll(rememberScrollState()),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    repeat(10) {
+                        ProfileShimmer()
                     }
                 }
-                state.movieDetailResponse?.genres?.let { genres ->
-                    Spacer(modifier = Modifier.height(4.dp))
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Label(
-                            label = stringResource(id = R.string.movie_detail_genre)
-                        )
-                        Spacer(modifier = Modifier.width(4.dp))
-                        Text(
-                            text = getGenreListText(genres),
-                            style = CinemaAppTheme.typography.smallText2,
-                            color = CinemaAppTheme.colors.textPrimary
-                        )
-                    }
-                }
-                state.movieDetailResponse?.budget?.let { budget ->
-                    if (budget > 0) {
-                        Spacer(modifier = Modifier.height(4.dp))
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically
+            } else {
+                LazyRow(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(250.dp),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    contentPadding = PaddingValues(
+                        start = 16.dp
+                    )
+                ) {
+                    items(crew.size) { index ->
+                        val crewModel = crew[index]
+                        ProfileView(
+                            profilePath = crewModel.profilePath,
+                            title = crewModel.name,
+                            description = crewModel.job
                         ) {
-                            Label(
-                                label = stringResource(id = R.string.movie_detail_budget)
-                            )
-                            Spacer(modifier = Modifier.width(4.dp))
-                            Text(
-                                text = "${
-                                    NumberFormat.getInstance(Locale.getDefault()).format(budget)
-                                } ${
-                                    stringResource(
-                                        id = R.string.movie_detail_currency
-                                    )
-                                }",
-                                style = CinemaAppTheme.typography.smallText2,
-                                color = CinemaAppTheme.colors.textPrimary
-                            )
+
                         }
                     }
                 }
-                state.movieDetailResponse?.revenue?.let { revenue ->
-                    if (revenue > 0) {
-                        Spacer(modifier = Modifier.height(4.dp))
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Label(
-                                label = stringResource(id = R.string.movie_detail_revenue)
-                            )
-                            Spacer(modifier = Modifier.width(4.dp))
-                            Text(
-                                text = "${
-                                    NumberFormat.getInstance(Locale.getDefault()).format(revenue)
-                                } ${
-                                    stringResource(
-                                        id = R.string.movie_detail_currency
-                                    )
-                                }",
-                                style = CinemaAppTheme.typography.smallText2,
-                                color = CinemaAppTheme.colors.textPrimary
-                            )
-                        }
-                    }
-                }
-                state.movieDetailResponse?.releaseDate?.let { releaseDate ->
-                    Spacer(modifier = Modifier.height(4.dp))
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Label(
-                            label = stringResource(id = R.string.movie_detail_release_date)
-                        )
-                        Spacer(modifier = Modifier.width(4.dp))
-                        Text(
-                            text = releaseDate.formatDate() ?: EMPTY_STRING,
-                            style = CinemaAppTheme.typography.smallText2,
-                            color = CinemaAppTheme.colors.textPrimary
-                        )
-                    }
-                }
             }
         }
-    }
-
-    @Composable
-    private fun Label(
-        label: String
-    ) {
-        Text(
-            text = label,
-            style = CinemaAppTheme.typography.smallText1,
-            color = CinemaAppTheme.colors.secondary
-        )
-    }
-
-    @Composable
-    fun Overview(
-        overview: String
-    ) {
-        Text(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            text = overview,
-            style = CinemaAppTheme.typography.normalText,
-            color = CinemaAppTheme.colors.textPrimary,
-            textAlign = TextAlign.Justify
-        )
-    }
-
-    private fun getGenreListText(
-        genres: List<GenreModel>?
-    ): String {
-        var text = EMPTY_STRING
-        genres?.forEachIndexed { index, genreModel ->
-            text += if (genres.size - 1 == index) {
-                genreModel.name ?: EMPTY_STRING
-            } else {
-                "${genreModel.name ?: EMPTY_STRING}, "
-            }
-        }
-        return text
-    }
-
-    private fun getCountriesListText(
-        genres: List<ProductionCountryModel>?
-    ): String {
-        var text = EMPTY_STRING
-        genres?.forEachIndexed { index, country ->
-            text += if (genres.size - 1 == index) {
-                country.name ?: EMPTY_STRING
-            } else {
-                "${country.name ?: EMPTY_STRING} | "
-            }
-        }
-        return text
     }
 }

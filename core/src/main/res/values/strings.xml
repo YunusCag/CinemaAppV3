@@ -24,4 +24,6 @@
     <string name="movie_detail_currency">$</string>
     <string name="movie_detail_revenue">Hasılat :</string>
     <string name="movie_detail_release_date">Vizyon Tarihi :</string>
+    <string name="movie_detail_cast">Oyuncular</string>
+    <string name="movie_detail_crew">Prodüksiyon</string>
 </resources>
