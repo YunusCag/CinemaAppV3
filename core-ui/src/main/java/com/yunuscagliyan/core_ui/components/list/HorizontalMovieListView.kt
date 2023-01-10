@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -39,8 +40,16 @@ fun HorizontalMovieListView(
     modifier: Modifier = Modifier,
     movies: Flow<PagingData<MovieModel>>,
     title: String,
+    titleTextStyle: TextStyle = CinemaAppTheme.typography.title,
+    titleColor: Color = CinemaAppTheme.colors.textPrimary,
+    titlePadding: PaddingValues = PaddingValues(
+        horizontal = 8.dp, vertical = 12.dp
+    ),
+    listPadding: PaddingValues = PaddingValues(
+        start = 8.dp
+    ),
     onMovieTap: (MovieModel?) -> Unit,
-    onListTap: () -> Unit,
+    onListTap: (() -> Unit)? = null,
 ) {
     val lazyMovieItems: LazyPagingItems<MovieModel> = movies.collectAsLazyPagingItems()
 
@@ -51,24 +60,28 @@ fun HorizontalMovieListView(
             modifier = Modifier
                 .fillMaxWidth()
                 .noRippleClickable {
-                    onListTap()
+                    onListTap?.invoke()
                 }
-                .padding(horizontal = 8.dp, vertical = 12.dp),
+                .padding(
+                    titlePadding
+                ),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
                 text = title,
-                style = CinemaAppTheme.typography.title,
-                color = CinemaAppTheme.colors.textPrimary
+                style = titleTextStyle,
+                color = titleColor
             )
-            Icon(
-                Icons.Default.KeyboardArrowRight,
-                contentDescription = null,
-                modifier = Modifier
-                    .size(24.dp),
-                tint = CinemaAppTheme.colors.textPrimary
-            )
+            if (onListTap != null) {
+                Icon(
+                    Icons.Default.KeyboardArrowRight,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(24.dp),
+                    tint = CinemaAppTheme.colors.textPrimary
+                )
+            }
         }
         Row(
             modifier = modifier
@@ -76,8 +89,7 @@ fun HorizontalMovieListView(
                 .height(220.dp)
         ) {
             LazyRow(
-                modifier = Modifier
-                    .padding(start = 8.dp)
+                contentPadding = listPadding
             ) {
                 items(lazyMovieItems.itemCount) { index ->
                     val movie = lazyMovieItems[index]
@@ -94,8 +106,7 @@ fun HorizontalMovieListView(
                 when {
                     loadState.refresh is LoadState.Loading -> {
                         LazyRow(
-                            modifier = Modifier
-                                .padding(start = 8.dp)
+                            contentPadding = listPadding
                         ) {
                             items(10) {
                                 MovieSmallCardSkeleton()

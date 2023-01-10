@@ -27,6 +27,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
+import coil.annotation.ExperimentalCoilApi
 import com.yunuscagliyan.core.R
 import com.yunuscagliyan.core.data.remote.model.cast.CastModel
 import com.yunuscagliyan.core.data.remote.model.country.ProductionCountryModel
@@ -37,6 +38,7 @@ import com.yunuscagliyan.core.util.Constants.NavigationArgumentKey.MOVIE_ID_KEY
 import com.yunuscagliyan.core.util.Constants.StringParameter.EMPTY_STRING
 import com.yunuscagliyan.core_ui.components.header.SimpleTopBar
 import com.yunuscagliyan.core_ui.components.image.AppImage
+import com.yunuscagliyan.core_ui.components.list.HorizontalMovieListView
 import com.yunuscagliyan.core_ui.components.main.MainUIFrame
 import com.yunuscagliyan.core_ui.components.ripple.NoRippleInteractionSource
 import com.yunuscagliyan.core_ui.components.shimmer.AnimatedShimmer
@@ -64,9 +66,12 @@ object MovieDetailScreen : CoreScreen<MovieDetailViewModel>() {
     @Composable
     override fun viewModel(): MovieDetailViewModel = hiltViewModel()
 
+    @OptIn(ExperimentalCoilApi::class)
     @Composable
     override fun Content(viewModel: MovieDetailViewModel) {
         val state by viewModel.state
+        val similarMovies = viewModel.similarMovies
+
 
         val scrollState = rememberScrollState()
 
@@ -115,7 +120,22 @@ object MovieDetailScreen : CoreScreen<MovieDetailViewModel>() {
                         isLoading = state.castLoading,
                         crew = state.crew
                     )
-                    Spacer(modifier = Modifier.height(32.dp))
+                    Spacer(modifier = Modifier.height(12.dp))
+                    HorizontalMovieListView(
+                        movies = similarMovies,
+                        title = stringResource(id = R.string.movie_detail_similar),
+                        titleTextStyle = CinemaAppTheme.typography.normalText,
+                        titleColor = CinemaAppTheme.colors.secondary,
+                        titlePadding = PaddingValues(
+                            start = 16.dp,
+                            bottom = 8.dp
+                        ),
+                        listPadding = PaddingValues(
+                            start = 16.dp
+                        ),
+                        onMovieTap = viewModel::onMovieClick
+                    )
+                    Spacer(modifier = Modifier.height(12.dp))
                 }
                 TopBar(
                     scrollValue = {
@@ -213,7 +233,7 @@ object MovieDetailScreen : CoreScreen<MovieDetailViewModel>() {
                 LazyRow(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(250.dp),
+                        .height(220.dp),
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
                     contentPadding = PaddingValues(
                         start = 16.dp
@@ -272,7 +292,7 @@ object MovieDetailScreen : CoreScreen<MovieDetailViewModel>() {
                 LazyRow(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(250.dp),
+                        .height(220.dp),
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
                     contentPadding = PaddingValues(
                         start = 16.dp

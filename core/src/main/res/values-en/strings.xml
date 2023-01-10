@@ -26,4 +26,5 @@
     <string name="movie_detail_release_date">Release Date :</string>
     <string name="movie_detail_cast">Oyuncular</string>
     <string name="movie_detail_crew">Crew</string>
+    <string name="movie_detail_similar">Similar Movies</string>
 </resources>
