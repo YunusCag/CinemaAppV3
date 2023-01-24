@@ -37,6 +37,7 @@ object Constants {
         const val MOVIE_DETAIL_URL = "movie/{movie_id}"
         const val MOVIE_CREDIT_URL = "movie/{movie_id}/credits"
         const val SIMILAR_MOVIES_URL = "movie/{movie_id}/similar"
+        const val MOVIE_VIDEO_URL = "movie/{movie_id}/videos"
     }
 
     object NetworkQueryParamKey {

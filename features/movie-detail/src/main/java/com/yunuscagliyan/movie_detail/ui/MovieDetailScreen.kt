@@ -36,6 +36,7 @@ import com.yunuscagliyan.core.data.remote.model.genre.GenreModel
 import com.yunuscagliyan.core.navigation.RootScreenRoute
 import com.yunuscagliyan.core.util.Constants.NavigationArgumentKey.MOVIE_ID_KEY
 import com.yunuscagliyan.core.util.Constants.StringParameter.EMPTY_STRING
+import com.yunuscagliyan.core_ui.components.button.SecondaryMediumTextButton
 import com.yunuscagliyan.core_ui.components.header.SimpleTopBar
 import com.yunuscagliyan.core_ui.components.image.AppImage
 import com.yunuscagliyan.core_ui.components.list.HorizontalMovieListView
@@ -136,6 +137,21 @@ object MovieDetailScreen : CoreScreen<MovieDetailViewModel>() {
                         onMovieTap = viewModel::onMovieClick
                     )
                     Spacer(modifier = Modifier.height(12.dp))
+                    if (!state.videoLoading && state.videoList.isNotEmpty()) {
+                        SecondaryMediumTextButton(
+                            modifier = Modifier
+                                .padding(
+                                    start = 16.dp,
+                                    end = 16.dp,
+                                    top = 12.dp,
+                                    bottom = 24.dp
+                                )
+                                .fillMaxWidth(),
+                            text = stringResource(id = R.string.movie_detail_see_trailer_button)
+                        ) {
+
+                        }
+                    }
                 }
                 TopBar(
                     scrollValue = {

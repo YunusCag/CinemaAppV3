@@ -27,4 +27,5 @@
     <string name="movie_detail_cast">Oyuncular</string>
     <string name="movie_detail_crew">Prodüksiyon</string>
     <string name="movie_detail_similar">Benzer Filmler</string>
+    <string name="movie_detail_see_trailer_button">Fragmanı İzle</string>
 </resources>

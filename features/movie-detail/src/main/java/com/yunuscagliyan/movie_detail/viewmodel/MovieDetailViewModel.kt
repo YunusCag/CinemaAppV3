@@ -5,6 +5,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.yunuscagliyan.core.data.enums.VideoSite
+import com.yunuscagliyan.core.data.enums.VideoType
 import com.yunuscagliyan.core.data.remote.model.cast.CastModel
 import com.yunuscagliyan.core.data.remote.model.movie.MovieModel
 import com.yunuscagliyan.core.navigation.RootScreenRoute
@@ -15,6 +17,7 @@ import com.yunuscagliyan.core_ui.navigation.Routes
 import com.yunuscagliyan.core_ui.viewmodel.CoreViewModel
 import com.yunuscagliyan.movie_detail.domain.GetCastCrew
 import com.yunuscagliyan.movie_detail.domain.GetMovieDetail
+import com.yunuscagliyan.movie_detail.domain.GetMovieVideo
 import com.yunuscagliyan.movie_detail.domain.GetSimilarMovies
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
@@ -28,6 +31,7 @@ class MovieDetailViewModel @Inject constructor(
     private val getMovieDetail: GetMovieDetail,
     private val getCastCrew: GetCastCrew,
     private val getSimilarMovies: GetSimilarMovies,
+    private val getMovieVideo: GetMovieVideo,
     savedStateHandle: SavedStateHandle
 ) : CoreViewModel() {
 
@@ -48,6 +52,9 @@ class MovieDetailViewModel @Inject constructor(
             id = movieId
         )
         getSimilar(
+            id = movieId
+        )
+        getVideo(
             id = movieId
         )
     }
@@ -125,6 +132,46 @@ class MovieDetailViewModel @Inject constructor(
         similarMovies = getSimilarMovies(
             movieId = id
         ).cachedIn(viewModelScope)
+    }
+
+    private fun getVideo(id: Int) {
+        getMovieVideo(
+            GetMovieVideo.Params(
+                movieId = id
+            )
+        ).onEach { result ->
+            when (result) {
+                is Resource.Error -> {
+                    setState(state) {
+                        copy(
+                            videoLoading = false,
+                            videoError = result.message
+                        )
+                    }
+                }
+                is Resource.Loading -> {
+                    setState(state) {
+                        copy(
+                            videoLoading = true
+                        )
+                    }
+                }
+                is Resource.Success -> {
+                    setState(state) {
+                        var rawVideoList = result.data?.results ?: emptyList()
+                        rawVideoList = rawVideoList.filter {
+                            it.type == VideoType.Trailer.type && it.site == VideoSite.Youtube.site
+                        }.toList()
+
+                        copy(
+                            videoLoading = false,
+                            videoList = rawVideoList
+                        )
+                    }
+
+                }
+            }
+        }.launchIn(viewModelScope)
     }
 
     fun onCastClick(castModel: CastModel) {
