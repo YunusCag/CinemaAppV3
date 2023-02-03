@@ -49,92 +49,97 @@ fun HorizontalMovieListView(
     listPadding: PaddingValues = PaddingValues(
         start = 8.dp
     ),
+    empty: @Composable () -> Unit = {},
     onMovieTap: (MovieModel?) -> Unit,
     onListTap: (() -> Unit)? = null,
 ) {
     val lazyMovieItems: LazyPagingItems<MovieModel> = movies.collectAsLazyPagingItems()
     val lazyState = rememberLazyListState()
 
-    Column(
-        modifier = modifier,
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .noRippleClickable {
-                    onListTap?.invoke()
-                }
-                .padding(
-                    titlePadding
-                ),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically,
+    if (lazyMovieItems.itemCount == 0 && lazyMovieItems.loadState.refresh != LoadState.Loading) {
+        empty()
+    } else {
+        Column(
+            modifier = modifier,
         ) {
-            Text(
-                text = title,
-                style = titleTextStyle,
-                color = titleColor
-            )
-            if (onListTap != null) {
-                Icon(
-                    Icons.Default.KeyboardArrowRight,
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(24.dp),
-                    tint = CinemaAppTheme.colors.textPrimary
-                )
-            }
-        }
-        Row(
-            modifier = modifier
-                .fillMaxWidth()
-                .height(220.dp)
-        ) {
-            LazyRow(
-                contentPadding = listPadding,
-                state = lazyState
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .noRippleClickable {
+                        onListTap?.invoke()
+                    }
+                    .padding(
+                        titlePadding
+                    ),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
             ) {
-                items(lazyMovieItems.itemCount) { index ->
-                    val movie = lazyMovieItems[index]
-                    MovieSmallCard(
-                        movie = movie,
-                        onTap = {
-                            onMovieTap(movie)
-                        }
+                Text(
+                    text = title,
+                    style = titleTextStyle,
+                    color = titleColor
+                )
+                if (onListTap != null) {
+                    Icon(
+                        Icons.Default.KeyboardArrowRight,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(24.dp),
+                        tint = CinemaAppTheme.colors.textPrimary
                     )
                 }
             }
+            Row(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .height(220.dp)
+            ) {
+                LazyRow(
+                    contentPadding = listPadding,
+                    state = lazyState
+                ) {
+                    items(lazyMovieItems.itemCount) { index ->
+                        val movie = lazyMovieItems[index]
+                        MovieSmallCard(
+                            movie = movie,
+                            onTap = {
+                                onMovieTap(movie)
+                            }
+                        )
+                    }
+                }
 
-            lazyMovieItems.apply {
-                when {
-                    loadState.refresh is LoadState.Loading -> {
-                        LazyRow(
-                            contentPadding = listPadding
-                        ) {
-                            items(10) {
-                                MovieSmallCardSkeleton()
+                lazyMovieItems.apply {
+                    when {
+                        loadState.refresh is LoadState.Loading -> {
+                            LazyRow(
+                                contentPadding = listPadding
+                            ) {
+                                items(10) {
+                                    MovieSmallCardSkeleton()
+                                }
                             }
                         }
-                    }
-                    loadState.refresh is LoadState.Error -> {
-                        val errorState = loadState.refresh as LoadState.Error
+                        loadState.refresh is LoadState.Error -> {
+                            val errorState = loadState.refresh as LoadState.Error
 
-                        NetworkErrorView(
-                            message = errorState.error.message
-                        )
-                    }
-                    loadState.append is LoadState.Loading -> {
-                        LoadingView(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                        )
-                    }
-                    loadState.append is LoadState.Error -> {
-                        val errorState = loadState.append as LoadState.Error
+                            NetworkErrorView(
+                                message = errorState.error.message
+                            )
+                        }
+                        loadState.append is LoadState.Loading -> {
+                            LoadingView(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                            )
+                        }
+                        loadState.append is LoadState.Error -> {
+                            val errorState = loadState.append as LoadState.Error
 
-                        NetworkErrorView(
-                            message = errorState.error.message
-                        )
+                            NetworkErrorView(
+                                message = errorState.error.message
+                            )
+                        }
                     }
                 }
             }
