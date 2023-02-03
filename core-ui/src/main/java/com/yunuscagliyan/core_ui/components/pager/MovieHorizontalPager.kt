@@ -79,7 +79,10 @@ fun MovieHorizontalPager(
 
             Icon(
                 Icons.Default.KeyboardArrowRight,
-                "arrow"
+                contentDescription = null,
+                modifier = Modifier
+                    .size(24.dp),
+                tint = CinemaAppTheme.colors.textPrimary
             )
         }
         Column(
