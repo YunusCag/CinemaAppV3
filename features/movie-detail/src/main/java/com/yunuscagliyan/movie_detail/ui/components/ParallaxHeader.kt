@@ -12,7 +12,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.yunuscagliyan.core_ui.components.image.AppImage
 import com.yunuscagliyan.core_ui.components.shimmer.AnimatedShimmer
-import com.yunuscagliyan.movie_detail.viewmodel.MovieDetailState
+import com.yunuscagliyan.movie_detail.viewmodel.detail.MovieDetailState
 
 @Composable
 fun ParallaxHeader(

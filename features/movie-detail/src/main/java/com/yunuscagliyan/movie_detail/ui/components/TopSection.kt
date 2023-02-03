@@ -16,7 +16,7 @@ import com.yunuscagliyan.core.util.Constants
 import com.yunuscagliyan.core_ui.components.image.AppImage
 import com.yunuscagliyan.core_ui.extension.formatDate
 import com.yunuscagliyan.core_ui.theme.CinemaAppTheme
-import com.yunuscagliyan.movie_detail.viewmodel.MovieDetailState
+import com.yunuscagliyan.movie_detail.viewmodel.detail.MovieDetailState
 import java.text.NumberFormat
 import java.util.*
 

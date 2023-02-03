@@ -1,4 +1,4 @@
-package com.yunuscagliyan.movie_detail.viewmodel
+package com.yunuscagliyan.movie_detail.viewmodel.detail
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
@@ -11,6 +11,7 @@ import com.yunuscagliyan.core.data.remote.model.cast.CastModel
 import com.yunuscagliyan.core.data.remote.model.movie.MovieModel
 import com.yunuscagliyan.core.navigation.RootScreenRoute
 import com.yunuscagliyan.core.util.Constants.NavigationArgumentKey.MOVIE_ID_KEY
+import com.yunuscagliyan.core.util.Constants.StringParameter.EMPTY_STRING
 import com.yunuscagliyan.core.util.Resource
 import com.yunuscagliyan.core_ui.event.CoreEvent
 import com.yunuscagliyan.core_ui.navigation.Routes
@@ -176,6 +177,23 @@ class MovieDetailViewModel @Inject constructor(
 
     fun onCastClick(castModel: CastModel) {
         //TODO Navigate Cast page
+    }
+
+    fun onTeaserClick() {
+        state.value.videoList.randomOrNull()?.let { movieVideoModel ->
+            movieVideoModel.key?.let { key ->
+                sendEvent(
+                    CoreEvent.Navigation(
+                        Routes.NavigateToRoute(
+                            pageRoute = RootScreenRoute.Video.navigate(
+                                videoId = key,
+                                videoName = movieVideoModel.name ?: EMPTY_STRING
+                            )
+                        )
+                    )
+                )
+            }
+        }
     }
 
     fun onMovieClick(model: MovieModel?) {

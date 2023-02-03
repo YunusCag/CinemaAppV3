@@ -23,9 +23,9 @@ object Constants {
         const val DEFAULT_ANIMATION_DURATION = 100
     }
 
-    object DateFormatUtil{
-        const val yyyyMMdd="yyyy-MM-dd"
-        const val ddMMMMyyyy="dd MMMM yyyy"
+    object DateFormatUtil {
+        const val yyyyMMdd = "yyyy-MM-dd"
+        const val ddMMMMyyyy = "dd MMMM yyyy"
     }
 
     object NetworkUtil {
@@ -62,5 +62,7 @@ object Constants {
     object NavigationArgumentKey {
         const val LIST_TYPE_KEY = "list_type"
         const val MOVIE_ID_KEY = "movie_id"
+        const val VIDEO_ID_KEY = "video_id"
+        const val VIDEO_NAME_KEY = "video_name"
     }
 }

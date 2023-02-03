@@ -3,6 +3,7 @@ package com.yunuscagliyan.core_ui.components.list
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
@@ -52,6 +53,7 @@ fun HorizontalMovieListView(
     onListTap: (() -> Unit)? = null,
 ) {
     val lazyMovieItems: LazyPagingItems<MovieModel> = movies.collectAsLazyPagingItems()
+    val lazyState = rememberLazyListState()
 
     Column(
         modifier = modifier,
@@ -89,7 +91,8 @@ fun HorizontalMovieListView(
                 .height(220.dp)
         ) {
             LazyRow(
-                contentPadding = listPadding
+                contentPadding = listPadding,
+                state = lazyState
             ) {
                 items(lazyMovieItems.itemCount) { index ->
                     val movie = lazyMovieItems[index]

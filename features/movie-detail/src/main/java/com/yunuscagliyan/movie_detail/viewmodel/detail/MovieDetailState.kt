@@ -1,4 +1,4 @@
-package com.yunuscagliyan.movie_detail.viewmodel
+package com.yunuscagliyan.movie_detail.viewmodel.detail
 
 import androidx.compose.runtime.Stable
 import com.yunuscagliyan.core.data.remote.model.cast.CastModel

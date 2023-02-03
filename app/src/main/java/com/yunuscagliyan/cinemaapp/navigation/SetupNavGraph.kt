@@ -8,12 +8,11 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.yunuscagliyan.core.navigation.RootScreenRoute
-import com.yunuscagliyan.core.util.Constants
 import com.yunuscagliyan.core.util.Constants.DurationUTil.TRANSITION_DURATION
-import com.yunuscagliyan.core_ui.navigation.NavigationAnimDirection
 import com.yunuscagliyan.home.home.ui.pages.main.MainScreen
 import com.yunuscagliyan.home.movie_list.ui.MovieListScreen
-import com.yunuscagliyan.movie_detail.ui.MovieDetailScreen
+import com.yunuscagliyan.movie_detail.ui.detail.MovieDetailScreen
+import com.yunuscagliyan.movie_detail.ui.video.VideoScreen
 import com.yunuscagliyan.on_boarding.ui.OnBoardingScreen
 import com.yunuscagliyan.splash.ui.SplashScreen
 
@@ -65,6 +64,10 @@ fun SetupNavGraph(navController: NavHostController) {
             navController
         )
         MovieDetailScreen.composable(
+            this,
+            navController
+        )
+        VideoScreen.composable(
             this,
             navController
         )
