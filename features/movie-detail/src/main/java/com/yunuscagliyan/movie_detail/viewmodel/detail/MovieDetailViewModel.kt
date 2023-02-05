@@ -7,8 +7,10 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.yunuscagliyan.core.data.enums.VideoSite
 import com.yunuscagliyan.core.data.enums.VideoType
+import com.yunuscagliyan.core.data.local.entity.MovieEntity
 import com.yunuscagliyan.core.data.remote.model.cast.CastModel
 import com.yunuscagliyan.core.data.remote.model.movie.MovieModel
+import com.yunuscagliyan.core.domain.repository.MovieRepository
 import com.yunuscagliyan.core.navigation.RootScreenRoute
 import com.yunuscagliyan.core.util.Constants.NavigationArgumentKey.MOVIE_ID_KEY
 import com.yunuscagliyan.core.util.Constants.StringParameter.EMPTY_STRING
@@ -25,6 +27,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -33,6 +36,7 @@ class MovieDetailViewModel @Inject constructor(
     private val getCastCrew: GetCastCrew,
     private val getSimilarMovies: GetSimilarMovies,
     private val getMovieVideo: GetMovieVideo,
+    private val repository: MovieRepository,
     savedStateHandle: SavedStateHandle
 ) : CoreViewModel() {
 
@@ -62,6 +66,67 @@ class MovieDetailViewModel @Inject constructor(
             getVideo(
                 id = id
             )
+            checkIsMovieFavourite(
+                id = id
+            )
+        }
+    }
+
+    private fun checkIsMovieFavourite(id: Int) {
+        repository.getNoteById(
+            movieId = id
+        ).onEach { result ->
+            when (result) {
+                is Resource.Success -> {
+                    val movie = result.data
+                    setState(state) {
+                        copy(
+                            isFavourite = movie != null
+                        )
+                    }
+                }
+                else -> {
+                    setState(state) {
+                        copy(
+                            isFavourite = false
+                        )
+                    }
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    fun onFavouriteClick(value: Boolean) {
+        setState(state) {
+            copy(
+                isFavourite = value
+            )
+        }
+        state.value.movieDetailResponse?.let { detail ->
+            viewModelScope.launch {
+                if (value) {
+                    repository.insertMovie(
+                        movie = MovieEntity(
+                            movieId = movieId,
+                            backdropPath = detail.backdropPath,
+                            originalLanguage = detail.originalLanguage,
+                            originalTitle = detail.originalTitle,
+                            overview = detail.overview,
+                            popularity = detail.popularity,
+                            posterPath = detail.posterPath,
+                            releaseDate = detail.releaseDate,
+                            title = detail.title,
+                            voteAverage = detail.voteAverage,
+                            voteCount = detail.voteCount
+                        )
+                    )
+                }else{
+                    repository.deleteMovie(
+                        movieId=movieId?:0
+                    )
+                }
+            }
+
         }
     }
 

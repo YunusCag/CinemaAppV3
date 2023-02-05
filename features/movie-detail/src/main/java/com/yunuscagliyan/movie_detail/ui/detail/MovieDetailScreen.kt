@@ -33,6 +33,7 @@ import com.yunuscagliyan.core.data.remote.model.crew.CrewModel
 import com.yunuscagliyan.core.navigation.RootScreenRoute
 import com.yunuscagliyan.core.util.Constants.NavigationArgumentKey.MOVIE_ID_KEY
 import com.yunuscagliyan.core.util.Constants.StringParameter.EMPTY_STRING
+import com.yunuscagliyan.core_ui.components.button.FavoriteButton
 import com.yunuscagliyan.core_ui.components.button.SecondaryMediumTextButton
 import com.yunuscagliyan.core_ui.components.error.NetworkErrorView
 import com.yunuscagliyan.core_ui.components.header.SimpleTopBar
@@ -68,7 +69,7 @@ object MovieDetailScreen : CoreScreen<MovieDetailViewModel>() {
     override fun Content(viewModel: MovieDetailViewModel) {
         val state by viewModel.state
         val similarMovies = viewModel.similarMovies
-        val similarLazy=similarMovies.collectAsLazyPagingItems()
+        val similarLazy = similarMovies.collectAsLazyPagingItems()
 
         val scrollState = rememberScrollState()
 
@@ -171,7 +172,8 @@ object MovieDetailScreen : CoreScreen<MovieDetailViewModel>() {
                         scrollState.maxValue
                     },
                     state = state,
-                    onBackPress = viewModel::popBack
+                    onBackPress = viewModel::popBack,
+                    onFavouriteClick = viewModel::onFavouriteClick
                 )
             }
 
@@ -183,7 +185,8 @@ object MovieDetailScreen : CoreScreen<MovieDetailViewModel>() {
         scrollValue: () -> Int,
         scrollMaxValue: () -> Int,
         state: MovieDetailState,
-        onBackPress: () -> Unit
+        onBackPress: () -> Unit,
+        onFavouriteClick: (Boolean) -> Unit
     ) {
         val modifier = if (state.movieDetailError != null) {
             Modifier
@@ -206,12 +209,9 @@ object MovieDetailScreen : CoreScreen<MovieDetailViewModel>() {
             title = state.movieDetailResponse?.title ?: EMPTY_STRING,
             backgroundColor = backgroundColor,
             rightActions = {
-                Icon(
-                    imageVector = Icons.Default.ArrowBack,
-                    contentDescription = stringResource(id = R.string.common_back_button_description),
-                    modifier = Modifier
-                        .size(24.dp),
-                    tint = Color.Transparent
+                FavoriteButton(
+                    isFavorite = state.isFavourite,
+                    onClick = onFavouriteClick
                 )
             },
             leftActions = {

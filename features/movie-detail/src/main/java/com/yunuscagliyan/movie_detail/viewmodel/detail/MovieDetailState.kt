@@ -12,6 +12,7 @@ data class MovieDetailState(
     val movieDetailLoading: Boolean = true,
     val movieDetailResponse: MovieDetailResponse? = null,
     val movieDetailError: UIText? = null,
+    val isFavourite: Boolean = false,
     val castLoading: Boolean = true,
     val cast: List<CastModel> = emptyList(),
     val crew: List<CrewModel> = emptyList(),

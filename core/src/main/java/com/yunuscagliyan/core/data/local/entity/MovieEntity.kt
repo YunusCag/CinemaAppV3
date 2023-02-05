@@ -7,12 +7,8 @@ import com.yunuscagliyan.core.util.Constants.DBUtil.MOVIE_TABLE_ENTITY
 
 @Entity(tableName = MOVIE_TABLE_ENTITY)
 data class MovieEntity(
-    @ColumnInfo(name = "adult")
-    val adult: Boolean? = null,
     @ColumnInfo(name = "backdrop_path")
     val backdropPath: String? = null,
-    @ColumnInfo(name = "genre_ids")
-    val genreIds: List<Int>? = null,
     @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "movieId")
     val movieId: Int? = null,
@@ -30,8 +26,6 @@ data class MovieEntity(
     val releaseDate: String? = null,
     @ColumnInfo(name = "title")
     val title: String? = null,
-    @ColumnInfo(name = "video")
-    val video: Boolean? = null,
     @ColumnInfo(name = "vote_average")
     val voteAverage: Double? = null,
     @ColumnInfo(name = "vote_count")

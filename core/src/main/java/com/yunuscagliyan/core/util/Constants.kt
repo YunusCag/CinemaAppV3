@@ -21,6 +21,7 @@ object Constants {
         const val SPLASH_DURATION = 4000
         const val HOME_AUTO_SCROLL_DURATION = 8000
         const val DEFAULT_ANIMATION_DURATION = 100
+        const val DISMISS_ANIMATION_DURATION=300
     }
 
     object DateFormatUtil {

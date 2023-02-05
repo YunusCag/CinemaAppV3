@@ -2,12 +2,18 @@ package com.yunuscagliyan.home.home.viewmodel.favourite
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
+import com.yunuscagliyan.core.data.local.entity.MovieEntity
+import com.yunuscagliyan.core.data.remote.model.movie.MovieModel
 import com.yunuscagliyan.core.domain.repository.MovieRepository
+import com.yunuscagliyan.core.navigation.RootScreenRoute
 import com.yunuscagliyan.core.util.Resource
+import com.yunuscagliyan.core_ui.event.CoreEvent
+import com.yunuscagliyan.core_ui.navigation.Routes
 import com.yunuscagliyan.core_ui.viewmodel.CoreViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -54,4 +60,34 @@ class FavouriteViewModel @Inject constructor(
             }
             .launchIn(viewModelScope)
     }
+
+    fun onMovieTap(movieModel: MovieModel) {
+        movieModel.id?.let { id ->
+            sendEvent(
+                CoreEvent.Navigation(
+                    Routes.NavigateToRoute(
+                        pageRoute = RootScreenRoute.MovieDetail.navigate(id)
+                    )
+                )
+            )
+        }
+    }
+
+    fun onDismiss(entity: MovieEntity) {
+        entity.movieId?.let { movieId->
+            viewModelScope.launch {
+                repository.deleteMovie(
+                    movieId = movieId
+                )
+            }
+            setState(state){
+                val temp=favourites.filter { it.movieId!=movieId }
+                copy(
+                    favourites = temp
+                )
+            }
+        }
+    }
+
+
 }

@@ -15,11 +15,12 @@ import com.yunuscagliyan.core_ui.theme.CinemaAppTheme
 
 @Composable
 fun NetworkErrorView(
+    modifier: Modifier=Modifier,
     message: String?,
     onRefreshClick: (() -> Unit)? = null
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(horizontal = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
