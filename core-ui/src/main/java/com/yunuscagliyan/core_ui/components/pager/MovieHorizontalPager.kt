@@ -139,7 +139,10 @@ fun MovieHorizontalPager(
                         val errorState = loadState.refresh as LoadState.Error
 
                         NetworkErrorView(
-                            message = errorState.error.message
+                            message = errorState.error.message,
+                            onRefreshClick = {
+                                lazyMovieItems.refresh()
+                            }
                         )
                     }
                     loadState.append is LoadState.Loading -> {
@@ -153,13 +156,6 @@ fun MovieHorizontalPager(
                                     .background(it)
                             )
                         }
-                    }
-                    loadState.append is LoadState.Error -> {
-                        val errorState = loadState.append as LoadState.Error
-
-                        NetworkErrorView(
-                            message = errorState.error.message
-                        )
                     }
                 }
             }

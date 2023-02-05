@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.yunuscagliyan.core_ui.theme.CinemaAppTheme
@@ -59,8 +60,8 @@ fun BaseButton(
             }
         },
         modifier = modifier
-            .heightIn(min = buttonSize,)
-            .height(IntrinsicSize.Max)
+            .defaultMinSize(minHeight = buttonSize)
+            .height(height = buttonSize)
             .width(intrinsicSize = IntrinsicSize.Max)
             .alpha(if (enabled) 1f else 0.5f)
     )
@@ -74,7 +75,7 @@ fun SecondaryMediumTextButton(
     enabled: Boolean = true,
     buttonSize: Dp = 42.dp,
     textStyle: TextStyle = CinemaAppTheme.typography.normalText,
-    textColor: Color = CinemaAppTheme.colors.textPrimary,
+    textColor: Color = CinemaAppTheme.colors.whiteColor,
     onClick: () -> Unit
 ) {
     BaseButton(
@@ -96,6 +97,42 @@ fun SecondaryMediumTextButton(
                 text = text,
                 style = textStyle,
                 color = textColor
+            )
+        }
+    }
+}
+
+@Composable
+fun SecondarySmallTextButton(
+    modifier: Modifier = Modifier,
+    text: String,
+    enabled: Boolean = true,
+    buttonSize: Dp = 36.dp,
+    textStyle: TextStyle = CinemaAppTheme.typography.normalText,
+    textColor: Color = CinemaAppTheme.colors.whiteColor,
+    onClick: () -> Unit
+) {
+    BaseButton(
+        modifier = modifier,
+        enabled = enabled,
+        textColor = textColor,
+        buttonSize = buttonSize,
+        onClick = onClick,
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(
+                    horizontal = 16.dp,
+                ),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = text,
+                style = textStyle,
+                color = textColor,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
         }
     }

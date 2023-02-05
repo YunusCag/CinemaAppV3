@@ -13,15 +13,19 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
+import androidx.paging.cachedIn
+import androidx.paging.compose.collectAsLazyPagingItems
 import coil.annotation.ExperimentalCoilApi
 import com.yunuscagliyan.core.R
 import com.yunuscagliyan.core.data.remote.model.cast.CastModel
@@ -30,15 +34,18 @@ import com.yunuscagliyan.core.navigation.RootScreenRoute
 import com.yunuscagliyan.core.util.Constants.NavigationArgumentKey.MOVIE_ID_KEY
 import com.yunuscagliyan.core.util.Constants.StringParameter.EMPTY_STRING
 import com.yunuscagliyan.core_ui.components.button.SecondaryMediumTextButton
+import com.yunuscagliyan.core_ui.components.error.NetworkErrorView
 import com.yunuscagliyan.core_ui.components.header.SimpleTopBar
 import com.yunuscagliyan.core_ui.components.list.HorizontalMovieListView
 import com.yunuscagliyan.core_ui.components.main.MainUIFrame
 import com.yunuscagliyan.core_ui.components.ripple.NoRippleInteractionSource
+import com.yunuscagliyan.core_ui.extension.asString
 import com.yunuscagliyan.core_ui.navigation.CoreScreen
 import com.yunuscagliyan.core_ui.theme.CinemaAppTheme
 import com.yunuscagliyan.movie_detail.ui.components.*
 import com.yunuscagliyan.movie_detail.viewmodel.detail.MovieDetailState
 import com.yunuscagliyan.movie_detail.viewmodel.detail.MovieDetailViewModel
+import kotlinx.coroutines.flow.retry
 import java.lang.Float.min
 import java.util.*
 
@@ -61,84 +68,99 @@ object MovieDetailScreen : CoreScreen<MovieDetailViewModel>() {
     override fun Content(viewModel: MovieDetailViewModel) {
         val state by viewModel.state
         val similarMovies = viewModel.similarMovies
-
+        val similarLazy=similarMovies.collectAsLazyPagingItems()
 
         val scrollState = rememberScrollState()
 
-        MainUIFrame {
+        val onRefresh: () -> Unit = remember {
+            {
+
+                similarLazy.refresh()
+                viewModel.initState()
+            }
+        }
+
+        MainUIFrame() {
             Box {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(CinemaAppTheme.colors.background)
-                        .verticalScroll(scrollState)
-                ) {
-                    ParallaxHeader(
-                        state = state,
-                        scrollValue = {
-                            scrollState.value
-                        },
-                        scrollMaxValue = {
-                            scrollState.maxValue
-                        },
+                if (state.movieDetailError != null) {
+                    NetworkErrorView(
+                        message = state.movieDetailError?.asString(),
+                        onRefreshClick = onRefresh
                     )
-                    Spacer(modifier = Modifier.height(12.dp))
-                    if (state.movieDetailLoading) {
-                        TopSectionShimmer()
-                    } else {
-                        TopSection(
-                            state = state
+                } else {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(CinemaAppTheme.colors.background)
+                            .verticalScroll(scrollState)
+                    ) {
+                        ParallaxHeader(
+                            state = state,
+                            scrollValue = {
+                                scrollState.value
+                            },
+                            scrollMaxValue = {
+                                scrollState.maxValue
+                            },
                         )
-                    }
-                    Spacer(modifier = Modifier.height(8.dp))
-                    if (state.movieDetailLoading) {
-                        OverviewShimmer()
-                    } else {
-                        state.movieDetailResponse?.overview?.let { overview ->
-                            Overview(
-                                overview = overview
+                        Spacer(modifier = Modifier.height(12.dp))
+                        if (state.movieDetailLoading) {
+                            TopSectionShimmer()
+                        } else {
+                            TopSection(
+                                state = state
                             )
                         }
-                    }
-                    Cast(
-                        isLoading = state.castLoading,
-                        cast = state.cast,
-                        viewModel = viewModel
-                    )
-                    Spacer(modifier = Modifier.height(12.dp))
-                    Crew(
-                        isLoading = state.castLoading,
-                        crew = state.crew
-                    )
-                    Spacer(modifier = Modifier.height(12.dp))
-                    HorizontalMovieListView(
-                        movies = similarMovies,
-                        title = stringResource(id = R.string.movie_detail_similar),
-                        titleTextStyle = CinemaAppTheme.typography.normalText,
-                        titleColor = CinemaAppTheme.colors.secondary,
-                        titlePadding = PaddingValues(
-                            start = 16.dp,
-                            bottom = 8.dp
-                        ),
-                        listPadding = PaddingValues(
-                            start = 16.dp
-                        ),
-                        onMovieTap = viewModel::onMovieClick
-                    )
-                    Spacer(modifier = Modifier.height(12.dp))
-                    if (!state.videoLoading && state.videoList.isNotEmpty()) {
-                        SecondaryMediumTextButton(
-                            modifier = Modifier
-                                .padding(
-                                    start = 16.dp,
-                                    end = 16.dp,
-                                    top = 12.dp,
-                                    bottom = 24.dp
+                        Spacer(modifier = Modifier.height(8.dp))
+                        if (state.movieDetailLoading) {
+                            OverviewShimmer()
+                        } else {
+                            state.movieDetailResponse?.overview?.let { overview ->
+                                Overview(
+                                    overview = overview
                                 )
-                                .fillMaxWidth(),
-                            text = stringResource(id = R.string.movie_detail_see_trailer_button),
-                            onClick = viewModel::onTeaserClick
+                            }
+                        }
+                        Cast(
+                            isLoading = state.castLoading,
+                            cast = state.cast,
+                            viewModel = viewModel
                         )
+                        Spacer(modifier = Modifier.height(12.dp))
+                        Crew(
+                            isLoading = state.castLoading,
+                            crew = state.crew
+                        )
+                        Spacer(modifier = Modifier.height(12.dp))
+                        HorizontalMovieListView(
+                            movies = similarMovies,
+                            title = stringResource(id = R.string.movie_detail_similar),
+                            titleTextStyle = CinemaAppTheme.typography.normalText,
+                            titleColor = CinemaAppTheme.colors.secondary,
+                            titlePadding = PaddingValues(
+                                start = 16.dp,
+                                bottom = 8.dp
+                            ),
+                            listPadding = PaddingValues(
+                                start = 16.dp
+                            ),
+                            onMovieTap = viewModel::onMovieClick
+                        )
+                        Spacer(modifier = Modifier.height(12.dp))
+                        if (!state.videoLoading && state.videoList.isNotEmpty()) {
+                            SecondaryMediumTextButton(
+                                modifier = Modifier
+                                    .padding(
+                                        start = 16.dp,
+                                        end = 16.dp,
+                                        top = 12.dp,
+                                        bottom = 24.dp
+                                    )
+                                    .fillMaxWidth(),
+                                text = stringResource(id = R.string.movie_detail_see_trailer_button),
+                                onClick = viewModel::onTeaserClick
+                            )
+                        }
                     }
                 }
                 TopBar(
@@ -152,6 +174,7 @@ object MovieDetailScreen : CoreScreen<MovieDetailViewModel>() {
                     onBackPress = viewModel::popBack
                 )
             }
+
         }
     }
 
@@ -162,16 +185,26 @@ object MovieDetailScreen : CoreScreen<MovieDetailViewModel>() {
         state: MovieDetailState,
         onBackPress: () -> Unit
     ) {
-        SimpleTopBar(
-            modifier = Modifier
+        val modifier = if (state.movieDetailError != null) {
+            Modifier
+        } else {
+            Modifier
                 .alpha(
                     if (scrollValue() == 0) 1f else min(
                         1f,
-                        (scrollValue().toFloat() / scrollMaxValue().toFloat()) * 20
+                        (scrollValue().toFloat() / scrollMaxValue().toFloat()) * 10
                     )
-                ),
+                )
+        }
+        val backgroundColor = if (state.movieDetailError != null) {
+            CinemaAppTheme.colors.primary
+        } else {
+            if (scrollValue() == 0) Color.Unspecified else CinemaAppTheme.colors.primary
+        }
+        SimpleTopBar(
+            modifier = modifier,
             title = state.movieDetailResponse?.title ?: EMPTY_STRING,
-            backgroundColor = if (scrollValue() == 0) Color.Unspecified else CinemaAppTheme.colors.primary,
+            backgroundColor = backgroundColor,
             rightActions = {
                 Icon(
                     imageVector = Icons.Default.ArrowBack,

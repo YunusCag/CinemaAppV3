@@ -56,7 +56,10 @@ fun HorizontalMovieListView(
     val lazyMovieItems: LazyPagingItems<MovieModel> = movies.collectAsLazyPagingItems()
     val lazyState = rememberLazyListState()
 
-    if (lazyMovieItems.itemCount == 0 && lazyMovieItems.loadState.refresh != LoadState.Loading) {
+    if (lazyMovieItems.itemCount == 0 &&
+        lazyMovieItems.loadState.refresh !is LoadState.Loading &&
+        lazyMovieItems.loadState.refresh !is LoadState.Error
+    ) {
         empty()
     } else {
         Column(
@@ -124,20 +127,16 @@ fun HorizontalMovieListView(
                             val errorState = loadState.refresh as LoadState.Error
 
                             NetworkErrorView(
-                                message = errorState.error.message
+                                message = errorState.error.message,
+                                onRefreshClick = {
+                                    lazyMovieItems.refresh()
+                                }
                             )
                         }
                         loadState.append is LoadState.Loading -> {
                             LoadingView(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                            )
-                        }
-                        loadState.append is LoadState.Error -> {
-                            val errorState = loadState.append as LoadState.Error
-
-                            NetworkErrorView(
-                                message = errorState.error.message
                             )
                         }
                     }

@@ -41,10 +41,10 @@ fun MovieGridView(
     onMovieTap: (MovieModel?) -> Unit
 ) {
     Column(
+        modifier=modifier
     ) {
         LazyVerticalStaggeredGrid(
-            columns = StaggeredGridCells.Fixed(column.columnCount),
-            modifier = modifier,
+            columns = StaggeredGridCells.Fixed(column.columnCount)
         ) {
             items(movies.itemCount) { index ->
                 val movie = movies[index]

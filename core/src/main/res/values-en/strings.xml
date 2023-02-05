@@ -4,6 +4,7 @@
     <string name="common_no_connection">Could not reach server. Check your internet connection.</string>
 
     <string name="common_back_button_description">Back</string>
+    <string name="common_refresh">Refresh</string>
     <!--Home Page-->
     <string name="home_page_top_bar_title">Homepage</string>
     <string name="up_coming_movie_text">Box Office Movies</string>

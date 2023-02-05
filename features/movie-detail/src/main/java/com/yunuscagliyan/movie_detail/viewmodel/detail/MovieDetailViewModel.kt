@@ -39,25 +39,30 @@ class MovieDetailViewModel @Inject constructor(
     val state = mutableStateOf(MovieDetailState())
     var similarMovies: Flow<PagingData<MovieModel>> = emptyFlow()
 
+    var movieId: Int? = savedStateHandle.get<Int>(MOVIE_ID_KEY)
+
     init {
-        savedStateHandle.get<Int>(MOVIE_ID_KEY)?.let { movieId ->
-            initState(movieId)
-        }
+        initState()
     }
 
-    private fun initState(movieId: Int) {
-        getMovieDetailResponse(
-            id = movieId
-        )
-        getMovieCastCrew(
-            id = movieId
-        )
-        getSimilar(
-            id = movieId
-        )
-        getVideo(
-            id = movieId
-        )
+    fun initState() {
+        setState(state) {
+            MovieDetailState()
+        }
+        movieId?.let { id ->
+            getMovieDetailResponse(
+                id = id
+            )
+            getMovieCastCrew(
+                id = id
+            )
+            getSimilar(
+                id = id
+            )
+            getVideo(
+                id = id
+            )
+        }
     }
 
     private fun getMovieDetailResponse(id: Int) {
