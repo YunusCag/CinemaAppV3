@@ -7,11 +7,13 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
@@ -80,38 +82,48 @@ object FavouriteScreen : CoreScreen<FavouriteViewModel>() {
     @Composable
     private fun FavouriteList(
         favourites: List<MovieEntity>,
-        onDismiss: (MovieEntity) -> Unit,
+        onDismiss: (Int, MovieEntity) -> Unit,
         onNavigateDetail: (MovieModel) -> Unit,
     ) {
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize(),
+            state = rememberLazyListState(),
             contentPadding = PaddingValues(
                 start = 8.dp,
                 end = 8.dp,
                 bottom = 16.dp
             )
         ) {
-            items(favourites.size) { index ->
+            items(
+                favourites.size,
+                key = {
+                    val entity = favourites[it]
+                    entity.hashCode()
+                }
+            ) { index ->
                 val entity = favourites[index]
                 val movie = entity.toMovieModel()
                 val dismissState = rememberDismissState(
-
+                    confirmStateChange = {
+                        if (it == DismissValue.DismissedToStart) {
+                            onDismiss(index, entity)
+                        }
+                        true
+                    }
                 )
-
-                if (dismissState.isDismissed(DismissDirection.EndToStart)) {
-                    onDismiss(entity)
-                }
                 SwipeToDismiss(
                     state = dismissState,
-                    dismissThresholds = { direction ->
-                        FractionalThreshold(if (direction == DismissDirection.EndToStart) 0.1f else 0.05f)
+                    dismissThresholds = { _ ->
+                        FractionalThreshold(0.2f)
                     },
+                    directions = setOf(DismissDirection.EndToStart),
                     background = {
                         val color by animateColorAsState(
-                            when (dismissState.targetValue) {
-                                DismissValue.Default -> Color.Transparent
-                                else -> CinemaAppTheme.colors.secondary
+                            when (dismissState.dismissDirection) {
+                                DismissDirection.StartToEnd -> Color.Transparent
+                                DismissDirection.EndToStart -> CinemaAppTheme.colors.secondary
+                                else -> Color.Transparent
                             },
                             animationSpec = tween(DISMISS_ANIMATION_DURATION)
                         )
@@ -125,6 +137,9 @@ object FavouriteScreen : CoreScreen<FavouriteViewModel>() {
 
                         Box(
                             Modifier
+                                .padding(
+                                    top = 24.dp
+                                )
                                 .fillMaxSize()
                                 .background(color)
                                 .padding(
@@ -142,10 +157,8 @@ object FavouriteScreen : CoreScreen<FavouriteViewModel>() {
                             )
                         }
                     },
-                    directions = setOf(DismissDirection.EndToStart,)
                 ) {
                     MovieLargeCard(
-                        modifier=Modifier.animateItemPlacement(),
                         model = movie
                     ) {
                         onNavigateDetail(movie)

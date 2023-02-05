@@ -209,10 +209,12 @@ object MovieDetailScreen : CoreScreen<MovieDetailViewModel>() {
             title = state.movieDetailResponse?.title ?: EMPTY_STRING,
             backgroundColor = backgroundColor,
             rightActions = {
-                FavoriteButton(
-                    isFavorite = state.isFavourite,
-                    onClick = onFavouriteClick
-                )
+                if(state.movieDetailError==null||!state.movieDetailLoading){
+                    FavoriteButton(
+                        isFavorite = state.isFavourite,
+                        onClick = onFavouriteClick
+                    )
+                }
             },
             leftActions = {
                 IconButton(

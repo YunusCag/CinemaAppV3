@@ -14,6 +14,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -73,17 +74,20 @@ class FavouriteViewModel @Inject constructor(
         }
     }
 
-    fun onDismiss(entity: MovieEntity) {
-        entity.movieId?.let { movieId->
+    fun onDismiss(index: Int, entity: MovieEntity) {
+        Timber.e("index:$index ---> $entity")
+        entity.movieId?.let { movieId ->
             viewModelScope.launch {
                 repository.deleteMovie(
                     movieId = movieId
                 )
             }
-            setState(state){
-                val temp=favourites.filter { it.movieId!=movieId }
+
+            setState(state) {
+                val favouriteList = favourites.toMutableList()
+                favouriteList.remove(entity)
                 copy(
-                    favourites = temp
+                    favourites = favouriteList.toList()
                 )
             }
         }
