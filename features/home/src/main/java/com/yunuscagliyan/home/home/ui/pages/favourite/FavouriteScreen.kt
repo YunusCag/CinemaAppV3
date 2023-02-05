@@ -1,11 +1,10 @@
 package com.yunuscagliyan.home.home.ui.pages.favourite
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.yunuscagliyan.core.navigation.MainScreenRoute
 import com.yunuscagliyan.core_ui.navigation.CoreScreen
@@ -20,10 +19,10 @@ object FavouriteScreen : CoreScreen<FavouriteViewModel>() {
 
     @Composable
     override fun Content(viewModel: FavouriteViewModel) {
+        val state by viewModel.state
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.Blue)
         ) {
 
         }

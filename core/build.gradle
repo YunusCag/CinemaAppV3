@@ -9,4 +9,8 @@ dependencies {
     implementation Retrofit.moshiConverter
     implementation Retrofit.moshiKotlin
     implementation Retrofit.moshiConverter
+
+    implementation Room.roomRuntime
+    kapt Room.roomCompiler
+    implementation Room.roomKtx
 }

@@ -48,6 +48,12 @@ object Constants {
         const val movieId = "movie_id"
     }
 
+    object DBUtil {
+        const val MOVIE_TABLE_ENTITY = "movie_entity"
+        const val MOVIE_DATABASE_VERSION = 1
+        const val MOVIE_DATABASE_NAME="movie_db"
+    }
+
     object LanguageUtil {
         const val EN_US = "en-US"//USA
         const val TR_TR = "tr-TR"//Turkey
