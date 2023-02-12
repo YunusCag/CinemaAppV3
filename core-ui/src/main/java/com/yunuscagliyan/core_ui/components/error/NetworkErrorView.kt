@@ -37,6 +37,7 @@ fun NetworkErrorView(
         Text(
             text = message ?: stringResource(id = R.string.common_http_error),
             style = CinemaAppTheme.typography.normalText,
+            color = CinemaAppTheme.colors.textPrimary
         )
         Spacer(modifier = Modifier.height(8.dp))
         onRefreshClick?.let { onClick->

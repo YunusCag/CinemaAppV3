@@ -42,6 +42,7 @@ import com.yunuscagliyan.core_ui.components.list.HorizontalMovieListView
 import com.yunuscagliyan.core_ui.components.main.MainUIFrame
 import com.yunuscagliyan.core_ui.components.ripple.NoRippleInteractionSource
 import com.yunuscagliyan.core_ui.extension.asString
+import com.yunuscagliyan.core_ui.extension.noRippleClickable
 import com.yunuscagliyan.core_ui.navigation.CoreScreen
 import com.yunuscagliyan.core_ui.theme.CinemaAppTheme
 import com.yunuscagliyan.movie_detail.ui.components.*
@@ -169,8 +170,12 @@ object MovieDetailScreen : CoreScreen<MovieDetailViewModel>() {
                     scrollValue = {
                         scrollState.value
                     },
-                    scrollMaxValue = {
-                        scrollState.maxValue
+                    alpha = {
+                        if (scrollState.value == 0 || state.movieDetailError != null) 1f
+                        else min(
+                            1f,
+                            (scrollState.value.toFloat() / scrollState.maxValue.toFloat()) * 10
+                        )
                     },
                     state = state,
                     onBackPress = viewModel::popBack,
@@ -184,29 +189,22 @@ object MovieDetailScreen : CoreScreen<MovieDetailViewModel>() {
     @Composable
     private fun TopBar(
         scrollValue: () -> Int,
-        scrollMaxValue: () -> Int,
+        alpha: () -> Float,
         state: MovieDetailState,
         onBackPress: () -> Unit,
         onFavouriteClick: (Boolean) -> Unit
     ) {
-        val modifier = if (state.movieDetailError != null) {
-            Modifier
-        } else {
-            Modifier
-                .alpha(
-                    if (scrollValue() == 0) 1f else min(
-                        1f,
-                        (scrollValue().toFloat() / scrollMaxValue().toFloat()) * 10
-                    )
-                )
-        }
         val backgroundColor = if (state.movieDetailError != null) {
             CinemaAppTheme.colors.primary
         } else {
             if (scrollValue() == 0) Color.Unspecified else CinemaAppTheme.colors.primary
         }
+
         SimpleTopBar(
-            modifier = modifier,
+            modifier = Modifier
+                .alpha(
+                    alpha()
+                ),
             title = state.movieDetailResponse?.title ?: EMPTY_STRING,
             backgroundColor = backgroundColor,
             rightActions = {
