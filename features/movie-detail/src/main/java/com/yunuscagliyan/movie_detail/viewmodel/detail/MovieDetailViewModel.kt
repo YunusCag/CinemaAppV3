@@ -45,6 +45,7 @@ class MovieDetailViewModel @Inject constructor(
 
     var movieId: Int? = savedStateHandle.get<Int>(MOVIE_ID_KEY)
 
+
     init {
         initState()
     }
@@ -120,9 +121,9 @@ class MovieDetailViewModel @Inject constructor(
                             voteCount = detail.voteCount
                         )
                     )
-                }else{
+                } else {
                     repository.deleteMovie(
-                        movieId=movieId?:0
+                        movieId = movieId ?: 0
                     )
                 }
             }

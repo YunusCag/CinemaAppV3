@@ -17,6 +17,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.yunuscagliyan.core.data.local.entity.MovieEntity
@@ -27,10 +29,14 @@ import com.yunuscagliyan.core.util.Constants.DurationUTil.DISMISS_ANIMATION_DURA
 import com.yunuscagliyan.core_ui.components.card.MovieLargeCard
 import com.yunuscagliyan.core_ui.components.error.NetworkErrorView
 import com.yunuscagliyan.core_ui.components.loading.LoadingView
+import com.yunuscagliyan.core_ui.components.main.MainUIFrame
 import com.yunuscagliyan.core_ui.extension.asString
 import com.yunuscagliyan.core_ui.navigation.CoreScreen
 import com.yunuscagliyan.core_ui.theme.CinemaAppTheme
+import com.yunuscagliyan.core.R
 import com.yunuscagliyan.home.home.viewmodel.favourite.FavouriteViewModel
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 object FavouriteScreen : CoreScreen<FavouriteViewModel>() {
     override val route: String
@@ -42,40 +48,76 @@ object FavouriteScreen : CoreScreen<FavouriteViewModel>() {
     @Composable
     override fun Content(viewModel: FavouriteViewModel) {
         val state by viewModel.state
-        LaunchedEffect(key1 = Unit){
-            viewModel.initState()
+        val context= LocalContext.current
+
+
+        val scaffoldState = rememberScaffoldState()
+        val coroutineScope = rememberCoroutineScope()
+
+        LaunchedEffect(key1 = Unit) {
+            viewModel.favouriteEvent.collectLatest { event ->
+                when (event) {
+                    is FavouriteViewModel.FavouriteEvent.ShowSnackBar -> {
+                        coroutineScope.launch {
+                            val result = scaffoldState.snackbarHostState.showSnackbar(
+                                context.getString(R.string.favourite_dismiss_text),
+                                duration = SnackbarDuration.Short,
+                                actionLabel = context.getString(R.string.common_revoke),
+                            )
+
+                            when (result) {
+                                SnackbarResult.Dismissed -> Unit
+                                SnackbarResult.ActionPerformed -> {
+                                    viewModel.onRevokeClick(
+                                        index = event.index,
+                                        entity = event.entity
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
+
+        LaunchedEffect(key1 = Unit) {
+            viewModel.initState()
+        }
+        MainUIFrame(
+            scaffoldState = scaffoldState
         ) {
-            Box(
+            Column(
                 modifier = Modifier
-                    .weight(1f),
-                contentAlignment = Alignment.Center
+                    .fillMaxSize()
             ) {
-                if (state.favouriteError != null) {
-                    NetworkErrorView(
-                        modifier = Modifier
-                            .padding(
-                                horizontal = 16.dp
-                            ),
-                        message = state.favouriteError?.asString()
-                    )
-                } else if (state.favouriteLoading) {
-                    LoadingView(
-                        modifier = Modifier
-                            .padding(
-                                horizontal = 16.dp
-                            ),
-                    )
-                } else {
-                    FavouriteList(
-                        favourites = state.favourites,
-                        onDismiss = viewModel::onDismiss,
-                        onNavigateDetail = viewModel::onMovieTap
-                    )
+                Box(
+                    modifier = Modifier
+                        .weight(1f),
+                    contentAlignment = Alignment.Center
+                ) {
+                    if (state.favouriteError != null) {
+                        NetworkErrorView(
+                            modifier = Modifier
+                                .padding(
+                                    horizontal = 16.dp
+                                ),
+                            message = state.favouriteError?.asString()
+                        )
+                    } else if (state.favouriteLoading) {
+                        LoadingView(
+                            modifier = Modifier
+                                .padding(
+                                    horizontal = 16.dp
+                                ),
+                        )
+                    } else {
+                        FavouriteList(
+                            favourites = state.favourites,
+                            onDismiss = viewModel::onDismiss,
+                            onNavigateDetail = viewModel::onMovieTap
+                        )
+                    }
                 }
             }
         }

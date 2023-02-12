@@ -6,6 +6,7 @@
     <string name="common_back_button_description">Geri</string>
     <string name="common_refresh">Yenile</string>
     <string name="common_all">Tümü</string>
+    <string name="common_revoke">Geri al</string>
     <!--Home Page-->
     <string name="home_page_top_bar_title">Anasayfa</string>
     <string name="up_coming_movie_text">Yakında Sinemalarda</string>
@@ -15,6 +16,7 @@
 
     <!--- Favourite Page -->
     <string name="favourite_page_top_bar_title">Favoriler</string>
+    <string name="favourite_dismiss_text">Favorilerden kaldırıldı.</string>
 
     <!--- Settings Page -->
     <string name="settings_page_top_bar_title">Ayarlar</string>

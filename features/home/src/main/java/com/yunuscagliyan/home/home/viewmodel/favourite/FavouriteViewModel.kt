@@ -11,8 +11,10 @@ import com.yunuscagliyan.core_ui.event.CoreEvent
 import com.yunuscagliyan.core_ui.navigation.Routes
 import com.yunuscagliyan.core_ui.viewmodel.CoreViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -23,6 +25,9 @@ class FavouriteViewModel @Inject constructor(
 ) : CoreViewModel() {
 
     val state = mutableStateOf(FavouriteState())
+
+    private val _favouriteEvent = Channel<FavouriteEvent>()
+    val favouriteEvent = _favouriteEvent.receiveAsFlow()
 
     fun initState() {
         repository.getAllMovies()
@@ -70,6 +75,22 @@ class FavouriteViewModel @Inject constructor(
         }
     }
 
+    fun onRevokeClick(index: Int,entity: MovieEntity) {
+        viewModelScope.launch {
+            repository.insertMovie(
+                movie = entity
+            )
+
+            setState(state) {
+                val movies = favourites.toMutableList()
+                movies.add(index, entity)
+                copy(
+                    favourites = movies.toList()
+                )
+            }
+        }
+    }
+
     fun onDismiss(index: Int, entity: MovieEntity) {
         Timber.e("index:$index ---> $entity")
         entity.movieId?.let { movieId ->
@@ -79,6 +100,12 @@ class FavouriteViewModel @Inject constructor(
                 )
             }
 
+            changeEvent(
+                event = FavouriteEvent.ShowSnackBar(
+                    entity = entity,
+                    index = index
+                )
+            )
             setState(state) {
                 val favouriteList = favourites.toMutableList()
                 favouriteList.remove(entity)
@@ -89,5 +116,13 @@ class FavouriteViewModel @Inject constructor(
         }
     }
 
+    private fun changeEvent(event: FavouriteEvent) {
+        viewModelScope.launch {
+            _favouriteEvent.send(event)
+        }
+    }
 
+    sealed class FavouriteEvent {
+        data class ShowSnackBar(val index:Int,val entity: MovieEntity) : FavouriteEvent()
+    }
 }
