@@ -55,7 +55,7 @@ object MovieListScreen : CoreScreen<MovieListViewModel>() {
         val state by viewModel.state
         val movies = viewModel.movies.collectAsLazyPagingItems()
         LaunchedEffect(key1 = state.genreList) {
-            Timber.e("TTT Refresh called.")
+            Timber.e("Refresh called.")
             movies.refresh()
         }
 
@@ -76,14 +76,17 @@ object MovieListScreen : CoreScreen<MovieListViewModel>() {
                     .navigationBarsPadding()
             ) {
                 Spacer(modifier = Modifier.height(8.dp))
-                AnimationBox {
-                    GenreListRow(
-                        genres = state.genreList,
-                        selectedIds = state.selectedGenreIds,
-                        onSelected = { genre, isSelected ->
-                            viewModel.onGenreClick(genre, isSelected)
-                        }
-                    )
+                if(!state.isGenreLoading){
+                    AnimationBox {
+                        GenreListRow(
+                            genres = state.genreList,
+                            selectedIds = state.selectedGenreIds,
+                            onSelected = { genre, isSelected ->
+                                viewModel.onGenreClick(genre, isSelected)
+                            },
+                            onAllClicked = viewModel::onAllClick
+                        )
+                    }
                 }
                 Spacer(modifier = Modifier.height(8.dp))
                 MovieGridView(

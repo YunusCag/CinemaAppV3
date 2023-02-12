@@ -24,11 +24,7 @@ class FavouriteViewModel @Inject constructor(
 
     val state = mutableStateOf(FavouriteState())
 
-    init {
-        initState()
-    }
-
-    private fun initState() {
+    fun initState() {
         repository.getAllMovies()
             .onEach { result ->
                 when (result) {

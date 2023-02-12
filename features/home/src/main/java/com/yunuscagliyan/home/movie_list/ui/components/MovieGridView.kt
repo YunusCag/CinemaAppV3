@@ -30,10 +30,13 @@ fun MovieGridView(
     onMovieTap: (MovieModel?) -> Unit
 ) {
     Column(
-        modifier=modifier
+        modifier = modifier
     ) {
         LazyVerticalStaggeredGrid(
-            columns = StaggeredGridCells.Fixed(column.columnCount)
+            columns = StaggeredGridCells.Fixed(column.columnCount),
+            contentPadding = PaddingValues(
+                //horizontal = if (column == MovieListGridColumn.SINGLE_ITEM) 8.dp else 0.dp
+            )
         ) {
             items(movies.itemCount) { index ->
                 val movie = movies[index]
@@ -63,6 +66,9 @@ fun MovieGridView(
                         modifier = Modifier.fillMaxSize(),
                         verticalArrangement = Arrangement.spacedBy(if (isSingleItem) 12.dp else 0.dp),
                         horizontalArrangement = Arrangement.spacedBy(if (isSingleItem) 8.dp else 0.dp),
+                        contentPadding = PaddingValues(
+                            horizontal = 8.dp
+                        )
                     ) {
                         items(30) {
                             AnimatedShimmer {

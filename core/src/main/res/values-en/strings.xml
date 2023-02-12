@@ -5,6 +5,7 @@
 
     <string name="common_back_button_description">Back</string>
     <string name="common_refresh">Refresh</string>
+    <string name="common_all">All</string>
     <!--Home Page-->
     <string name="home_page_top_bar_title">Homepage</string>
     <string name="up_coming_movie_text">Box Office Movies</string>

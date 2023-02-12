@@ -5,6 +5,7 @@
 
     <string name="common_back_button_description">Geri</string>
     <string name="common_refresh">Yenile</string>
+    <string name="common_all">Tümü</string>
     <!--Home Page-->
     <string name="home_page_top_bar_title">Anasayfa</string>
     <string name="up_coming_movie_text">Yakında Sinemalarda</string>

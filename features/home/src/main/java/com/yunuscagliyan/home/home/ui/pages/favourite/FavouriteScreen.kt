@@ -42,6 +42,10 @@ object FavouriteScreen : CoreScreen<FavouriteViewModel>() {
     @Composable
     override fun Content(viewModel: FavouriteViewModel) {
         val state by viewModel.state
+        LaunchedEffect(key1 = Unit){
+            viewModel.initState()
+        }
+
         Column(
             modifier = Modifier
                 .fillMaxSize()

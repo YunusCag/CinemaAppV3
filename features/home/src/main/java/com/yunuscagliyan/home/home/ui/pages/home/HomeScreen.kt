@@ -17,6 +17,7 @@ import com.yunuscagliyan.core.navigation.MainScreenRoute
 import com.yunuscagliyan.core_ui.components.pager.MovieHorizontalPager
 import com.yunuscagliyan.home.data.enum.MoviePagingType
 import com.yunuscagliyan.home.home.viewmodel.home.HomeViewModel
+import com.yunuscagliyan.home.home.viewmodel.main.MovieViewModel
 
 object HomeScreen : CoreScreen<HomeViewModel>() {
     override val route: String
@@ -28,13 +29,15 @@ object HomeScreen : CoreScreen<HomeViewModel>() {
     @OptIn(ExperimentalPagerApi::class, ExperimentalCoilApi::class)
     @Composable
     override fun Content(viewModel: HomeViewModel) {
-        val upComingMovies = viewModel.upComingMovies
+        val movieViewModel: MovieViewModel = hiltViewModel()
 
-        val trendingMovies = viewModel.trendingMovies
+        val upComingMovies = movieViewModel.upComingMovies
 
-        val popularMovies = viewModel.popularMovies
+        val trendingMovies = movieViewModel.trendingMovies
 
-        val topRatedMovies = viewModel.topRatedMovies
+        val popularMovies = movieViewModel.popularMovies
+
+        val topRatedMovies = movieViewModel.topRatedMovies
 
         Column(
             modifier = Modifier

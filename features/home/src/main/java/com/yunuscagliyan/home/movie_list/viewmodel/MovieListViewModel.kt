@@ -90,19 +90,29 @@ class MovieListViewModel @Inject constructor(
     }
 
     fun onGenreClick(genre: GenreModel, isSelected: Boolean) {
-        val selectedGenreIds = state.value.selectedGenreIds
-        val ids: MutableList<Int> = mutableListOf()
-        ids.addAll(selectedGenreIds)
-        if (isSelected) {
-            ids.remove(genre.id)
-        } else {
-            genre.id?.let { id ->
-                ids.add(id)
+        setState(state) {
+            val ids: MutableList<Int> = selectedGenreIds.toMutableList()
+            if (isSelected) {
+                ids.remove(genre.id)
+            } else {
+                genre.id?.let { id ->
+                    ids.add(id)
+                }
             }
+            copy(
+                selectedGenreIds = ids
+            )
         }
-        state.value = state.value.copy(
-            selectedGenreIds = ids
-        )
+
+        getMovies()
+    }
+
+    fun onAllClick() {
+        setState(state) {
+            copy(
+                selectedGenreIds = emptyList()
+            )
+        }
         getMovies()
     }
 
