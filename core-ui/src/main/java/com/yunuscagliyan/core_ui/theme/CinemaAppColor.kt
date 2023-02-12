@@ -91,7 +91,7 @@ object AppCustomLightColors : AppColor {
     override val colorPrimaryDark = Color(0xFF0A1823)
     override val colorSecondary = Color(0xFFE82251)
     override val colorAccent = Color(0xFFFBC02D)
-    override val colorBackground = Color(0xFFFFFFFF)
+    override val colorBackground = Color(0xFFF5F5F5)
 
     override val colorBlack = Color(0xFF000000)
     override val colorWhite = Color(0xFFFFFFFF)

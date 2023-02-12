@@ -2,19 +2,19 @@ package com.yunuscagliyan.home.home.viewmodel.favourite
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
+import com.yunuscagliyan.core.R
 import com.yunuscagliyan.core.data.local.entity.MovieEntity
 import com.yunuscagliyan.core.data.remote.model.movie.MovieModel
 import com.yunuscagliyan.core.domain.repository.MovieRepository
 import com.yunuscagliyan.core.navigation.RootScreenRoute
 import com.yunuscagliyan.core.util.Resource
+import com.yunuscagliyan.core.util.UIText
 import com.yunuscagliyan.core_ui.event.CoreEvent
 import com.yunuscagliyan.core_ui.navigation.Routes
 import com.yunuscagliyan.core_ui.viewmodel.CoreViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -25,9 +25,6 @@ class FavouriteViewModel @Inject constructor(
 ) : CoreViewModel() {
 
     val state = mutableStateOf(FavouriteState())
-
-    private val _favouriteEvent = Channel<FavouriteEvent>()
-    val favouriteEvent = _favouriteEvent.receiveAsFlow()
 
     fun initState() {
         repository.getAllMovies()
@@ -75,7 +72,7 @@ class FavouriteViewModel @Inject constructor(
         }
     }
 
-    fun onRevokeClick(index: Int,entity: MovieEntity) {
+    private fun onRevokeClick(index: Int,entity: MovieEntity) {
         viewModelScope.launch {
             repository.insertMovie(
                 movie = entity
@@ -100,12 +97,20 @@ class FavouriteViewModel @Inject constructor(
                 )
             }
 
-            changeEvent(
-                event = FavouriteEvent.ShowSnackBar(
-                    entity = entity,
-                    index = index
+            sendEvent(
+                event = CoreEvent.ShowSnackBar(
+                    message = UIText.StringResource(
+                        resId = R.string.favourite_dismiss_text
+                    ),
+                    actionLabel = UIText.StringResource(
+                        resId = R.string.common_revoke
+                    ),
+                    onClick = {
+                        onRevokeClick(index, entity)
+                    }
                 )
             )
+
             setState(state) {
                 val favouriteList = favourites.toMutableList()
                 favouriteList.remove(entity)
@@ -114,15 +119,5 @@ class FavouriteViewModel @Inject constructor(
                 )
             }
         }
-    }
-
-    private fun changeEvent(event: FavouriteEvent) {
-        viewModelScope.launch {
-            _favouriteEvent.send(event)
-        }
-    }
-
-    sealed class FavouriteEvent {
-        data class ShowSnackBar(val index:Int,val entity: MovieEntity) : FavouriteEvent()
     }
 }
