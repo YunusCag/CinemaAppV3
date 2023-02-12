@@ -50,7 +50,6 @@ object HomeScreen : CoreScreen<HomeViewModel>() {
                     )
                 }
             )
-
             HorizontalMovieListView(
                 movies = trendingMovies,
                 title = stringResource(R.string.trending_title_text),

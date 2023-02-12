@@ -14,20 +14,26 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.yunuscagliyan.core.data.remote.model.movie.MovieModel
 import com.yunuscagliyan.core.util.Constants
+import com.yunuscagliyan.core.util.Constants.StringParameter.EMPTY_STRING
 import com.yunuscagliyan.core_ui.components.image.AppImage
 import com.yunuscagliyan.core_ui.components.label.MovieRateLabel
+import com.yunuscagliyan.core_ui.extension.formatDate
+import com.yunuscagliyan.core_ui.extension.noRippleClickable
 import com.yunuscagliyan.core_ui.theme.CinemaAppTheme
 
-@OptIn(ExperimentalMaterialApi::class)
+
 @Composable
 fun MovieLargeCard(
-    modifier: Modifier=Modifier,
+    modifier: Modifier = Modifier,
     model: MovieModel?,
     onTap: () -> Unit
 ) {
     val imageWidth = 140.dp
     Box(
         modifier = Modifier
+            .noRippleClickable {
+                onTap()
+            }
             .fillMaxWidth()
             .padding(
                 start = 8.dp,
@@ -44,8 +50,7 @@ fun MovieLargeCard(
                 .padding(top = 24.dp),
             shape = CinemaAppTheme.shapes.defaultSmallShape,
             backgroundColor = CinemaAppTheme.colors.card,
-            elevation = 4.dp,
-            onClick = onTap
+            elevation = 4.dp
         ) {
             Column(
                 modifier = Modifier
@@ -60,7 +65,7 @@ fun MovieLargeCard(
                 verticalArrangement = Arrangement.Bottom,
             ) {
                 Text(
-                    text = model?.title ?: Constants.StringParameter.EMPTY_STRING,
+                    text = model?.title ?: EMPTY_STRING,
                     style = CinemaAppTheme.typography.normalText.copy(
                         fontWeight = FontWeight.Bold
                     ),
@@ -70,9 +75,17 @@ fun MovieLargeCard(
                 MovieRateLabel(
                     voteAverage = model?.voteAverage
                 )
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    text = model?.overview ?: Constants.StringParameter.EMPTY_STRING,
+                    text = model?.releaseDate?.formatDate() ?: EMPTY_STRING,
+                    style = CinemaAppTheme.typography.smallText1.copy(
+                        fontWeight = FontWeight.SemiBold
+                    ),
+                    color = CinemaAppTheme.colors.secondary
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = model?.overview ?: EMPTY_STRING,
                     style = CinemaAppTheme.typography.smallText1,
                     color = CinemaAppTheme.colors.secondaryGray,
                     maxLines = 4,

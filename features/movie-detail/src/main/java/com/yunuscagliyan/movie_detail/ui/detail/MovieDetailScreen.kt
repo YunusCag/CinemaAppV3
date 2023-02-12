@@ -33,6 +33,7 @@ import com.yunuscagliyan.core.data.remote.model.crew.CrewModel
 import com.yunuscagliyan.core.navigation.RootScreenRoute
 import com.yunuscagliyan.core.util.Constants.NavigationArgumentKey.MOVIE_ID_KEY
 import com.yunuscagliyan.core.util.Constants.StringParameter.EMPTY_STRING
+import com.yunuscagliyan.core_ui.components.anim.AnimationBox
 import com.yunuscagliyan.core_ui.components.button.FavoriteButton
 import com.yunuscagliyan.core_ui.components.button.SecondaryMediumTextButton
 import com.yunuscagliyan.core_ui.components.error.NetworkErrorView
@@ -209,11 +210,13 @@ object MovieDetailScreen : CoreScreen<MovieDetailViewModel>() {
             title = state.movieDetailResponse?.title ?: EMPTY_STRING,
             backgroundColor = backgroundColor,
             rightActions = {
-                if(state.movieDetailError==null||!state.movieDetailLoading){
-                    FavoriteButton(
-                        isFavorite = state.isFavourite,
-                        onClick = onFavouriteClick
-                    )
+                if (state.movieDetailError == null && !state.movieDetailLoading) {
+                    AnimationBox {
+                        FavoriteButton(
+                            isFavorite = state.isFavourite,
+                            onClick = onFavouriteClick
+                        )
+                    }
                 }
             },
             leftActions = {

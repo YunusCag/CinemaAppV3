@@ -1,5 +1,9 @@
 package com.yunuscagliyan.movie_detail.ui.components
 
+import androidx.compose.animation.expandHorizontally
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkHorizontally
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
 import androidx.compose.material.Text
@@ -13,6 +17,7 @@ import com.yunuscagliyan.core.R
 import com.yunuscagliyan.core.data.remote.model.country.ProductionCountryModel
 import com.yunuscagliyan.core.data.remote.model.genre.GenreModel
 import com.yunuscagliyan.core.util.Constants
+import com.yunuscagliyan.core_ui.components.anim.AnimationBox
 import com.yunuscagliyan.core_ui.components.image.AppImage
 import com.yunuscagliyan.core_ui.extension.formatDate
 import com.yunuscagliyan.core_ui.theme.CinemaAppTheme
@@ -32,17 +37,23 @@ fun TopSection(
                 horizontal = 16.dp
             )
     ) {
-        Card(
-            modifier = Modifier
-                .width(150.dp)
-                .fillMaxHeight(),
-            shape = CinemaAppTheme.shapes.medium,
+        AnimationBox(
+            duration = Constants.DurationUTil.LOW_ANIMATION_DURATION.toLong(),
+            enter = expandHorizontally() + fadeIn(),
+            exit = shrinkHorizontally() + fadeOut()
         ) {
-            AppImage(
-                modifier = Modifier.fillMaxSize(),
-                url = state.movieDetailResponse?.posterPath,
-                description = state.movieDetailResponse?.title
-            )
+            Card(
+                modifier = Modifier
+                    .width(150.dp)
+                    .fillMaxHeight(),
+                shape = CinemaAppTheme.shapes.medium,
+            ) {
+                AppImage(
+                    modifier = Modifier.fillMaxSize(),
+                    url = state.movieDetailResponse?.posterPath,
+                    description = state.movieDetailResponse?.title
+                )
+            }
         }
         Spacer(modifier = Modifier.width(12.dp))
         Column {
@@ -53,7 +64,8 @@ fun TopSection(
             )
             Spacer(modifier = Modifier.height(2.dp))
             Text(
-                text = state.movieDetailResponse?.originalTitle ?: Constants.StringParameter.EMPTY_STRING,
+                text = state.movieDetailResponse?.originalTitle
+                    ?: Constants.StringParameter.EMPTY_STRING,
                 style = CinemaAppTheme.typography.smallText1,
                 color = CinemaAppTheme.colors.secondaryGray
             )

@@ -17,11 +17,13 @@ object Constants {
     }
 
     object DurationUTil {
+        const val DEFAULT_ANIMATION_DURATION = 100
+        const val LOW_ANIMATION_DURATION = 200
         const val TRANSITION_DURATION = 500
         const val SPLASH_DURATION = 4000
         const val HOME_AUTO_SCROLL_DURATION = 8000
-        const val DEFAULT_ANIMATION_DURATION = 100
-        const val DISMISS_ANIMATION_DURATION=300
+        const val DISMISS_ANIMATION_DURATION = 300
+        const val ANIMATION_BOX_DURATION = 400
     }
 
     object DateFormatUtil {
@@ -52,7 +54,7 @@ object Constants {
     object DBUtil {
         const val MOVIE_TABLE_ENTITY = "movie_entity"
         const val MOVIE_DATABASE_VERSION = 1
-        const val MOVIE_DATABASE_NAME="movie_db"
+        const val MOVIE_DATABASE_NAME = "movie_db"
     }
 
     object LanguageUtil {

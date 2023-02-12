@@ -23,6 +23,7 @@ import com.yunuscagliyan.core_ui.components.main.MainUIFrame
 import com.yunuscagliyan.core_ui.navigation.CoreScreen
 import com.yunuscagliyan.core.R
 import com.yunuscagliyan.core.util.Constants.NavigationArgumentKey.LIST_TYPE_KEY
+import com.yunuscagliyan.core_ui.components.anim.AnimationBox
 import com.yunuscagliyan.core_ui.components.ripple.NoRippleInteractionSource
 import com.yunuscagliyan.core_ui.theme.CinemaAppTheme
 import com.yunuscagliyan.home.data.enum.MovieListGridColumn
@@ -75,13 +76,15 @@ object MovieListScreen : CoreScreen<MovieListViewModel>() {
                     .navigationBarsPadding()
             ) {
                 Spacer(modifier = Modifier.height(8.dp))
-                GenreListRow(
-                    genres = state.genreList,
-                    selectedIds = state.selectedGenreIds,
-                    onSelected = { genre, isSelected ->
-                        viewModel.onGenreClick(genre, isSelected)
-                    }
-                )
+                AnimationBox {
+                    GenreListRow(
+                        genres = state.genreList,
+                        selectedIds = state.selectedGenreIds,
+                        onSelected = { genre, isSelected ->
+                            viewModel.onGenreClick(genre, isSelected)
+                        }
+                    )
+                }
                 Spacer(modifier = Modifier.height(8.dp))
                 MovieGridView(
                     modifier = Modifier

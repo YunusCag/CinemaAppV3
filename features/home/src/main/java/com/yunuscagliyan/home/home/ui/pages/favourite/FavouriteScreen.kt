@@ -1,6 +1,6 @@
 package com.yunuscagliyan.home.home.ui.pages.favourite
 
-import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.*
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -12,8 +12,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.key
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
@@ -78,7 +77,7 @@ object FavouriteScreen : CoreScreen<FavouriteViewModel>() {
         }
     }
 
-    @OptIn(ExperimentalMaterialApi::class, ExperimentalFoundationApi::class)
+    @OptIn(ExperimentalFoundationApi::class)
     @Composable
     private fun FavouriteList(
         favourites: List<MovieEntity>,
@@ -104,66 +103,88 @@ object FavouriteScreen : CoreScreen<FavouriteViewModel>() {
             ) { index ->
                 val entity = favourites[index]
                 val movie = entity.toMovieModel()
-                val dismissState = rememberDismissState(
-                    confirmStateChange = {
-                        if (it == DismissValue.DismissedToStart) {
-                            onDismiss(index, entity)
-                        }
-                        true
-                    }
+
+
+
+                MovieItem(
+                    modifier = Modifier.animateItemPlacement(),
+                    index = index,
+                    entity = entity,
+                    movie = movie,
+                    onDismiss = onDismiss,
+                    onNavigateDetail = onNavigateDetail
                 )
-                SwipeToDismiss(
-                    state = dismissState,
-                    dismissThresholds = { _ ->
-                        FractionalThreshold(0.2f)
-                    },
-                    directions = setOf(DismissDirection.EndToStart),
-                    background = {
-                        val color by animateColorAsState(
-                            when (dismissState.dismissDirection) {
-                                DismissDirection.StartToEnd -> Color.Transparent
-                                DismissDirection.EndToStart -> CinemaAppTheme.colors.secondary
-                                else -> Color.Transparent
-                            },
-                            animationSpec = tween(DISMISS_ANIMATION_DURATION)
-                        )
-                        val alignment = Alignment.CenterEnd
-                        val icon = Icons.Default.Delete
+            }
+        }
+    }
 
-                        val scale by animateFloatAsState(
-                            if (dismissState.targetValue == DismissValue.Default) 0.75f else 1f,
-                            animationSpec = tween(DISMISS_ANIMATION_DURATION)
-                        )
-
-                        Box(
-                            Modifier
-                                .padding(
-                                    top = 24.dp
-                                )
-                                .fillMaxSize()
-                                .background(color)
-                                .padding(
-                                    horizontal = 16.dp
-                                ),
-                            contentAlignment = alignment
-                        ) {
-                            Icon(
-                                icon,
-                                contentDescription = "Delete Icon",
-                                tint = CinemaAppTheme.colors.whiteColor,
-                                modifier = Modifier
-                                    .size(36.dp)
-                                    .scale(scale)
-                            )
-                        }
-                    },
-                ) {
-                    MovieLargeCard(
-                        model = movie
-                    ) {
-                        onNavigateDetail(movie)
-                    }
+    @Composable
+    @OptIn(ExperimentalMaterialApi::class)
+    private fun MovieItem(
+        modifier: Modifier = Modifier,
+        index: Int,
+        entity: MovieEntity,
+        movie: MovieModel,
+        onDismiss: (Int, MovieEntity) -> Unit,
+        onNavigateDetail: (MovieModel) -> Unit
+    ) {
+        val dismissState = rememberDismissState(
+            confirmStateChange = {
+                if (it == DismissValue.DismissedToStart) {
+                    onDismiss(index, entity)
                 }
+                true
+            }
+        )
+        SwipeToDismiss(
+            state = dismissState,
+            dismissThresholds = { _ ->
+                FractionalThreshold(1f)
+            },
+            directions = setOf(DismissDirection.EndToStart),
+            background = {
+                val color by animateColorAsState(
+                    when (dismissState.dismissDirection) {
+                        DismissDirection.StartToEnd -> Color.Transparent
+                        DismissDirection.EndToStart -> CinemaAppTheme.colors.secondary
+                        else -> Color.Transparent
+                    },
+                    animationSpec = tween(DISMISS_ANIMATION_DURATION)
+                )
+
+                val scale by animateFloatAsState(
+                    if (dismissState.targetValue == DismissValue.Default) 0.75f else 1f,
+                    animationSpec = tween(DISMISS_ANIMATION_DURATION)
+                )
+
+                Box(
+                    Modifier
+                        .padding(
+                            top = 36.dp
+                        )
+                        .fillMaxSize()
+                        .background(color)
+                        .padding(
+                            horizontal = 16.dp
+                        ),
+                    contentAlignment = Alignment.CenterEnd
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Delete,
+                        contentDescription = "Delete Icon",
+                        tint = CinemaAppTheme.colors.whiteColor,
+                        modifier = Modifier
+                            .size(36.dp)
+                            .scale(scale)
+                    )
+                }
+            },
+        ) {
+            MovieLargeCard(
+                modifier = modifier,
+                model = movie
+            ) {
+                onNavigateDetail(movie)
             }
         }
     }
