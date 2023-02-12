@@ -7,12 +7,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Modifier
 import com.yunuscagliyan.core.util.Constants
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
 fun AnimationBox(
+    modifier: Modifier=Modifier,
     enter: EnterTransition = expandVertically() + fadeIn(),
     exit: ExitTransition = fadeOut() + shrinkVertically(),
     duration: Long = Constants.DurationUTil.ANIMATION_BOX_DURATION.toLong(),

@@ -1,5 +1,6 @@
 package com.yunuscagliyan.home.movie_list.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -9,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -69,33 +71,40 @@ object MovieListScreen : CoreScreen<MovieListViewModel>() {
                 )
             }
         ) {
-            Column(
+            Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding()
                     .navigationBarsPadding()
             ) {
-                Spacer(modifier = Modifier.height(8.dp))
-                if(!state.isGenreLoading){
-                    AnimationBox {
-                        GenreListRow(
-                            genres = state.genreList,
-                            selectedIds = state.selectedGenreIds,
-                            onSelected = { genre, isSelected ->
-                                viewModel.onGenreClick(genre, isSelected)
-                            },
-                            onAllClicked = viewModel::onAllClick
-                        )
-                    }
-                }
-                Spacer(modifier = Modifier.height(8.dp))
                 MovieGridView(
                     modifier = Modifier
-                        .weight(1f),
+                        .fillMaxSize(),
                     movies = movies,
                     column = state.columnCount,
                     onMovieTap = viewModel::onMovieTap
                 )
+                AnimationBox {
+                    GenreListRow(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(
+                                CinemaAppTheme.colors.background.copy(
+                                    alpha = 0.4f
+                                )
+                            )
+                            .padding(
+                                top = 8.dp,
+                                bottom = 8.dp
+                            ),
+                        genres = state.genreList,
+                        selectedIds = state.selectedGenreIds,
+                        onSelected = { genre, isSelected ->
+                            viewModel.onGenreClick(genre, isSelected)
+                        },
+                        isLoading = state.isGenreLoading,
+                        onAllClicked = viewModel::onAllClick
+                    )
+                }
             }
         }
     }

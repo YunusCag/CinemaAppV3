@@ -27,6 +27,9 @@ fun MovieGridView(
     modifier: Modifier = Modifier,
     movies: LazyPagingItems<MovieModel>,
     column: MovieListGridColumn,
+    contentPaddingValues: PaddingValues = PaddingValues(
+        top = 60.dp
+    ),
     onMovieTap: (MovieModel?) -> Unit
 ) {
     Column(
@@ -34,9 +37,7 @@ fun MovieGridView(
     ) {
         LazyVerticalStaggeredGrid(
             columns = StaggeredGridCells.Fixed(column.columnCount),
-            contentPadding = PaddingValues(
-                //horizontal = if (column == MovieListGridColumn.SINGLE_ITEM) 8.dp else 0.dp
-            )
+            contentPadding = contentPaddingValues
         ) {
             items(movies.itemCount) { index ->
                 val movie = movies[index]
@@ -67,7 +68,7 @@ fun MovieGridView(
                         verticalArrangement = Arrangement.spacedBy(if (isSingleItem) 12.dp else 0.dp),
                         horizontalArrangement = Arrangement.spacedBy(if (isSingleItem) 8.dp else 0.dp),
                         contentPadding = PaddingValues(
-                            horizontal = 8.dp
+                            horizontal = if (isSingleItem) 8.dp else 0.dp
                         )
                     ) {
                         items(30) {
