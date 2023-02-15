@@ -43,12 +43,17 @@ object Constants {
         const val MOVIE_VIDEO_URL = "movie/{movie_id}/videos"
     }
 
+    object NetworkCacheUtil {
+        const val CACHE_FILE_NAME = "offlineCache"
+    }
+
     object NetworkQueryParamKey {
         const val page = "page"
         const val language = "language"
         const val region = "region"
         const val withGenres = "with_genres"
         const val movieId = "movie_id"
+        const val apiKey = "api_key"
     }
 
     object DBUtil {

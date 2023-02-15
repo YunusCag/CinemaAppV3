@@ -135,7 +135,7 @@ abstract class CoreScreen<T : CoreViewModel> {
             is Routes.PopBackRoute -> {
                 navHostController.popBackStack(
                     routes.route,
-                    routes.inclusive
+                    routes.inclusive,
                 )
             }
             is Routes.PopBack -> {

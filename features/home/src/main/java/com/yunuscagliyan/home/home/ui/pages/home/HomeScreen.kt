@@ -29,15 +29,13 @@ object HomeScreen : CoreScreen<HomeViewModel>() {
     @OptIn(ExperimentalPagerApi::class, ExperimentalCoilApi::class)
     @Composable
     override fun Content(viewModel: HomeViewModel) {
-        val movieViewModel: MovieViewModel = hiltViewModel()
+        val upComingMovies = viewModel.upComingMovies
 
-        val upComingMovies = movieViewModel.upComingMovies
+        val trendingMovies = viewModel.trendingMovies
 
-        val trendingMovies = movieViewModel.trendingMovies
+        val popularMovies = viewModel.popularMovies
 
-        val popularMovies = movieViewModel.popularMovies
-
-        val topRatedMovies = movieViewModel.topRatedMovies
+        val topRatedMovies = viewModel.topRatedMovies
 
         Column(
             modifier = Modifier

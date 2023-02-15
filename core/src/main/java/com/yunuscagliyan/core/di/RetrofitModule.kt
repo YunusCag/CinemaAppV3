@@ -1,17 +1,21 @@
 package com.yunuscagliyan.core.di
 
+import android.app.Application
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.yunuscagliyan.core.BuildConfig
+import com.yunuscagliyan.core.data.remote.util.ApiKeyInterceptor
+import com.yunuscagliyan.core.util.Constants.NetworkCacheUtil.CACHE_FILE_NAME
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import okhttp3.Interceptor
+import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import java.io.File
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -28,30 +32,18 @@ object RetrofitModule {
 
     @Provides
     @Singleton
-    fun provideRequestInterceptor(): Interceptor {
-        return Interceptor { chain ->
-            val url = chain.request()
-                .url
-                .newBuilder()
-                .addQueryParameter("api_key", BuildConfig.API_KEY)
-                .build()
-            val request = chain.request()
-                .newBuilder()
-                .url(url)
-                .build()
-            return@Interceptor chain.proceed(request)
-        }
-    }
-
-    @Provides
-    @Singleton
-    fun provideOkHttpClient(requestInterceptor: Interceptor): OkHttpClient {
-        val loggingInterceptor=HttpLoggingInterceptor().apply {
+    fun provideOkHttpClient(
+        application: Application
+    ): OkHttpClient {
+        val loggingInterceptor = HttpLoggingInterceptor().apply {
             setLevel(HttpLoggingInterceptor.Level.BODY)
         }
+        val httpCacheDirectory = File(application.cacheDir, CACHE_FILE_NAME)
+        val cache = Cache(httpCacheDirectory, 10 * 1024 * 1024)
 
         return OkHttpClient.Builder()
-            .addInterceptor(requestInterceptor)
+            .cache(cache)
+            .addNetworkInterceptor(ApiKeyInterceptor())
             .addInterceptor(loggingInterceptor)
             .connectTimeout(60, TimeUnit.SECONDS)
             .build()
