@@ -100,6 +100,7 @@ class MovieListViewModel @Inject constructor(
                 ids.remove(genre.id)
             } else {
                 genre.id?.let { id ->
+                    ids.clear()
                     ids.add(id)
                 }
             }

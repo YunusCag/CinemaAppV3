@@ -39,7 +39,7 @@ object RetrofitModule {
             setLevel(HttpLoggingInterceptor.Level.BODY)
         }
         val httpCacheDirectory = File(application.cacheDir, CACHE_FILE_NAME)
-        val cache = Cache(httpCacheDirectory, 10 * 1024 * 1024)
+        val cache = Cache(httpCacheDirectory, 10L * 1024L * 1024L)
 
         return OkHttpClient.Builder()
             .cache(cache)

@@ -37,6 +37,8 @@ fun MovieGridView(
         modifier = modifier
     ) {
         LazyVerticalStaggeredGrid(
+            modifier = Modifier
+                .weight(1f),
             columns = StaggeredGridCells.Fixed(column.columnCount),
             contentPadding = contentPaddingValues
         ) {
@@ -68,14 +70,15 @@ fun MovieGridView(
                         modifier = Modifier.fillMaxSize(),
                         verticalArrangement = Arrangement.spacedBy(if (isSingleItem) 12.dp else 0.dp),
                         horizontalArrangement = Arrangement.spacedBy(if (isSingleItem) 8.dp else 0.dp),
-                        contentPadding = PaddingValues(
-                            horizontal = if (isSingleItem) 8.dp else 0.dp
-                        )
+                        contentPadding = contentPaddingValues
                     ) {
                         items(30) {
                             AnimatedShimmer {
                                 Box(
                                     modifier = Modifier
+                                        .padding(
+                                            horizontal = if (isSingleItem) 8.dp else 0.dp
+                                        )
                                         .fillMaxWidth()
                                         .heightIn(min = 150.dp)
                                         .background(
@@ -96,19 +99,6 @@ fun MovieGridView(
                             movies.refresh()
                             onRefreshClick()
                         }
-                    )
-                }
-                loadState.append is LoadState.Loading -> {
-                    LoadingView(
-                        modifier = Modifier
-                            .height(150.dp)
-                    )
-                }
-                loadState.append is LoadState.Error -> {
-                    val errorState = loadState.append as LoadState.Error
-
-                    NetworkErrorView(
-                        message = errorState.error.message
                     )
                 }
             }
