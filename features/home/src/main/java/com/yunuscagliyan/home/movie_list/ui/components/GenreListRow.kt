@@ -30,7 +30,7 @@ fun GenreListRow(
         ),
         horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        if (!isLoading) {
+        if (!isLoading && genres.isNotEmpty()) {
             item {
                 ToggleButton(
                     label = stringResource(id = R.string.common_all),

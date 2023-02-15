@@ -81,6 +81,7 @@ object MovieListScreen : CoreScreen<MovieListViewModel>() {
                         .fillMaxSize(),
                     movies = movies,
                     column = state.columnCount,
+                    onRefreshClick =viewModel::getMovieGenreList,
                     onMovieTap = viewModel::onMovieTap
                 )
                 AnimationBox {

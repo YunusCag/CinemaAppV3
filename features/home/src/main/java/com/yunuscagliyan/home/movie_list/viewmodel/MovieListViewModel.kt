@@ -49,7 +49,10 @@ class MovieListViewModel @Inject constructor(
             listType = listType
         )
         getMovies()
+        getMovieGenreList()
+    }
 
+    fun getMovieGenreList() {
         getGenreList(
             GetMovieGenreList.Params()
         ).onEach { result ->
@@ -68,6 +71,7 @@ class MovieListViewModel @Inject constructor(
                 is Resource.Success -> {
                     state.value = state.value.copy(
                         genreList = result.data?.genres ?: emptyList(),
+                        selectedGenreIds = emptyList(),
                         isGenreLoading = false
                     )
                 }

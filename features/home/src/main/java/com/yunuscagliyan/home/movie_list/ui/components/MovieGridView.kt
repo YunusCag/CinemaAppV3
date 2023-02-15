@@ -30,6 +30,7 @@ fun MovieGridView(
     contentPaddingValues: PaddingValues = PaddingValues(
         top = 60.dp
     ),
+    onRefreshClick: () -> Unit,
     onMovieTap: (MovieModel?) -> Unit
 ) {
     Column(
@@ -90,7 +91,11 @@ fun MovieGridView(
                     val errorState = loadState.refresh as LoadState.Error
 
                     NetworkErrorView(
-                        message = errorState.error.message
+                        message = errorState.error.message,
+                        onRefreshClick = {
+                            movies.refresh()
+                            onRefreshClick()
+                        }
                     )
                 }
                 loadState.append is LoadState.Loading -> {
