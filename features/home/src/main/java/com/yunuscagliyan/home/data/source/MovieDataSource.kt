@@ -1,5 +1,6 @@
 package com.yunuscagliyan.home.data.source
 
+import com.yunuscagliyan.core.data.enums.LanguageType
 import com.yunuscagliyan.core.data.paging.BaseMovieDataSource
 import com.yunuscagliyan.core.data.remote.response.MovieListResponse
 import com.yunuscagliyan.home.data.enum.MoviePagingType
@@ -12,7 +13,7 @@ class MovieDataSource(
 ) : BaseMovieDataSource() {
     data class Param(
         var genreIds: List<Int>? = null,
-        val language: String = "en",
+        val language: String = LanguageType.EN.code,
         val region: String = "US",
     )
 

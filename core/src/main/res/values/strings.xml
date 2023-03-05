@@ -7,6 +7,8 @@
     <string name="common_refresh">Yenile</string>
     <string name="common_all">Tümü</string>
     <string name="common_revoke">Geri al</string>
+    <string name="common_turkish">Türkçe</string>
+    <string name="common_english">İngilizce</string>
     <!--Home Page-->
     <string name="home_page_top_bar_title">Anasayfa</string>
     <string name="up_coming_movie_text">Yakında Sinemalarda</string>
@@ -20,6 +22,7 @@
 
     <!--- Settings Page -->
     <string name="settings_page_top_bar_title">Ayarlar</string>
+    <string name="settings_language_selection_title">Dil Seçimi</string>
 
     <!--- Movie Detail-->
     <string name="movie_detail_country">Ülke :</string>

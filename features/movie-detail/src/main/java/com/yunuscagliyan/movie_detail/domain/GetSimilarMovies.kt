@@ -4,6 +4,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.yunuscagliyan.core.data.remote.model.movie.MovieModel
+import com.yunuscagliyan.core.helper.LanguageHelper
 import com.yunuscagliyan.core.util.Constants
 import com.yunuscagliyan.movie_detail.service.MovieDetailService
 import com.yunuscagliyan.movie_detail.source.SimilarMoviesDataSource
@@ -11,7 +12,8 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetSimilarMovies @Inject constructor(
-    private val service: MovieDetailService
+    private val service: MovieDetailService,
+    private val languageHelper: LanguageHelper
 ) {
     operator fun invoke(
         movieId: Int
@@ -25,6 +27,7 @@ class GetSimilarMovies @Inject constructor(
                     service = service,
                     params = SimilarMoviesDataSource.Param(
                         movieId = movieId,
+                        language = languageHelper.language.code
                     )
                 )
             }

@@ -7,6 +7,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.yunuscagliyan.core.data.remote.model.genre.GenreModel
 import com.yunuscagliyan.core.data.remote.model.movie.MovieModel
+import com.yunuscagliyan.core.helper.LanguageHelper
 import com.yunuscagliyan.core.navigation.RootScreenRoute
 import com.yunuscagliyan.core.util.Constants.NavigationArgumentKey.LIST_TYPE_KEY
 import com.yunuscagliyan.core.util.Resource
@@ -28,6 +29,7 @@ import javax.inject.Inject
 class MovieListViewModel @Inject constructor(
     private val getMovieListByType: GetMovieListByType,
     private val getGenreList: GetMovieGenreList,
+    private val languageHelper: LanguageHelper,
     savedStateHandle: SavedStateHandle
 ) : CoreViewModel() {
 
@@ -45,16 +47,20 @@ class MovieListViewModel @Inject constructor(
     }
 
     private fun initState() {
-        state.value = state.value.copy(
-            listType = listType
-        )
+        setState(state) {
+            copy(
+                listType = listType
+            )
+        }
         getMovies()
         getMovieGenreList()
     }
 
     fun getMovieGenreList() {
         getGenreList(
-            GetMovieGenreList.Params()
+            GetMovieGenreList.Params(
+                language = languageHelper.language.code
+            )
         ).onEach { result ->
             when (result) {
                 is Resource.Error -> {
@@ -82,7 +88,7 @@ class MovieListViewModel @Inject constructor(
     private fun getMovies() {
         movies = getMovieListByType(
             type = listType,
-            genreIds = state.value.selectedGenreIds
+            genreIds = state.value.selectedGenreIds,
         ).cachedIn(viewModelScope)
     }
 

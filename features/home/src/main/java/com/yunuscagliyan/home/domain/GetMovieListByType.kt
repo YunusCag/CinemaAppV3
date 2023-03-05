@@ -4,6 +4,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.yunuscagliyan.core.data.remote.model.movie.MovieModel
+import com.yunuscagliyan.core.helper.LanguageHelper
 import com.yunuscagliyan.core.util.Constants.PaginationUtil.PER_PAGE_ITEM
 import com.yunuscagliyan.home.data.enum.MoviePagingType
 import com.yunuscagliyan.home.data.source.MovieDataSource
@@ -13,10 +14,12 @@ import javax.inject.Inject
 
 class GetMovieListByType @Inject constructor(
     private val service: HomeService,
+    private val languageHelper: LanguageHelper
 ) {
     operator fun invoke(
-        genreIds: List<Int>?=null,
-        type: MoviePagingType
+        genreIds: List<Int>? = null,
+        type: MoviePagingType,
+        language: String = languageHelper.language.code
     ): Flow<PagingData<MovieModel>> {
         return Pager(
             config = PagingConfig(
@@ -26,7 +29,8 @@ class GetMovieListByType @Inject constructor(
                 MovieDataSource(
                     service = service,
                     params = MovieDataSource.Param(
-                        genreIds = genreIds
+                        genreIds = genreIds,
+                        language = language
                     ),
                     type = type
                 )

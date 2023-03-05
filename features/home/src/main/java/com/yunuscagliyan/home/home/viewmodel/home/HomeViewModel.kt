@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.yunuscagliyan.core.data.remote.model.movie.MovieModel
+import com.yunuscagliyan.core.helper.LanguageHelper
 import com.yunuscagliyan.core.navigation.RootScreenRoute
 import com.yunuscagliyan.core_ui.event.CoreEvent
 import com.yunuscagliyan.core_ui.navigation.RouteNavigationOptions
@@ -18,7 +19,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getMovieListByType: GetMovieListByType
+    private val getMovieListByType: GetMovieListByType,
+    private val languageHelper: LanguageHelper
 ) : CoreViewModel() {
 
     var upComingMovies: Flow<PagingData<MovieModel>> = emptyFlow()
@@ -33,12 +35,27 @@ class HomeViewModel @Inject constructor(
 
     private fun getMovies() {
         upComingMovies =
-            getMovieListByType(type = MoviePagingType.UPCOMING).cachedIn(viewModelScope)
+            getMovieListByType(
+                type = MoviePagingType.UPCOMING,
+                language = languageHelper.language.code
+            ).cachedIn(viewModelScope)
+
         trendingMovies =
-            getMovieListByType(type = MoviePagingType.TRENDING).cachedIn(viewModelScope)
-        popularMovies = getMovieListByType(type = MoviePagingType.POPULAR).cachedIn(viewModelScope)
+            getMovieListByType(
+                type = MoviePagingType.TRENDING,
+                language = languageHelper.language.code
+            ).cachedIn(viewModelScope)
+
+        popularMovies = getMovieListByType(
+            type = MoviePagingType.POPULAR,
+            language = languageHelper.language.code
+        ).cachedIn(viewModelScope)
+
         topRatedMovies =
-            getMovieListByType(type = MoviePagingType.TOP_RATED).cachedIn(viewModelScope)
+            getMovieListByType(
+                type = MoviePagingType.TOP_RATED,
+                language = languageHelper.language.code
+            ).cachedIn(viewModelScope)
     }
 
     fun navigateList(pagingType: MoviePagingType) {

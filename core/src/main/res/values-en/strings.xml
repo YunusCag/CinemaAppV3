@@ -7,6 +7,8 @@
     <string name="common_refresh">Refresh</string>
     <string name="common_all">All</string>
     <string name="common_revoke">Geri al</string>
+    <string name="common_turkish">Turkish</string>
+    <string name="common_english">English</string>
     <!--Home Page-->
     <string name="home_page_top_bar_title">Homepage</string>
     <string name="up_coming_movie_text">Box Office Movies</string>
@@ -20,6 +22,7 @@
 
     <!--- Settings Page -->
     <string name="settings_page_top_bar_title">Settings</string>
+    <string name="settings_language_selection_title">Language Choice</string>
 
     <!--- Movie Detail-->
     <string name="movie_detail_country">Country :</string>

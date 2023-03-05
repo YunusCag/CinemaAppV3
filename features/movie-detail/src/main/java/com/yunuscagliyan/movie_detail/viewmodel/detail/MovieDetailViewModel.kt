@@ -11,6 +11,7 @@ import com.yunuscagliyan.core.data.local.entity.MovieEntity
 import com.yunuscagliyan.core.data.remote.model.cast.CastModel
 import com.yunuscagliyan.core.data.remote.model.movie.MovieModel
 import com.yunuscagliyan.core.domain.repository.MovieRepository
+import com.yunuscagliyan.core.helper.LanguageHelper
 import com.yunuscagliyan.core.navigation.RootScreenRoute
 import com.yunuscagliyan.core.util.Constants.NavigationArgumentKey.MOVIE_ID_KEY
 import com.yunuscagliyan.core.util.Constants.StringParameter.EMPTY_STRING
@@ -37,6 +38,7 @@ class MovieDetailViewModel @Inject constructor(
     private val getSimilarMovies: GetSimilarMovies,
     private val getMovieVideo: GetMovieVideo,
     private val repository: MovieRepository,
+    private val languageHelper: LanguageHelper,
     savedStateHandle: SavedStateHandle
 ) : CoreViewModel() {
 
@@ -134,7 +136,8 @@ class MovieDetailViewModel @Inject constructor(
     private fun getMovieDetailResponse(id: Int) {
         getMovieDetail(
             GetMovieDetail.Params(
-                movieId = id
+                movieId = id,
+                language = languageHelper.language.code
             )
         ).onEach { result ->
             when (result) {
@@ -168,7 +171,8 @@ class MovieDetailViewModel @Inject constructor(
     private fun getMovieCastCrew(id: Int) {
         getCastCrew(
             GetCastCrew.Params(
-                movieId = id
+                movieId = id,
+                language = languageHelper.language.code
             )
         ).onEach { result ->
             when (result) {

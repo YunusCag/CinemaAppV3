@@ -1,5 +1,6 @@
 package com.yunuscagliyan.movie_detail.source
 
+import com.yunuscagliyan.core.data.enums.LanguageType
 import com.yunuscagliyan.core.data.paging.BaseMovieDataSource
 import com.yunuscagliyan.core.data.remote.response.MovieListResponse
 import com.yunuscagliyan.movie_detail.service.MovieDetailService
@@ -11,14 +12,17 @@ class SimilarMoviesDataSource(
 
     data class Param(
         val movieId: Int,
-        val language: String = "en-US",
-    )
+        val language: String = LanguageType.EN.code,
+        val region: String = "US"
+    ) {
+        fun getFullLanguage(): String = "$language-$region"
+    }
 
     override suspend fun makeRequest(currentPage: Int): MovieListResponse {
         return service.getSimilarMovies(
             movieId = params.movieId,
             page = currentPage,
-            language = params.language
+            language = params.getFullLanguage()
         )
     }
 }
