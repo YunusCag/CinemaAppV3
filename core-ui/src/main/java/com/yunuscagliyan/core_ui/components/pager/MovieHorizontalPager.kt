@@ -96,25 +96,25 @@ fun MovieHorizontalPager(
                     delay(HOME_AUTO_SCROLL_DURATION.toLong())
                     if (pagerState.pageCount > pagerState.currentPage) {
                         pagerState.animateScrollToPage(
-                            page = (pagerState.currentPage + 1) % (pagerState.pageCount),
+                            page = (pagerState.currentPage + 1) % (pagerState.pageCount)
                         )
                     }
                 }
             }
+
             HorizontalPager(
+                modifier=Modifier
+                    .fillMaxWidth()
+                    .clip(CinemaAppTheme.shapes.defaultMediumShape)
+                    .padding(
+                        horizontal = 8.dp
+                    ),
                 count = lazyMovieItems.itemCount,
                 state = pagerState,
-                modifier = Modifier
-                    .fillMaxWidth(),
-                contentPadding = PaddingValues(
-                    horizontal = 8.dp
-                )
-
             ) { index ->
                 val movie = lazyMovieItems[index]
                 MovieHorizontalPage(
                     movie = movie,
-                    pageOffset = calculateCurrentOffsetForPage(index).absoluteValue,
                     onTap = {
                         onMovieTap(movie)
                     }
@@ -170,25 +170,12 @@ fun MovieHorizontalPager(
 private fun MovieHorizontalPage(
     movie: MovieModel?,
     modifier: Modifier = Modifier,
-    pageOffset: Float,
-    onTap: () -> Unit,
+    onTap: () -> Unit
 ) {
     Card(
-        modifier = modifier
-            .graphicsLayer {
-                // We animate the scaleX + scaleY, between 85% and 100%
-                lerp(
-                    start = ScaleFactor(0.65f, 0.85f),
-                    stop = ScaleFactor(1f, 1f),
-                    fraction = 1f - pageOffset.coerceIn(0f, 1f)
-                ).also { scale ->
-                    scaleX = scale.scaleX
-                    scaleY = scale.scaleX
-                }
-                alpha = 1f - pageOffset.coerceIn(0f, 1f)
-            },
+        modifier = modifier,
         elevation = 0.dp,
-        shape = CinemaAppTheme.shapes.defaultMediumShape,
+        //shape = CinemaAppTheme.shapes.defaultMediumShape,
         backgroundColor = Color.Unspecified,
         onClick = onTap
     ) {
