@@ -76,6 +76,7 @@ dependencies {
     api project(Modules.home)
     api project(Modules.movieDetail)
 
+    implementation 'androidx.core:core-splashscreen:1.0.0-beta01'
 
     testImplementation(Testing.junit4)
     androidTestImplementation(Testing.junitAndroidExt)

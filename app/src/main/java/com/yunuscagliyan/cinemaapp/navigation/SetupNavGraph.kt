@@ -18,7 +18,9 @@ import com.yunuscagliyan.splash.ui.SplashScreen
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun SetupNavGraph(navController: NavHostController) {
+fun SetupNavGraph(
+    navController: NavHostController,
+) {
     AnimatedNavHost(
         navController = navController,
         startDestination = RootScreenRoute.Splash.route,

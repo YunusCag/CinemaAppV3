@@ -5,7 +5,6 @@ import androidx.compose.runtime.mutableStateOf
 import com.yunuscagliyan.core.data.enums.LanguageType
 import com.yunuscagliyan.core.helper.LanguageHelper
 import com.yunuscagliyan.core_ui.viewmodel.CoreViewModel
-import com.yunuscagliyan.home.home.viewmodel.favourite.FavouriteState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -35,15 +34,15 @@ class SettingsViewModel @Inject constructor(
         }
 
         setState(state) {
-            languageHelper.changeLanguage(
-                type = type,
-                context = context,
-                reCreate = true
-            )
             copy(
                 selectedLanguage = type
             )
         }
+        languageHelper.changeLanguage(
+            type = type,
+            context = context,
+            restart = true
+        )
 
     }
 }

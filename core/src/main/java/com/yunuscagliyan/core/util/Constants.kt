@@ -20,7 +20,7 @@ object Constants {
         const val DEFAULT_ANIMATION_DURATION = 100
         const val LOW_ANIMATION_DURATION = 200
         const val TRANSITION_DURATION = 500
-        const val SPLASH_DURATION = 4000
+        const val SPLASH_DURATION = 2000
         const val HOME_AUTO_SCROLL_DURATION = 8000
         const val DISMISS_ANIMATION_DURATION = 300
         const val ANIMATION_BOX_DURATION = 400

@@ -1,8 +1,10 @@
 package com.yunuscagliyan.core.helper
 
 
-import android.app.Activity
+import android.content.ComponentName
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.content.res.Configuration
 import com.yunuscagliyan.core.data.enums.LanguageType
 import com.yunuscagliyan.core.data.local.preference.Preferences
@@ -34,10 +36,10 @@ class LanguageHelper @Inject constructor(
         return LanguageType.fromCode(code) ?: LanguageType.EN
     }
 
-    fun changeLanguage(type: LanguageType, context: Context, reCreate: Boolean = false) {
-        val locale = Locale(type.code)
+    fun changeLanguage(type: LanguageType, context: Context, restart: Boolean = false) {
         preferences.languageCode = type.code
         language = type
+        val locale = Locale(type.code)
 
         context.resources.apply {
             val config = Configuration(configuration)
@@ -45,9 +47,22 @@ class LanguageHelper @Inject constructor(
             Locale.setDefault(locale)
             config.setLocale(locale)
             context.resources.updateConfiguration(config, displayMetrics)
-            if (reCreate) {
-                (context as? Activity?)?.recreate()
+            if (restart) {
+                //(context as? Activity?)?.recreate()
+                restartApp(context)
             }
+        }
+    }
+
+    private fun restartApp(context: Context) {
+        val packageManager: PackageManager = context.packageManager
+        val intent: Intent? = packageManager.getLaunchIntentForPackage(context.packageName)
+        val componentName: ComponentName? = intent?.component
+        componentName?.let {
+            val restartIntent: Intent = Intent.makeRestartActivityTask(it)
+            restartIntent.flags=
+                Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            context.startActivity(restartIntent)
         }
     }
 

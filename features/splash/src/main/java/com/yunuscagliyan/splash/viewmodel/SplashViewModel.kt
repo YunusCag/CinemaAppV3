@@ -22,22 +22,26 @@ class SplashViewModel @Inject constructor(
         initState()
     }
 
-    private fun initState() {
+     fun initState() {
         val shouldShow = preferences.shouldShowOnBoard
 
         viewModelScope.launch {
             delay(SPLASH_DURATION.toLong())
-            sendEvent(
-                CoreEvent.Navigation(
-                    Routes.NavigateToRoute(
-                        if (shouldShow) RootScreenRoute.OnBoarding.route else RootScreenRoute.Main.route,
-                        options = RouteNavigationOptions(
-                            RootScreenRoute.Splash.route,
-                            inclusive = true
-                        )
+            navigateNext(shouldShow)
+        }
+    }
+
+    private fun navigateNext(shouldShow: Boolean) {
+        sendEvent(
+            CoreEvent.Navigation(
+                Routes.NavigateToRoute(
+                    if (shouldShow) RootScreenRoute.OnBoarding.route else RootScreenRoute.Main.route,
+                    options = RouteNavigationOptions(
+                        RootScreenRoute.Splash.route,
+                        inclusive = true
                     )
                 )
             )
-        }
+        )
     }
 }
