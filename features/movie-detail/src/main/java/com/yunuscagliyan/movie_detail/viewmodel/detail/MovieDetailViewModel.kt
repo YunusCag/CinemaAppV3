@@ -12,6 +12,7 @@ import com.yunuscagliyan.core.data.remote.model.cast.CastModel
 import com.yunuscagliyan.core.data.remote.model.movie.MovieModel
 import com.yunuscagliyan.core.domain.repository.MovieRepository
 import com.yunuscagliyan.core.helper.LanguageHelper
+import com.yunuscagliyan.core.helper.RegionHelper
 import com.yunuscagliyan.core.navigation.RootScreenRoute
 import com.yunuscagliyan.core.util.Constants.NavigationArgumentKey.MOVIE_ID_KEY
 import com.yunuscagliyan.core.util.Constants.StringParameter.EMPTY_STRING
@@ -39,6 +40,7 @@ class MovieDetailViewModel @Inject constructor(
     private val getMovieVideo: GetMovieVideo,
     private val repository: MovieRepository,
     private val languageHelper: LanguageHelper,
+    private val regionHelper: RegionHelper,
     savedStateHandle: SavedStateHandle
 ) : CoreViewModel() {
 
@@ -137,7 +139,8 @@ class MovieDetailViewModel @Inject constructor(
         getMovieDetail(
             GetMovieDetail.Params(
                 movieId = id,
-                language = languageHelper.language.code
+                language = languageHelper.language.code,
+                region = regionHelper.region.code
             )
         ).onEach { result ->
             when (result) {
@@ -172,7 +175,8 @@ class MovieDetailViewModel @Inject constructor(
         getCastCrew(
             GetCastCrew.Params(
                 movieId = id,
-                language = languageHelper.language.code
+                language = languageHelper.language.code,
+                region = regionHelper.region.code
             )
         ).onEach { result ->
             when (result) {
@@ -213,7 +217,8 @@ class MovieDetailViewModel @Inject constructor(
     private fun getVideo(id: Int) {
         getMovieVideo(
             GetMovieVideo.Params(
-                movieId = id
+                movieId = id,
+                region = regionHelper.region.code
             )
         ).onEach { result ->
             when (result) {

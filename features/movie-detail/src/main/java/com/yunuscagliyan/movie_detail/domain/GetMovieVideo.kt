@@ -1,6 +1,7 @@
 package com.yunuscagliyan.movie_detail.domain
 
 import com.yunuscagliyan.core.data.enums.LanguageType
+import com.yunuscagliyan.core.data.enums.RegionType
 import com.yunuscagliyan.core.data.remote.response.MovieVideoResponse
 import com.yunuscagliyan.core.domain.CoreRequestUseCase
 import com.yunuscagliyan.movie_detail.service.MovieDetailService
@@ -12,15 +13,14 @@ class GetMovieVideo @Inject constructor(
     data class Params(
         val movieId: Int,
         val language: String = LanguageType.EN.code,
-        val region: String = "US"
-    ) {
-        fun getFullLanguage(): String = "$language-$region"
-    }
+        val region: String = RegionType.USA.code
+    )
 
     override suspend fun makeRequest(params: Params): MovieVideoResponse {
         return service.getMovieVideo(
             movieId = params.movieId,
-            language = params.getFullLanguage()
+            language = params.language,
+            region = params.region
         )
     }
 }

@@ -1,8 +1,6 @@
 package com.yunuscagliyan.home.movie_list.ui.components
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -45,7 +43,6 @@ fun GenreListRow(
         }
         items(genres.size) { index ->
             val genre = genres[index]
-
             ToggleButton(
                 label = genre.name ?: EMPTY_STRING,
                 isSelected = selectedIds.any { it == genre.id },
@@ -53,6 +50,9 @@ fun GenreListRow(
                     onSelected(genre, isSelected)
                 }
             )
+            if (index != genres.size - 1) {
+                Spacer(modifier = Modifier.width(16.dp))
+            }
         }
     }
 }

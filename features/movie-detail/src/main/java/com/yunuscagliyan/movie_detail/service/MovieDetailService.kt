@@ -18,26 +18,30 @@ interface MovieDetailService {
     @GET(MOVIE_DETAIL_URL)
     suspend fun getMovieDetail(
         @Path(Constants.NetworkQueryParamKey.movieId) movieId: Int,
-        @Query(Constants.NetworkQueryParamKey.language) language: String
+        @Query(Constants.NetworkQueryParamKey.language) language: String,
+        @Query(Constants.NetworkQueryParamKey.region) region: String?,
     ): MovieDetailResponse
 
     @GET(MOVIE_CREDIT_URL)
     suspend fun getMovieCastCrew(
         @Path(Constants.NetworkQueryParamKey.movieId) movieId: Int,
-        @Query(Constants.NetworkQueryParamKey.language) language: String
+        @Query(Constants.NetworkQueryParamKey.language) language: String,
+        @Query(Constants.NetworkQueryParamKey.region) region: String?,
     ): CastCrewResponse
 
     @GET(SIMILAR_MOVIES_URL)
     suspend fun getSimilarMovies(
         @Path(Constants.NetworkQueryParamKey.movieId) movieId: Int,
         @Query(Constants.NetworkQueryParamKey.page) page: Int,
-        @Query(Constants.NetworkQueryParamKey.language) language: String
+        @Query(Constants.NetworkQueryParamKey.language) language: String,
+        @Query(Constants.NetworkQueryParamKey.region) region: String?,
     ): MovieListResponse
 
     @GET(MOVIE_VIDEO_URL)
     suspend fun getMovieVideo(
         @Path(Constants.NetworkQueryParamKey.movieId) movieId: Int,
-        @Query(Constants.NetworkQueryParamKey.language) language: String
+        @Query(Constants.NetworkQueryParamKey.language) language: String,
+        @Query(Constants.NetworkQueryParamKey.region) region: String?,
     ): MovieVideoResponse
 
 }

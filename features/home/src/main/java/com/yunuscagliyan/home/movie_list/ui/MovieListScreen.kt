@@ -90,7 +90,7 @@ object MovieListScreen : CoreScreen<MovieListViewModel>() {
                             .fillMaxWidth()
                             .background(
                                 CinemaAppTheme.colors.background.copy(
-                                    alpha = 0.4f
+                                    alpha = 0.1f
                                 )
                             )
                             .padding(

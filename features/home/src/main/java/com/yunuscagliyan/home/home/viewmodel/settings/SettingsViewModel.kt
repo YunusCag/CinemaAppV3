@@ -3,14 +3,17 @@ package com.yunuscagliyan.home.home.viewmodel.settings
 import android.content.Context
 import androidx.compose.runtime.mutableStateOf
 import com.yunuscagliyan.core.data.enums.LanguageType
+import com.yunuscagliyan.core.data.enums.RegionType
 import com.yunuscagliyan.core.helper.LanguageHelper
+import com.yunuscagliyan.core.helper.RegionHelper
 import com.yunuscagliyan.core_ui.viewmodel.CoreViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
-    private val languageHelper: LanguageHelper
+    private val languageHelper: LanguageHelper,
+    private val regionHelper: RegionHelper
 ) : CoreViewModel() {
     val state = mutableStateOf(SettingsState())
 
@@ -21,9 +24,12 @@ class SettingsViewModel @Inject constructor(
 
     private fun initState() {
         setState(state) {
-            val type = languageHelper.getCurrentLanguage()
+            val languageType = languageHelper.getCurrentLanguage()
+            val regionType = regionHelper.region
+
             copy(
-                selectedLanguage = type
+                selectedLanguage = languageType,
+                selectedRegion = regionType
             )
         }
     }
@@ -44,5 +50,21 @@ class SettingsViewModel @Inject constructor(
             restart = true
         )
 
+    }
+
+    fun changeSelectedRegion(type: RegionType, context: Context) {
+        if (state.value.selectedRegion == type) {
+            return
+        }
+
+        setState(state) {
+            copy(
+                selectedRegion = type
+            )
+        }
+        regionHelper.changeRegion(
+            type = type,
+            context = context
+        )
     }
 }

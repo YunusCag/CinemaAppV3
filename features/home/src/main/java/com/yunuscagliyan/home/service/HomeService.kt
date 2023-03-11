@@ -46,7 +46,8 @@ interface HomeService {
 
     @GET(GENRE_LIST_MOVIES_URL)
     suspend fun getMovieGenreList(
-        @Query(Constants.NetworkQueryParamKey.language) lang: String
+        @Query(Constants.NetworkQueryParamKey.language) lang: String,
+        @Query(Constants.NetworkQueryParamKey.region) region: String?,
     ): GenreListResponse
 
 

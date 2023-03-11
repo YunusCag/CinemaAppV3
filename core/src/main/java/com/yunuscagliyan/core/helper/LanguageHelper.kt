@@ -1,13 +1,11 @@
 package com.yunuscagliyan.core.helper
 
 
-import android.content.ComponentName
 import android.content.Context
-import android.content.Intent
-import android.content.pm.PackageManager
 import android.content.res.Configuration
 import com.yunuscagliyan.core.data.enums.LanguageType
 import com.yunuscagliyan.core.data.local.preference.Preferences
+import com.yunuscagliyan.core.extension.restartApp
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -48,22 +46,8 @@ class LanguageHelper @Inject constructor(
             config.setLocale(locale)
             context.resources.updateConfiguration(config, displayMetrics)
             if (restart) {
-                //(context as? Activity?)?.recreate()
-                restartApp(context)
+                context.restartApp()
             }
         }
     }
-
-    private fun restartApp(context: Context) {
-        val packageManager: PackageManager = context.packageManager
-        val intent: Intent? = packageManager.getLaunchIntentForPackage(context.packageName)
-        val componentName: ComponentName? = intent?.component
-        componentName?.let {
-            val restartIntent: Intent = Intent.makeRestartActivityTask(it)
-            restartIntent.flags=
-                Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-            context.startActivity(restartIntent)
-        }
-    }
-
 }

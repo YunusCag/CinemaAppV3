@@ -1,6 +1,5 @@
 package com.yunuscagliyan.home.home.ui.pages.settings
 
-import android.app.Activity
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -13,6 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.yunuscagliyan.core.R
 import com.yunuscagliyan.core.data.enums.LanguageType
+import com.yunuscagliyan.core.data.enums.RegionType
 import com.yunuscagliyan.core.navigation.MainScreenRoute
 import com.yunuscagliyan.core_ui.components.card.CheckboxCardTile
 import com.yunuscagliyan.core_ui.components.label.DefaultPageTitle
@@ -48,6 +48,15 @@ object SettingsScreen : CoreScreen<SettingsViewModel>() {
                 selectedType = state.selectedLanguage,
                 onSelectLanguage = {
                     viewModel.changeSelectedLanguage(it, context)
+                }
+            )
+            Spacer(
+                modifier = Modifier.height(16.dp)
+            )
+            RegionChoice(
+                selectedType = state.selectedRegion,
+                onSelectRegion = {
+                    viewModel.changeSelectedRegion(it, context)
                 }
             )
         }
@@ -87,5 +96,40 @@ object SettingsScreen : CoreScreen<SettingsViewModel>() {
             }
         }
 
+    }
+
+    @Composable
+    private fun RegionChoice(
+        selectedType: RegionType,
+        onSelectRegion: (RegionType) -> Unit
+    ) {
+        val regions = RegionType.values()
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            DefaultPageTitle(
+                title = stringResource(id = R.string.settings_region_selection_title)
+            )
+            Spacer(
+                modifier = Modifier
+                    .height(12.dp)
+            )
+            repeat(regions.size) { index ->
+                val type = regions[index]
+                CheckboxCardTile(
+                    modifier = Modifier
+                        .padding(
+                            top = 8.dp
+                        ),
+                    title = stringResource(id = type.text),
+                    checked = selectedType == type,
+                    onCheckedChange = {
+                        onSelectRegion(type)
+                    }
+                )
+            }
+        }
     }
 }

@@ -8,6 +8,7 @@ import androidx.paging.cachedIn
 import com.yunuscagliyan.core.data.remote.model.genre.GenreModel
 import com.yunuscagliyan.core.data.remote.model.movie.MovieModel
 import com.yunuscagliyan.core.helper.LanguageHelper
+import com.yunuscagliyan.core.helper.RegionHelper
 import com.yunuscagliyan.core.navigation.RootScreenRoute
 import com.yunuscagliyan.core.util.Constants.NavigationArgumentKey.LIST_TYPE_KEY
 import com.yunuscagliyan.core.util.Resource
@@ -30,6 +31,7 @@ class MovieListViewModel @Inject constructor(
     private val getMovieListByType: GetMovieListByType,
     private val getGenreList: GetMovieGenreList,
     private val languageHelper: LanguageHelper,
+    private val regionHelper: RegionHelper,
     savedStateHandle: SavedStateHandle
 ) : CoreViewModel() {
 
@@ -59,7 +61,8 @@ class MovieListViewModel @Inject constructor(
     fun getMovieGenreList() {
         getGenreList(
             GetMovieGenreList.Params(
-                language = languageHelper.language.code
+                language = languageHelper.language.code,
+                region = regionHelper.region.code
             )
         ).onEach { result ->
             when (result) {
@@ -94,9 +97,11 @@ class MovieListViewModel @Inject constructor(
 
 
     fun changeColumnCount(column: MovieListGridColumn) {
-        state.value = state.value.copy(
-            columnCount = column
-        )
+        setState(state) {
+            copy(
+                columnCount = column
+            )
+        }
     }
 
     fun onGenreClick(genre: GenreModel, isSelected: Boolean) {

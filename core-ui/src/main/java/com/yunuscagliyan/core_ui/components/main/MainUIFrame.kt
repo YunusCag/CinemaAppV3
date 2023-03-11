@@ -25,26 +25,23 @@ fun MainUIFrame(
     ),
     content: @Composable (PaddingValues) -> Unit,
 ) {
-
-    CinemaAppTheme {
-        Scaffold(
-            scaffoldState = scaffoldState,
-            modifier = modifier
-                .fillMaxSize()
-                .statusBarsPadding(),
-            topBar = topBar,
-            bottomBar = bottomBar,
-            backgroundColor = CinemaAppTheme.colors.background,
-            snackbarHost = {
-                SnackbarHost(it) { data ->
-                    Snackbar(
-                        actionColor = CinemaAppTheme.colors.secondary,
-                        snackbarData = data
-                    )
-                }
+    Scaffold(
+        scaffoldState = scaffoldState,
+        modifier = modifier
+            .fillMaxSize()
+            .statusBarsPadding(),
+        topBar = topBar,
+        bottomBar = bottomBar,
+        backgroundColor = CinemaAppTheme.colors.background,
+        snackbarHost = {
+            SnackbarHost(it) { data ->
+                Snackbar(
+                    actionColor = CinemaAppTheme.colors.secondary,
+                    snackbarData = data
+                )
             }
-        ) { paddingValues ->
-            content(paddingValues)
         }
+    ) { paddingValues ->
+        content(paddingValues)
     }
 }
