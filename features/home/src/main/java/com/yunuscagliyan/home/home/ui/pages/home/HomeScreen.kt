@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -18,7 +17,6 @@ import com.yunuscagliyan.core.navigation.MainScreenRoute
 import com.yunuscagliyan.core_ui.components.pager.MovieHorizontalPager
 import com.yunuscagliyan.home.data.enum.MoviePagingType
 import com.yunuscagliyan.home.home.viewmodel.home.HomeViewModel
-import com.yunuscagliyan.home.home.viewmodel.main.MovieViewModel
 
 object HomeScreen : CoreScreen<HomeViewModel>() {
     override val route: String

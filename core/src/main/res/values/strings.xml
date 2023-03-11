@@ -16,6 +16,10 @@
     <string name="common_turkey">Türkiye</string>
     <string name="common_usa">Amerika</string>
 
+    <!--- Theme  -->
+    <string name="common_system_theme">Sistem Teması</string>
+    <string name="common_dark_theme">Karanlık Tema</string>
+    <string name="common_light_theme">Aydınlık Tema</string>
 
     <!--Home Page-->
     <string name="home_page_top_bar_title">Anasayfa</string>
@@ -32,6 +36,7 @@
     <string name="settings_page_top_bar_title">Ayarlar</string>
     <string name="settings_language_selection_title">Dil Seçimi</string>
     <string name="settings_region_selection_title">Bölge Seçimi</string>
+    <string name="settings_theme_selection_title">Tema Seçimi</string>
 
     <!--- Movie Detail-->
     <string name="movie_detail_country">Ülke :</string>

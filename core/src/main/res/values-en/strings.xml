@@ -16,6 +16,11 @@
     <string name="common_turkey">Turkey</string>
     <string name="common_usa">USA</string>
 
+    <!--- Theme  -->
+    <string name="common_system_theme">System Theme</string>
+    <string name="common_dark_theme">Dark Theme</string>
+    <string name="common_light_theme">Light Theme</string>
+
 
     <!--Home Page-->
     <string name="home_page_top_bar_title">Homepage</string>
@@ -32,6 +37,7 @@
     <string name="settings_page_top_bar_title">Settings</string>
     <string name="settings_language_selection_title">Language Choice</string>
     <string name="settings_region_selection_title">Region Choice</string>
+    <string name="settings_theme_selection_title">Theme Choice</string>
 
     <!--- Movie Detail-->
     <string name="movie_detail_country">Country :</string>

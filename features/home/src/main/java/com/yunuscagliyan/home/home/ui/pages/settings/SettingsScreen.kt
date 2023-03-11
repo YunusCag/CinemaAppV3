@@ -1,5 +1,6 @@
 package com.yunuscagliyan.home.home.ui.pages.settings
 
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -13,10 +14,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.yunuscagliyan.core.R
 import com.yunuscagliyan.core.data.enums.LanguageType
 import com.yunuscagliyan.core.data.enums.RegionType
+import com.yunuscagliyan.core.data.enums.ThemeType
 import com.yunuscagliyan.core.navigation.MainScreenRoute
 import com.yunuscagliyan.core_ui.components.card.CheckboxCardTile
+import com.yunuscagliyan.core_ui.components.card.RadioButtonCardTile
 import com.yunuscagliyan.core_ui.components.label.DefaultPageTitle
 import com.yunuscagliyan.core_ui.navigation.CoreScreen
+import com.yunuscagliyan.home.home.viewmodel.main.AppViewModel
 import com.yunuscagliyan.home.home.viewmodel.settings.SettingsViewModel
 
 object SettingsScreen : CoreScreen<SettingsViewModel>() {
@@ -28,6 +32,8 @@ object SettingsScreen : CoreScreen<SettingsViewModel>() {
 
     @Composable
     override fun Content(viewModel: SettingsViewModel) {
+        val appViewModel: AppViewModel =
+            androidx.lifecycle.viewmodel.compose.viewModel(LocalContext.current as ComponentActivity)
         val state by viewModel.state
         val context = LocalContext.current
 
@@ -59,6 +65,16 @@ object SettingsScreen : CoreScreen<SettingsViewModel>() {
                     viewModel.changeSelectedRegion(it, context)
                 }
             )
+            Spacer(
+                modifier = Modifier.height(16.dp)
+            )
+            ThemeChoice(
+                selectedType = state.selectedTheme,
+                onSelectTheme = {
+                    appViewModel.changeTheme(it)
+                    viewModel.changeTheme(it)
+                }
+            )
         }
     }
 
@@ -82,7 +98,7 @@ object SettingsScreen : CoreScreen<SettingsViewModel>() {
             )
             repeat(languages.size) { index ->
                 val type = languages[index]
-                CheckboxCardTile(
+                RadioButtonCardTile(
                     modifier = Modifier
                         .padding(
                             top = 8.dp
@@ -118,7 +134,7 @@ object SettingsScreen : CoreScreen<SettingsViewModel>() {
             )
             repeat(regions.size) { index ->
                 val type = regions[index]
-                CheckboxCardTile(
+                RadioButtonCardTile(
                     modifier = Modifier
                         .padding(
                             top = 8.dp
@@ -127,6 +143,41 @@ object SettingsScreen : CoreScreen<SettingsViewModel>() {
                     checked = selectedType == type,
                     onCheckedChange = {
                         onSelectRegion(type)
+                    }
+                )
+            }
+        }
+    }
+
+    @Composable
+    private fun ThemeChoice(
+        selectedType: ThemeType,
+        onSelectTheme: (ThemeType) -> Unit
+    ) {
+        val regions = ThemeType.values()
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            DefaultPageTitle(
+                title = stringResource(id = R.string.settings_theme_selection_title)
+            )
+            Spacer(
+                modifier = Modifier
+                    .height(12.dp)
+            )
+            repeat(regions.size) { index ->
+                val type = regions[index]
+                RadioButtonCardTile(
+                    modifier = Modifier
+                        .padding(
+                            top = 8.dp
+                        ),
+                    title = stringResource(id = type.text),
+                    checked = selectedType == type,
+                    onCheckedChange = {
+                        onSelectTheme(type)
                     }
                 )
             }

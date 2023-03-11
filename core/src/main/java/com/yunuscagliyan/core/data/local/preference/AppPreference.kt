@@ -3,6 +3,7 @@ package com.yunuscagliyan.core.data.local.preference
 import android.content.SharedPreferences
 import com.yunuscagliyan.core.data.enums.LanguageType
 import com.yunuscagliyan.core.data.enums.RegionType
+import com.yunuscagliyan.core.data.enums.ThemeType
 
 class AppPreference(
     private val sharedPref: SharedPreferences
@@ -27,6 +28,14 @@ class AppPreference(
         set(value) {
             sharedPref.edit()
                 .putString(Preferences.KEY_REGION_CODE, value)
+                .apply()
+        }
+    override var themeCode: String
+        get() = sharedPref.getString(Preferences.KEY_THEME_CODE, null)
+            ?: ThemeType.Auto.code
+        set(value) {
+            sharedPref.edit()
+                .putString(Preferences.KEY_THEME_CODE, value)
                 .apply()
         }
 }
