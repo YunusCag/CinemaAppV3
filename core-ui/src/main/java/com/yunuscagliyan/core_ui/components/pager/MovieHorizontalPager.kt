@@ -102,23 +102,30 @@ fun MovieHorizontalPager(
                 }
             }
 
-            HorizontalPager(
-                modifier=Modifier
+            Card(
+                modifier = Modifier
                     .fillMaxWidth()
-                    .clip(CinemaAppTheme.shapes.defaultMediumShape)
                     .padding(
                         horizontal = 8.dp
                     ),
-                count = lazyMovieItems.itemCount,
-                state = pagerState,
-            ) { index ->
-                val movie = lazyMovieItems[index]
-                MovieHorizontalPage(
-                    movie = movie,
-                    onTap = {
-                        onMovieTap(movie)
-                    }
-                )
+                shape = CinemaAppTheme.shapes.defaultLargeShape,
+                backgroundColor = Color.Transparent,
+                elevation = 0.dp
+            ) {
+                HorizontalPager(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    count = lazyMovieItems.itemCount,
+                    state = pagerState,
+                ) { index ->
+                    val movie = lazyMovieItems[index]
+                    MovieHorizontalPage(
+                        movie = movie,
+                        onTap = {
+                            onMovieTap(movie)
+                        }
+                    )
+                }
             }
 
             lazyMovieItems.apply {
@@ -164,7 +171,6 @@ fun MovieHorizontalPager(
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
 @ExperimentalCoilApi
 @Composable
 private fun MovieHorizontalPage(
@@ -172,18 +178,17 @@ private fun MovieHorizontalPage(
     modifier: Modifier = Modifier,
     onTap: () -> Unit
 ) {
-    Card(
-        modifier = modifier,
-        elevation = 0.dp,
-        //shape = CinemaAppTheme.shapes.defaultMediumShape,
-        backgroundColor = Color.Unspecified,
-        onClick = onTap
+    Box(
+        modifier = modifier
+            .noRippleClickable {
+                onTap()
+            },
     ) {
         AppImage(
             modifier = Modifier.fillMaxSize(),
             url = movie?.posterPath,
             description = movie?.title,
-            contentScale = ContentScale.FillBounds
+            contentScale = ContentScale.Crop
         )
         Box(
             modifier = Modifier
@@ -224,10 +229,4 @@ private fun MovieHorizontalPage(
             )
         }
     }
-
-}
-
-@ExperimentalPagerApi
-fun PagerScope.calculateCurrentOffsetForPage(page: Int): Float {
-    return (currentPage + currentPageOffset) - page
 }
