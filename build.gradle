@@ -5,6 +5,8 @@ buildscript {
     }
     dependencies {
         classpath(Build.hiltAndroidGradlePlugin)
+        classpath(Build.googleService)
+        classpath(Build.crashlytics)
     }
 }// Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {

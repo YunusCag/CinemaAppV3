@@ -3,6 +3,8 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'dagger.hilt.android.plugin'
     id 'kotlin-kapt'
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
 }
 
 android {
@@ -57,6 +59,11 @@ dependencies {
     implementation(Google.material)
     implementation(Coil.coilCompose)
     implementation Google.accompanistNavigationAnimation
+    implementation(Compose.splash)
+
+    implementation platform(Google.firebaseBOM)
+    implementation Google.firebaseAnalytics
+    implementation Google.firebaseCrashlytics
 
     implementation(Retrofit.okHttp)
     implementation(Retrofit.retrofit)
@@ -75,8 +82,6 @@ dependencies {
     api project(Modules.onBoarding)
     api project(Modules.home)
     api project(Modules.movieDetail)
-
-    implementation 'androidx.core:core-splashscreen:1.0.0-beta01'
 
     testImplementation(Testing.junit4)
     androidTestImplementation(Testing.junitAndroidExt)
