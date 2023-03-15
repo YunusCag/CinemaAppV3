@@ -223,9 +223,11 @@ object MainScreen : CoreScreen<MainViewModel>() {
             unselectedContentColor = CinemaAppTheme.colors.textPrimary,
             interactionSource = NoRippleInteractionSource(),
             onClick = {
-                navController.navigate(route) {
-                    popUpTo(navController.graph.findStartDestination().id)
-                    launchSingleTop = true
+                if(!selected){
+                    navController.navigate(route) {
+                        popUpTo(navController.graph.findStartDestination().id)
+                        launchSingleTop = true
+                    }
                 }
             }
         )

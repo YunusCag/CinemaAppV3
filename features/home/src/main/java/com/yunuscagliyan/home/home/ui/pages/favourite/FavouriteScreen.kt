@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.yunuscagliyan.core.data.local.entity.MovieEntity
@@ -24,11 +25,13 @@ import com.yunuscagliyan.core.data.remote.model.movie.MovieModel
 import com.yunuscagliyan.core.navigation.MainScreenRoute
 import com.yunuscagliyan.core.util.Constants.DurationUTil.DISMISS_ANIMATION_DURATION
 import com.yunuscagliyan.core_ui.components.card.MovieLargeCard
+import com.yunuscagliyan.core_ui.components.empty.NetworkEmptyView
 import com.yunuscagliyan.core_ui.components.error.NetworkErrorView
 import com.yunuscagliyan.core_ui.components.loading.LoadingView
 import com.yunuscagliyan.core_ui.extension.asString
 import com.yunuscagliyan.core_ui.navigation.CoreScreen
 import com.yunuscagliyan.core_ui.theme.CinemaAppTheme
+import com.yunuscagliyan.core.R
 import com.yunuscagliyan.home.home.viewmodel.favourite.FavouriteViewModel
 
 object FavouriteScreen : CoreScreen<FavouriteViewModel>() {
@@ -71,11 +74,20 @@ object FavouriteScreen : CoreScreen<FavouriteViewModel>() {
                             ),
                     )
                 } else {
-                    FavouriteList(
-                        favourites = state.favourites,
-                        onDismiss = viewModel::onDismiss,
-                        onNavigateDetail = viewModel::onMovieTap
-                    )
+                    if (state.favourites.isNotEmpty()) {
+                        FavouriteList(
+                            favourites = state.favourites,
+                            onDismiss = viewModel::onDismiss,
+                            onNavigateDetail = viewModel::onMovieTap
+                        )
+                    } else {
+                        NetworkEmptyView(
+                            modifier = Modifier
+                                .fillMaxSize(),
+                            image = R.drawable.no_data_found,
+                            title = stringResource(id = R.string.favourite_no_favourites_title)
+                        )
+                    }
                 }
             }
         }

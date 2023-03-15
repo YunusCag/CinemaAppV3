@@ -16,6 +16,8 @@
     <string name="common_turkey">Türkiye</string>
     <string name="common_usa">Amerika</string>
 
+    <string name="common_empty_text">Aranılan içerik bulunamadı.</string>
+
     <!--- Theme  -->
     <string name="common_system_theme">Sistem Teması</string>
     <string name="common_dark_theme">Karanlık Tema</string>
@@ -31,6 +33,7 @@
     <!--- Favourite Page -->
     <string name="favourite_page_top_bar_title">Favoriler</string>
     <string name="favourite_dismiss_text">Favorilerden kaldırıldı.</string>
+    <string name="favourite_no_favourites_title">Favori listenizde film bulunmamaktadır.</string>
 
     <!--- Settings Page -->
     <string name="settings_page_top_bar_title">Ayarlar</string>

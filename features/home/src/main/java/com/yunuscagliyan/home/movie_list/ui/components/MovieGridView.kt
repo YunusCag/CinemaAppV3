@@ -13,9 +13,9 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import com.yunuscagliyan.core.data.remote.model.movie.MovieModel
 import com.yunuscagliyan.core_ui.components.card.MovieLargeCard
+import com.yunuscagliyan.core_ui.components.empty.NetworkEmptyView
 import com.yunuscagliyan.core_ui.components.error.NetworkErrorView
 import com.yunuscagliyan.core_ui.components.image.AppImage
-import com.yunuscagliyan.core_ui.components.loading.LoadingView
 import com.yunuscagliyan.core_ui.components.shimmer.AnimatedShimmer
 import com.yunuscagliyan.core_ui.extension.noRippleClickable
 import com.yunuscagliyan.core_ui.theme.CinemaAppTheme
@@ -33,36 +33,51 @@ fun MovieGridView(
     onRefreshClick: () -> Unit,
     onMovieTap: (MovieModel?) -> Unit
 ) {
+    val columnCount =
+        if (movies.itemCount == 1 && column.columnCount == MovieListGridColumn.COLUMN_THIRD.columnCount) {
+            column.columnCount - 1
+        } else {
+            column.columnCount
+        }
+
     Column(
         modifier = modifier
     ) {
-        LazyVerticalStaggeredGrid(
-            modifier = Modifier
-                .weight(1f),
-            columns = StaggeredGridCells.Fixed(column.columnCount),
-            contentPadding = PaddingValues(
-                top = if (column == MovieListGridColumn.SINGLE_ITEM) 60.dp else 0.dp,
-                bottom = 10.dp
-            )
-        ) {
-            items(movies.itemCount) { index ->
-                val movie = movies[index]
-                if (column == MovieListGridColumn.SINGLE_ITEM) {
-                    MovieLargeCard(
-                        model = movie,
-                        onTap = {
-                            onMovieTap(movie)
-                        }
-                    )
-                } else {
-                    MovieGridItemSmall(
-                        movieModel = movie,
-                        onTap = {
-                            onMovieTap(movie)
-                        }
-                    )
+        if (movies.itemCount > 0) {
+            LazyVerticalStaggeredGrid(
+                modifier = Modifier
+                    .weight(1f),
+                columns = StaggeredGridCells.Fixed(columnCount),
+                contentPadding = PaddingValues(
+                    top = if (column == MovieListGridColumn.SINGLE_ITEM) 60.dp else 0.dp,
+                    bottom = 10.dp
+                )
+            ) {
+                items(movies.itemCount) { index ->
+                    val movie = movies[index]
+                    if (column == MovieListGridColumn.SINGLE_ITEM) {
+                        MovieLargeCard(
+                            model = movie,
+                            onTap = {
+                                onMovieTap(movie)
+                            }
+                        )
+                    } else {
+                        MovieGridItemSmall(
+                            movieModel = movie,
+                            onTap = {
+                                onMovieTap(movie)
+                            }
+                        )
+                    }
                 }
             }
+        } else {
+            NetworkEmptyView(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
+            )
         }
         movies.apply {
             when {

@@ -16,6 +16,8 @@
     <string name="common_turkey">Turkey</string>
     <string name="common_usa">USA</string>
 
+    <string name="common_empty_text">There is no content about the searching.</string>
+
     <!--- Theme  -->
     <string name="common_system_theme">System Theme</string>
     <string name="common_dark_theme">Dark Theme</string>
@@ -32,6 +34,7 @@
     <!--- Favourite Page -->
     <string name="favourite_page_top_bar_title">Favourites</string>
     <string name="favourite_dismiss_text">Removed from favourites.</string>
+    <string name="favourite_no_favourites_title">There are no movies in your  favourite list.</string>
 
     <!--- Settings Page -->
     <string name="settings_page_top_bar_title">Settings</string>
