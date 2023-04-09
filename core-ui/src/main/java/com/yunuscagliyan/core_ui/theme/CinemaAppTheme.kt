@@ -46,6 +46,7 @@ private val DarkColorPalette = CinemaAppColors(
     textPrimary = AppCustomDarkColors.colorTextPrimary,
     secondaryGray = AppCustomDarkColors.colorSecondaryGray,
     card = AppCustomDarkColors.colorCard,
+    dividerColor = AppCustomDarkColors.dividerColor,
     isDark = true
 )
 
@@ -60,6 +61,7 @@ private val LightColorPalette = CinemaAppColors(
     textPrimary = AppCustomLightColors.colorTextPrimary,
     secondaryGray = AppCustomLightColors.colorSecondaryGray,
     card = AppCustomLightColors.colorCard,
+    dividerColor = AppCustomLightColors.dividerColor,
     isDark = false
 )
 

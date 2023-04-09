@@ -18,6 +18,7 @@ class CinemaAppColors(
     textPrimary: Color,
     secondaryGray: Color,
     card: Color,
+    dividerColor: Color,
     isDark: Boolean
 ) {
     var whiteColor by mutableStateOf(whiteColor)
@@ -40,6 +41,8 @@ class CinemaAppColors(
         private set
     var card by mutableStateOf(card)
         private set
+    var dividerColor by mutableStateOf(dividerColor)
+        private set
     var isDark by mutableStateOf(isDark)
         private set
 
@@ -54,6 +57,7 @@ class CinemaAppColors(
         textPrimary = textPrimary,
         secondaryGray = secondaryGray,
         card = card,
+        dividerColor = dividerColor,
         isDark = isDark
     )
 
@@ -68,6 +72,7 @@ class CinemaAppColors(
         textPrimary = other.textPrimary
         secondaryGray = other.secondaryGray
         card = other.card
+        dividerColor = other.dividerColor
         isDark = other.isDark
     }
 }
@@ -83,7 +88,7 @@ private interface AppColor {
     val colorTextPrimary: Color
     val colorSecondaryGray: Color
     val colorCard: Color
-
+    val dividerColor: Color
 }
 
 object AppCustomLightColors : AppColor {
@@ -98,6 +103,7 @@ object AppCustomLightColors : AppColor {
     override val colorTextPrimary: Color = Color(0xFF000000)
     override val colorSecondaryGray: Color = Color(0xFF8294A8)
     override val colorCard: Color = Color(0xFFFFFFFF)
+    override val dividerColor: Color = Color(0xFF9e9e9e)
 }
 
 object AppCustomDarkColors : AppColor {
@@ -112,4 +118,5 @@ object AppCustomDarkColors : AppColor {
     override val colorTextPrimary: Color = Color(0xFFFFFFFF)
     override val colorSecondaryGray: Color = Color(0xFF8294A8)
     override val colorCard: Color = Color(0xFF273343)
+    override val dividerColor: Color = Color(0xFF9e9e9e)
 }

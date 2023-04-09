@@ -12,5 +12,6 @@ enum class RegionType(
 
     companion object {
         fun fromCode(code: String?): RegionType? = values().find { it.code == code }
+        fun fromIndex(index: Int): RegionType? = RegionType.values().find { it.ordinal == index }
     }
 }

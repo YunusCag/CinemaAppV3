@@ -13,5 +13,6 @@ enum class LanguageType(
 
     companion object {
         fun fromCode(code: String?): LanguageType? = values().find { it.code == code }
+        fun fromIndex(index: Int): LanguageType? = values().find { it.ordinal == index }
     }
 }

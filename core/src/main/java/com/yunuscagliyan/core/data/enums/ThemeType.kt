@@ -13,5 +13,7 @@ enum class ThemeType(
 
     companion object {
         fun fromCode(code: String) = values().find { it.code == code }
+        fun fromIndex(index: Int): ThemeType? = ThemeType.values().find { it.ordinal == index }
+
     }
 }

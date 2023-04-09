@@ -15,7 +15,8 @@ import com.yunuscagliyan.core.data.enums.LanguageType
 import com.yunuscagliyan.core.data.enums.RegionType
 import com.yunuscagliyan.core.data.enums.ThemeType
 import com.yunuscagliyan.core.navigation.MainScreenRoute
-import com.yunuscagliyan.core_ui.components.card.RadioButtonCardTile
+import com.yunuscagliyan.core_ui.components.card.RadioTile
+import com.yunuscagliyan.core_ui.components.card.RadioTileList
 import com.yunuscagliyan.core_ui.components.label.DefaultPageTitle
 import com.yunuscagliyan.core_ui.navigation.CoreScreen
 import com.yunuscagliyan.home.home.ui.components.appViewModel
@@ -73,6 +74,9 @@ object SettingsScreen : CoreScreen<SettingsViewModel>() {
                     viewModel.changeTheme(it)
                 }
             )
+            Spacer(
+                modifier = Modifier.height(16.dp)
+            )
         }
     }
 
@@ -94,20 +98,17 @@ object SettingsScreen : CoreScreen<SettingsViewModel>() {
                 modifier = Modifier
                     .height(12.dp)
             )
-            repeat(languages.size) { index ->
-                val type = languages[index]
-                RadioButtonCardTile(
-                    modifier = Modifier
-                        .padding(
-                            top = 8.dp
-                        ),
-                    title = stringResource(id = type.text),
-                    checked = selectedType == type,
-                    onCheckedChange = {
-                        onSelectLanguage(type)
+            RadioTileList(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                itemList = languages.map { stringResource(id = it.text) }.toList(),
+                selectedIndex = selectedType.ordinal,
+                onCheckedChange = { index, checked ->
+                    LanguageType.fromIndex(index)?.let {
+                        onSelectLanguage(it)
                     }
-                )
-            }
+                }
+            )
         }
 
     }
@@ -130,20 +131,17 @@ object SettingsScreen : CoreScreen<SettingsViewModel>() {
                 modifier = Modifier
                     .height(12.dp)
             )
-            repeat(regions.size) { index ->
-                val type = regions[index]
-                RadioButtonCardTile(
-                    modifier = Modifier
-                        .padding(
-                            top = 8.dp
-                        ),
-                    title = stringResource(id = type.text),
-                    checked = selectedType == type,
-                    onCheckedChange = {
-                        onSelectRegion(type)
+            RadioTileList(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                itemList = regions.map { stringResource(id = it.text) }.toList(),
+                selectedIndex = selectedType.ordinal,
+                onCheckedChange = { index, checked ->
+                    RegionType.fromIndex(index)?.let {
+                        onSelectRegion(it)
                     }
-                )
-            }
+                }
+            )
         }
     }
 
@@ -152,7 +150,7 @@ object SettingsScreen : CoreScreen<SettingsViewModel>() {
         selectedType: ThemeType,
         onSelectTheme: (ThemeType) -> Unit
     ) {
-        val regions = ThemeType.values()
+        val themeTypes = ThemeType.values()
 
         Column(
             modifier = Modifier
@@ -165,20 +163,17 @@ object SettingsScreen : CoreScreen<SettingsViewModel>() {
                 modifier = Modifier
                     .height(12.dp)
             )
-            repeat(regions.size) { index ->
-                val type = regions[index]
-                RadioButtonCardTile(
-                    modifier = Modifier
-                        .padding(
-                            top = 8.dp
-                        ),
-                    title = stringResource(id = type.text),
-                    checked = selectedType == type,
-                    onCheckedChange = {
-                        onSelectTheme(type)
+            RadioTileList(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                itemList = themeTypes.map { stringResource(id = it.text) }.toList(),
+                selectedIndex = selectedType.ordinal,
+                onCheckedChange = { index, checked ->
+                    ThemeType.fromIndex(index)?.let {
+                        onSelectTheme(it)
                     }
-                )
-            }
+                }
+            )
         }
     }
 }
