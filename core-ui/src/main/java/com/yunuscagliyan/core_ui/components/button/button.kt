@@ -13,6 +13,8 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
@@ -87,6 +89,9 @@ fun SecondaryMediumTextButton(
     ) {
         Row(
             modifier = Modifier
+                .semantics {
+                    contentDescription = text
+                }
                 .fillMaxWidth()
                 .padding(
                     horizontal = 16.dp
@@ -121,6 +126,9 @@ fun SecondarySmallTextButton(
     ) {
         Row(
             modifier = Modifier
+                .semantics {
+                    contentDescription = text
+                }
                 .fillMaxWidth()
                 .padding(
                     horizontal = 16.dp,

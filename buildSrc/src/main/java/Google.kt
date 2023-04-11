@@ -8,6 +8,7 @@ object Google {
 
     const val material = "com.google.android.material:material:$materialVersion"
     const val accompanistPager = "com.google.accompanist:accompanist-pager:$pagerVersion"
+    const val accompanistPagerIndicator = "com.google.accompanist:accompanist-pager-indicators:$pagerVersion"
     const val accompanistSystemUIController="com.google.accompanist:accompanist-systemuicontroller:$systemUIControllerVersion"
     const val accompanistNavigationAnimation="com.google.accompanist:accompanist-navigation-animation:$navigationAnimationVersion"
     const val firebaseBOM = "com.google.firebase:firebase-bom:$firebaseBOMVersion"

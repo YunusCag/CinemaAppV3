@@ -11,6 +11,10 @@ data class CinemaAppShapes(
     val defaultSmallShape: CornerBasedShape = RoundedCornerShape(6.dp),
     val defaultMediumShape: CornerBasedShape = RoundedCornerShape(8.dp),
     val defaultLargeShape: CornerBasedShape = RoundedCornerShape(10.dp),
+    val bottomRoundedLargeShape: CornerBasedShape = RoundedCornerShape(
+        bottomEnd = 16.dp,
+        bottomStart = 16.dp
+    ),
     val nonShape: CornerBasedShape = RoundedCornerShape(0.dp),
     val materialShapes: Shapes = Shapes()
 ) {
@@ -25,6 +29,7 @@ data class CinemaAppShapes(
         defaultSmallShape: CornerBasedShape,
         defaultMediumShape: CornerBasedShape,
         defaultLargeShape: CornerBasedShape,
+        bottomRoundedLargeShape: CornerBasedShape,
         nonShape: CornerBasedShape,
         small: CornerBasedShape,
         medium: CornerBasedShape,
@@ -34,6 +39,7 @@ data class CinemaAppShapes(
         defaultMediumShape = defaultMediumShape,
         defaultLargeShape = defaultLargeShape,
         nonShape = nonShape,
+        bottomRoundedLargeShape = bottomRoundedLargeShape,
         materialShapes = Shapes(
             small = small,
             medium = medium,
@@ -45,6 +51,7 @@ data class CinemaAppShapes(
         defaultSmallShape: CornerBasedShape = this.defaultSmallShape,
         defaultMediumShape: CornerBasedShape = this.defaultMediumShape,
         defaultLargeShape: CornerBasedShape = this.defaultLargeShape,
+        bottomRoundedLargeShape: CornerBasedShape = this.bottomRoundedLargeShape,
         nonShape: CornerBasedShape = this.nonShape,
         small: CornerBasedShape = this.small,
         medium: CornerBasedShape = this.medium,
@@ -53,6 +60,7 @@ data class CinemaAppShapes(
         defaultSmallShape = defaultSmallShape,
         defaultMediumShape = defaultMediumShape,
         defaultLargeShape = defaultLargeShape,
+        bottomRoundedLargeShape = bottomRoundedLargeShape,
         nonShape = nonShape,
         small = small,
         medium = medium,
@@ -65,9 +73,3 @@ private val appShapes = CinemaAppShapes()
 fun defaultAppShapes() = appShapes
 
 fun appShapes() = appShapes
-
-val Shapes = Shapes(
-    small = RoundedCornerShape(4.dp),
-    medium = RoundedCornerShape(6.dp),
-    large = RoundedCornerShape(8.dp),
-)

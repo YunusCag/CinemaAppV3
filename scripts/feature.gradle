@@ -33,6 +33,7 @@ dependencies {
 
     implementation Coil.coilCompose
     implementation Google.accompanistPager
+    implementation Google.accompanistPagerIndicator
     implementation Google.accompanistNavigationAnimation
 
     implementation Retrofit.okHttp
@@ -43,4 +44,8 @@ dependencies {
     kapt DaggerHilt.hiltCompiler
     implementation DaggerHilt.hiltAndroid
     debugImplementation Compose.composeDebugTest
+
+    testImplementation(Testing.junit4)
+    androidTestImplementation(Testing.junitAndroidExt)
+    androidTestImplementation(Compose.composeUnitTest)
 }

@@ -7,6 +7,7 @@
     <string name="common_refresh">Yenile</string>
     <string name="common_all">Tümü</string>
     <string name="common_revoke">Geri al</string>
+    <string name="common_skip">Geç</string>
 
     <!--- Language -->
     <string name="common_turkish">Türkçe</string>
@@ -22,6 +23,16 @@
     <string name="common_system_theme">Sistem Teması</string>
     <string name="common_dark_theme">Karanlık Tema</string>
     <string name="common_light_theme">Aydınlık Tema</string>
+
+    <!--OnBoarding Page-->
+    <string name="on_boarding_first_title">Film Dünyasına Hoş Geldiniz!</string>
+    <string name="on_boarding_first_description">CinemaApp, film ve dizi tutkunları için özel olarak tasarlanmış bir mobil uygulamadır. Sinema dünyasının heyecan verici atmosferini avuçlarınıza getiren bu uygulama, kullanıcı dostu arayüzü ve güçlü TheMoviedb API entegrasyonu sayesinde kullanıcılarına benzersiz bir deneyim sunmaktadır.</string>
+
+    <string name="on_boarding_second_title">Sinematik Serüvene Hazır Mısınız?</string>
+    <string name="on_boarding_second_description"> En sevdiğiniz filmleri ve dizileri keşfedebilir, fragmanları izleyebilir, oyuncular hakkında bilgi edinebilir ve detaylı film bilgilerini görüntüleyebilirsiniz.</string>
+
+    <string name="on_boarding_third_title">Favori Filmleriniz</string>
+    <string name="on_boarding_third_description">Favori filmlerinizi kaydedin, izlemek istediğiniz filmleri takip edin ve güncel film haberlerine ulaşın.</string>
 
     <!--Home Page-->
     <string name="home_page_top_bar_title">Anasayfa</string>
