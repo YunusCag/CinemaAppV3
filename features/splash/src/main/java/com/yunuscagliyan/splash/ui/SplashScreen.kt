@@ -71,7 +71,7 @@ object SplashScreen : CoreScreen<SplashViewModel>() {
                 modifier = Modifier
                     .size(120.dp)
                     .alpha(alpha = alpha),
-                painter = painterResource(id = R.drawable.app_logo),
+                painter = painterResource(id = R.drawable.ic_app_logo),
                 contentDescription = null
             )
         }
