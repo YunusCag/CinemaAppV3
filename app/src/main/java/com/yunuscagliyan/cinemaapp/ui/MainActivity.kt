@@ -11,9 +11,12 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.lifecycleScope
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import com.google.android.gms.ads.MobileAds
 import com.yunuscagliyan.cinemaapp.navigation.SetupNavGraph
 import com.yunuscagliyan.core.data.enums.ThemeType
 import com.yunuscagliyan.core.util.Constants
+import com.yunuscagliyan.core_ui.extension.loadInterstitial
+import com.yunuscagliyan.core_ui.helper.AdmobHelper
 import com.yunuscagliyan.core_ui.theme.CinemaAppTheme
 import com.yunuscagliyan.home.home.viewmodel.main.AppViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,6 +32,8 @@ class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalAnimationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        MobileAds.initialize(this)
+        this.loadInterstitial()
         val splash = installSplashScreen()
         splash.setKeepOnScreenCondition {
             keepScreen
@@ -57,5 +62,10 @@ class MainActivity : ComponentActivity() {
                 SetupNavGraph(navController = navController)
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        AdmobHelper.clearInterstitialAd()
     }
 }

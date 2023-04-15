@@ -64,6 +64,7 @@ dependencies {
     implementation platform(Google.firebaseBOM)
     implementation Google.firebaseAnalytics
     implementation Google.firebaseCrashlytics
+    implementation Google.adMob
 
     implementation(Retrofit.okHttp)
     implementation(Retrofit.retrofit)

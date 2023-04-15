@@ -35,6 +35,7 @@ dependencies {
     implementation Google.accompanistPager
     implementation Google.accompanistPagerIndicator
     implementation Google.accompanistNavigationAnimation
+    implementation Google.adMob
 
     implementation Retrofit.okHttp
     implementation Retrofit.retrofit

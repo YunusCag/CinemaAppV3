@@ -38,6 +38,7 @@ dependencies {
     implementation Google.accompanistPager
     implementation Google.accompanistSystemUIController
     implementation Google.accompanistNavigationAnimation
+    implementation Google.adMob
 
     kapt DaggerHilt.hiltCompiler
     implementation DaggerHilt.hiltAndroid

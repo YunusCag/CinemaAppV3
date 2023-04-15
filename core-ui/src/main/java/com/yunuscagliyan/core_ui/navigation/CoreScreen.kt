@@ -22,9 +22,9 @@ import androidx.navigation.NavDeepLink
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.composable
-import com.yunuscagliyan.core.util.UIText
 import com.yunuscagliyan.core_ui.event.CoreEvent
 import com.yunuscagliyan.core_ui.extension.asString
+import com.yunuscagliyan.core_ui.extension.showInterstitial
 import com.yunuscagliyan.core_ui.theme.CinemaAppTheme
 import com.yunuscagliyan.core_ui.viewmodel.CoreViewModel
 import kotlinx.coroutines.flow.collectLatest
@@ -57,7 +57,6 @@ abstract class CoreScreen<T : CoreViewModel> {
             getDeepLinks(),
         ) {
             val viewModel = viewModel()
-
             val snackState = remember { SnackbarHostState() }
             val snackScope = rememberCoroutineScope()
             val context = LocalContext.current
@@ -66,10 +65,12 @@ abstract class CoreScreen<T : CoreViewModel> {
                 viewModel.uiEvent.collectLatest { event ->
                     when (event) {
                         is CoreEvent.Navigation -> {
-                            handleNavigation(
-                                navHostController,
-                                event.state
-                            )
+                            context.showInterstitial {
+                                handleNavigation(
+                                    navHostController,
+                                    event.state
+                                )
+                            }
                         }
                         is CoreEvent.ShowSnackBar -> {
                             snackScope.launch {

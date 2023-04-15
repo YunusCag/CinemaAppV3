@@ -2,4 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.yunuscagliyan.core_ui">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <application>
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="@string/admob_app_id"/>
+    </application>
+
 </manifest>

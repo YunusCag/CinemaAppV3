@@ -4,6 +4,7 @@ object Google {
     private const val systemUIControllerVersion="0.27.1"
     private const val navigationAnimationVersion="0.27.1"
     private const val firebaseBOMVersion = "31.2.3"
+    private const val adMobVersion="22.0.0"
 
 
     const val material = "com.google.android.material:material:$materialVersion"
@@ -14,4 +15,5 @@ object Google {
     const val firebaseBOM = "com.google.firebase:firebase-bom:$firebaseBOMVersion"
     const val firebaseAnalytics = "com.google.firebase:firebase-analytics-ktx"
     const val firebaseCrashlytics = "com.google.firebase:firebase-crashlytics-ktx"
+    const val adMob = "com.google.android.gms:play-services-ads:$adMobVersion"
 }

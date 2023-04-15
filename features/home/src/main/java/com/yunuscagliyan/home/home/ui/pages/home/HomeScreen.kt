@@ -14,6 +14,7 @@ import com.yunuscagliyan.core_ui.components.list.HorizontalMovieListView
 import com.yunuscagliyan.core_ui.navigation.CoreScreen
 import com.yunuscagliyan.core.R
 import com.yunuscagliyan.core.navigation.MainScreenRoute
+import com.yunuscagliyan.core_ui.components.admob.BannerAd
 import com.yunuscagliyan.core_ui.components.pager.MovieHorizontalPager
 import com.yunuscagliyan.home.data.enum.MoviePagingType
 import com.yunuscagliyan.home.home.viewmodel.home.HomeViewModel
@@ -51,6 +52,7 @@ object HomeScreen : CoreScreen<HomeViewModel>() {
                     )
                 }
             )
+            BannerAd()
             HorizontalMovieListView(
                 movies = trendingMovies,
                 title = stringResource(R.string.trending_title_text),
@@ -61,7 +63,7 @@ object HomeScreen : CoreScreen<HomeViewModel>() {
                     )
                 },
             )
-            Spacer(modifier = Modifier.height(8.dp))
+            BannerAd()
             HorizontalMovieListView(
                 movies = popularMovies,
                 title = stringResource(R.string.popular_title_text),
@@ -72,7 +74,7 @@ object HomeScreen : CoreScreen<HomeViewModel>() {
                     )
                 }
             )
-            Spacer(modifier = Modifier.height(8.dp))
+            BannerAd()
             HorizontalMovieListView(
                 movies = topRatedMovies,
                 title = stringResource(R.string.top_rated_title_text),

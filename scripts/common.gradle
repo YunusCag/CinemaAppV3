@@ -25,6 +25,10 @@ android {
             buildConfigField("String", "API_KEY", localProperties["API_KEY"])
             buildConfigField("String", "BASE_URL", localProperties["BASE_URL"])
             buildConfigField("String", "POSTER_BASE_URL", localProperties["POSTER_BASE_URL"])
+            buildConfigField("String", "ADMOB_APP_ID", localProperties["ADMOB_APP_TEST_ID"])
+            resValue("string", "admob_app_id", localProperties["ADMOB_APP_TEST_ID"])
+            buildConfigField("String", "ADMOB_BANNER_ID", localProperties["ADMOB_BANNER_TEST_ID"])
+            buildConfigField("String", "ADMOB_INTERSTITIAL_ID", localProperties["ADMOB_INTERSTITIAL_TEST_ID"])
         }
 
         release {
@@ -34,6 +38,10 @@ android {
             buildConfigField("String", "API_KEY", localProperties["API_KEY"])
             buildConfigField("String", "BASE_URL", localProperties["BASE_URL"])
             buildConfigField("String", "POSTER_BASE_URL", localProperties["POSTER_BASE_URL"])
+            buildConfigField("String", "ADMOB_APP_ID", localProperties["ADMOB_APP_PROD_ID"])
+            resValue("string", "admob_app_id", localProperties["ADMOB_APP_PROD_ID"])
+            buildConfigField("String", "ADMOB_BANNER_ID", localProperties["ADMOB_BANNER_PROD_ID"])
+            buildConfigField("String", "ADMOB_INTERSTITIAL_ID", localProperties["ADMOB_INTERSTITIAL_PROD_ID"])
         }
     }
     compileOptions {

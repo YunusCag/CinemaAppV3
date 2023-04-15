@@ -66,7 +66,6 @@ object Constants {
         const val EN_US = "en-US"//USA
         const val TR_TR = "tr-TR"//Turkey
         const val JA_JR = "ja-JR"//Japanese
-
     }
 
     object PaginationUtil {
@@ -78,5 +77,9 @@ object Constants {
         const val MOVIE_ID_KEY = "movie_id"
         const val VIDEO_ID_KEY = "video_id"
         const val VIDEO_NAME_KEY = "video_name"
+    }
+
+    object AdMobUtil {
+        const val INTERSTITIAL_SHOWING_COUNTER = 5
     }
 }
