@@ -17,3 +17,6 @@ local.properties
 /buildSrc/build/
 .idea/
 .idea/sonarlint/
+/sinemalogkeystore.jks
+/fastlane
+/app/release/app-release.aab
