@@ -25,14 +25,14 @@
     <string name="common_light_theme">Light Theme</string>
 
     <!--OnBoarding Page-->
-    <string name="on_boarding_first_title">Film Dünyasına Hoş Geldiniz!</string>
-    <string name="on_boarding_first_description">CinemaApp, film ve dizi tutkunları için özel olarak tasarlanmış bir mobil uygulamadır. Sinema dünyasının heyecan verici atmosferini avuçlarınıza getiren bu uygulama, kullanıcı dostu arayüzü ve güçlü TheMoviedb API entegrasyonu sayesinde kullanıcılarına benzersiz bir deneyim sunmaktadır.</string>
+    <string name="on_boarding_first_title">Welcome to the World Of Films!</string>
+    <string name="on_boarding_first_description">CinemaApp is a mobile application specifically designed for movie and TV series enthusiasts. This application brings the exciting atmosphere of the cinema world to your fingertips and offers its users a unique experience thanks to its user-friendly interface and powerful integration with TheMoviedb API.</string>
 
-    <string name="on_boarding_second_title">Sinematik Serüvene Hazır Mısınız?</string>
-    <string name="on_boarding_second_description"> En sevdiğiniz filmleri ve dizileri keşfedebilir, fragmanları izleyebilir, oyuncular hakkında bilgi edinebilir ve detaylı film bilgilerini görüntüleyebilirsiniz.</string>
+    <string name="on_boarding_second_title">Are You Ready for a Cinematic Adventure?</string>
+    <string name="on_boarding_second_description">You can discover your favorite movies and TV series, watch trailers, learn about actors, and view detailed movie information.</string>
 
-    <string name="on_boarding_third_title">Favori Filmleriniz</string>
-    <string name="on_boarding_third_description">Favori filmlerinizi kaydedin, izlemek istediğiniz filmleri takip edin ve güncel film haberlerine ulaşın.</string>
+    <string name="on_boarding_third_title">Your Favourite Movies</string>
+    <string name="on_boarding_third_description">Save your favorite movies, track the movies you want to watch, and access the latest film news.</string>
 
     <!--Home Page-->
     <string name="home_page_top_bar_title">Homepage</string>
