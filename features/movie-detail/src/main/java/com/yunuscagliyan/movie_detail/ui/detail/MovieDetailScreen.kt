@@ -21,6 +21,7 @@ import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil.annotation.ExperimentalCoilApi
+import com.google.android.gms.ads.AdSize
 import com.yunuscagliyan.core.R
 import com.yunuscagliyan.core.data.remote.model.cast.CastModel
 import com.yunuscagliyan.core.data.remote.model.crew.CrewModel
@@ -123,7 +124,10 @@ object MovieDetailScreen : CoreScreen<MovieDetailViewModel>() {
                             cast = state.cast,
                             viewModel = viewModel
                         )
-                        BannerAd()
+                        BannerAd(
+                            paddingValues = PaddingValues(),
+                            adSize = AdSize.LARGE_BANNER
+                        )
                         Crew(
                             isLoading = state.castLoading,
                             crew = state.crew
@@ -270,7 +274,8 @@ object MovieDetailScreen : CoreScreen<MovieDetailViewModel>() {
                         .height(220.dp),
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
                     contentPadding = PaddingValues(
-                        start = 16.dp
+                        start = 16.dp,
+                        end = 16.dp
                     )
                 ) {
                     items(cast.size) { index ->
@@ -329,7 +334,8 @@ object MovieDetailScreen : CoreScreen<MovieDetailViewModel>() {
                         .height(220.dp),
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
                     contentPadding = PaddingValues(
-                        start = 16.dp
+                        start = 16.dp,
+                        end = 16.dp
                     )
                 ) {
                     items(crew.size) { index ->
