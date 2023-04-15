@@ -27,6 +27,7 @@ import com.yunuscagliyan.core.data.remote.model.crew.CrewModel
 import com.yunuscagliyan.core.navigation.RootScreenRoute
 import com.yunuscagliyan.core.util.Constants.NavigationArgumentKey.MOVIE_ID_KEY
 import com.yunuscagliyan.core.util.Constants.StringParameter.EMPTY_STRING
+import com.yunuscagliyan.core_ui.components.admob.BannerAd
 import com.yunuscagliyan.core_ui.components.anim.AnimationBox
 import com.yunuscagliyan.core_ui.components.button.FavoriteButton
 import com.yunuscagliyan.core_ui.components.button.SecondaryMediumTextButton
@@ -110,6 +111,7 @@ object MovieDetailScreen : CoreScreen<MovieDetailViewModel>() {
                         if (state.movieDetailLoading) {
                             OverviewShimmer()
                         } else {
+                            BannerAd()
                             state.movieDetailResponse?.overview?.let { overview ->
                                 Overview(
                                     overview = overview
@@ -121,7 +123,7 @@ object MovieDetailScreen : CoreScreen<MovieDetailViewModel>() {
                             cast = state.cast,
                             viewModel = viewModel
                         )
-                        Spacer(modifier = Modifier.height(12.dp))
+                        BannerAd()
                         Crew(
                             isLoading = state.castLoading,
                             crew = state.crew
