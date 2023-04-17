@@ -80,6 +80,6 @@ object Constants {
     }
 
     object AdMobUtil {
-        const val INTERSTITIAL_SHOWING_COUNTER = 5
+        const val INTERSTITIAL_SHOWING_COUNTER = 8
     }
 }
