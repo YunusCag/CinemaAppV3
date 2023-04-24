@@ -9,3 +9,12 @@
 <img src="https://github.com/YunusCag/CinemaAppV3/blob/master/screenshots/Favoriler.png?raw=true" width="30%" />
 <img src="https://github.com/YunusCag/CinemaAppV3/blob/master/screenshots/Detay%20Sayfas%C4%B1.png?raw=true" width="30%" />
 </p>
+## App Module Architecture
+- app
+- core
+- core-ui
+- features:
+   - splash
+   - on-boarding
+   - home
+   - movie-detail
