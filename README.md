@@ -15,7 +15,7 @@
      <li>app</li>
     <li>core</li>
      <li>core-ui</li>
-    <li> <p>features </p>
+    <li>features
         <ul>
            <li> splash</li>
            <li> on-boarding</li>
