@@ -10,13 +10,21 @@
 <img src="https://github.com/YunusCag/CinemaAppV3/blob/master/screenshots/Detay%20Sayfas%C4%B1.png?raw=true" width="30%" />
 </p>
 ## App Module Architecture
-<p>
-</p>
-- app
-- core
-- core-ui
-- features:
-   - splash
-   - on-boarding
-   - home
-   - movie-detail
+<div>
+  <ul>
+     <li>app</li>
+    <li>core</li>
+     <li>core-ui</li>
+     <li> <p>features </p>
+        <p> 
+        <ul>
+           <li> splash</li>
+           <li> on-boarding</li>
+           <li> home</li>
+           <li> movie-detail</li>
+        </ul>
+     </p>
+     </li>
+     
+   </ul>
+   </div>
