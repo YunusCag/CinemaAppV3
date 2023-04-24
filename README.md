@@ -36,3 +36,6 @@
 * [Dagger-Hilt](https://developer.android.com/training/dependency-injection/hilt-android) - Dependency Injection
 * [MVVM Architecture](https://developer.android.com/jetpack/guide) - Modern, maintainable, and Google suggested app architecture
 * [Retrofit2 & OkHttp3](https://github.com/square/retrofit)
+* [Compose Navigation](https://developer.android.com/jetpack/compose/navigation) - Navigating with Compose
+* [Room Database](https://developer.android.com/training/data-storage/room) - For local storage
+
