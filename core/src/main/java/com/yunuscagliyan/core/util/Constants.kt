@@ -82,4 +82,10 @@ object Constants {
     object AdMobUtil {
         const val INTERSTITIAL_SHOWING_COUNTER = 8
     }
+
+    object YoutubeUtil {
+        const val THUMBNAIL_BASE_URL = "https://img.youtube.com/vi/"
+
+        const val defaultJPG = "/1.jpg"
+    }
 }

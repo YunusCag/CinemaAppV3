@@ -26,7 +26,7 @@
 
     <!--OnBoarding Page-->
     <string name="on_boarding_first_title">Welcome to the World Of Films!</string>
-    <string name="on_boarding_first_description">CinemaApp is a mobile application specifically designed for movie and TV series enthusiasts. This application brings the exciting atmosphere of the cinema world to your fingertips and offers its users a unique experience thanks to its user-friendly interface and powerful integration with TheMoviedb API.</string>
+    <string name="on_boarding_first_description">Cinema Tracker is a mobile application specifically designed for movie and TV series enthusiasts. This application brings the exciting atmosphere of the cinema world to your fingertips and offers its users a unique experience thanks to its user-friendly interface and powerful integration with TheMoviedb API.</string>
 
     <string name="on_boarding_second_title">Are You Ready for a Cinematic Adventure?</string>
     <string name="on_boarding_second_description">You can discover your favorite movies and TV series, watch trailers, learn about actors, and view detailed movie information.</string>
@@ -63,4 +63,5 @@
     <string name="movie_detail_crew">Crew</string>
     <string name="movie_detail_similar">Similar Movies</string>
     <string name="movie_detail_see_trailer_button">See Trailer</string>
+    <string name="movie_detail_trailer_title">Trailers</string>
 </resources>

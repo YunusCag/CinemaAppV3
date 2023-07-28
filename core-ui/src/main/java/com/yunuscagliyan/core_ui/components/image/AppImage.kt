@@ -20,8 +20,10 @@ import coil.size.Size
 import com.yunuscagliyan.core.BuildConfig
 import com.yunuscagliyan.core.util.Constants.StringParameter.EMPTY_STRING
 import com.yunuscagliyan.core.R
+import com.yunuscagliyan.core.util.Constants
 import com.yunuscagliyan.core_ui.components.error.NetworkErrorView
 import com.yunuscagliyan.core_ui.theme.CinemaAppTheme
+import timber.log.Timber
 
 @Composable
 fun AppImage(
@@ -34,6 +36,56 @@ fun AppImage(
         rememberAsyncImagePainter(
             model = ImageRequest.Builder(LocalContext.current)
                 .data("${BuildConfig.POSTER_BASE_URL}${url ?: EMPTY_STRING}")
+                .size(Size.ORIGINAL)
+                .build(),
+            error = painterResource(id = R.drawable.ic_replay)
+        )
+    when (painter.state) {
+        is AsyncImagePainter.State.Loading -> {
+            Box(
+                modifier = modifier
+                    .background(CinemaAppTheme.colors.background),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .size(36.dp),
+                    color = CinemaAppTheme.colors.secondary
+                )
+            }
+        }
+        is AsyncImagePainter.State.Success -> {
+            Image(
+                painter = painter,
+                contentDescription = description ?: EMPTY_STRING,
+                modifier = modifier,
+                contentScale = contentScale,
+            )
+        }
+        else -> {
+            Image(
+                painter = painter,
+                contentDescription = description ?: EMPTY_STRING,
+                modifier = modifier,
+                contentScale = contentScale,
+            )
+        }
+    }
+}
+
+@Composable
+fun YoutubeThumbnailImage(
+    modifier: Modifier = Modifier,
+    videoKey: String?,
+    description: String?,
+    contentScale: ContentScale = ContentScale.Crop
+) {
+    val url = "${Constants.YoutubeUtil.THUMBNAIL_BASE_URL}${videoKey ?: EMPTY_STRING}${Constants.YoutubeUtil.defaultJPG}"
+    Timber.e("Thumbnail:${url}")
+    val painter =
+        rememberAsyncImagePainter(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(url)
                 .size(Size.ORIGINAL)
                 .build(),
             error = painterResource(id = R.drawable.ic_replay)

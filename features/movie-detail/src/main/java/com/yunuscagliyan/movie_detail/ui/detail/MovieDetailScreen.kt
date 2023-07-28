@@ -35,6 +35,7 @@ import com.yunuscagliyan.core_ui.components.button.SecondaryMediumTextButton
 import com.yunuscagliyan.core_ui.components.error.NetworkErrorView
 import com.yunuscagliyan.core_ui.components.header.SimpleTopBar
 import com.yunuscagliyan.core_ui.components.list.HorizontalMovieListView
+import com.yunuscagliyan.core_ui.components.list.VideoThumbnailListView
 import com.yunuscagliyan.core_ui.components.main.MainUIFrame
 import com.yunuscagliyan.core_ui.components.ripple.NoRippleInteractionSource
 import com.yunuscagliyan.core_ui.extension.asString
@@ -148,19 +149,13 @@ object MovieDetailScreen : CoreScreen<MovieDetailViewModel>() {
                             onMovieTap = viewModel::onMovieClick
                         )
                         Spacer(modifier = Modifier.height(12.dp))
-                        if (!state.videoLoading && state.videoList.isNotEmpty()) {
-                            SecondaryMediumTextButton(
-                                modifier = Modifier
-                                    .padding(
-                                        start = 16.dp,
-                                        end = 16.dp,
-                                        top = 12.dp,
-                                        bottom = 24.dp
-                                    )
-                                    .fillMaxWidth(),
-                                text = stringResource(id = R.string.movie_detail_see_trailer_button),
-                                onClick = viewModel::onTeaserClick
+                        if (state.videoLoading || state.videoList.isNotEmpty()) {
+                            VideoThumbnailListView(
+                                videos = state.videoList,
+                                isLoading = state.videoLoading,
+                                onVideoClick = viewModel::onVideoClick
                             )
+                            Spacer(modifier = Modifier.height(24.dp))
                         }
                     }
                 }

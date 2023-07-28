@@ -16,6 +16,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -80,15 +81,8 @@ object VideoScreen : CoreScreen<VideoViewModel>() {
             }
         }
 
-        BackHandler {
-            activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-            viewModel.popBack()
-        }
-
         DisposableEffect(key1 = Unit) {
-            activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
             onDispose {
-                activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
                 youtubePlayer?.release()
                 youtubePlayer = null
             }
@@ -126,7 +120,8 @@ object VideoScreen : CoreScreen<VideoViewModel>() {
     ) {
         AndroidView(
             modifier = Modifier
-                .fillMaxSize(),
+                .fillMaxSize()
+                .background(color = CinemaAppTheme.colors.background),
             factory = { context ->
                 YouTubePlayerView(context).apply {
                     layoutParams = ViewGroup.LayoutParams(
@@ -141,6 +136,7 @@ object VideoScreen : CoreScreen<VideoViewModel>() {
                             )
                         }
                     })
+                    setBackgroundColor(resources.getColor(android.R.color.black))
                     enterFullScreen()
 
                 }

@@ -10,6 +10,7 @@ import com.yunuscagliyan.core.data.enums.VideoType
 import com.yunuscagliyan.core.data.local.entity.MovieEntity
 import com.yunuscagliyan.core.data.remote.model.cast.CastModel
 import com.yunuscagliyan.core.data.remote.model.movie.MovieModel
+import com.yunuscagliyan.core.data.remote.model.video.MovieVideoModel
 import com.yunuscagliyan.core.domain.repository.MovieRepository
 import com.yunuscagliyan.core.helper.LanguageHelper
 import com.yunuscagliyan.core.helper.RegionHelper
@@ -241,7 +242,7 @@ class MovieDetailViewModel @Inject constructor(
                     setState(state) {
                         var rawVideoList = result.data?.results ?: emptyList()
                         rawVideoList = rawVideoList.filter {
-                            it.type == VideoType.Trailer.type && it.site == VideoSite.Youtube.site
+                            (it.type == VideoType.Trailer.type || it.type == VideoType.Teaser.type) && it.site == VideoSite.Youtube.site
                         }.toList()
 
                         copy(
@@ -259,20 +260,18 @@ class MovieDetailViewModel @Inject constructor(
         //TODO Navigate Cast page
     }
 
-    fun onTeaserClick() {
-        state.value.videoList.randomOrNull()?.let { movieVideoModel ->
-            movieVideoModel.key?.let { key ->
-                sendEvent(
-                    CoreEvent.Navigation(
-                        Routes.NavigateToRoute(
-                            pageRoute = RootScreenRoute.Video.navigate(
-                                videoId = key,
-                                videoName = movieVideoModel.name ?: EMPTY_STRING
-                            )
+    fun onVideoClick(video:MovieVideoModel) {
+        video.key?.let { key ->
+            sendEvent(
+                CoreEvent.Navigation(
+                    Routes.NavigateToRoute(
+                        pageRoute = RootScreenRoute.Video.navigate(
+                            videoId = key,
+                            videoName = video.name ?: EMPTY_STRING
                         )
                     )
                 )
-            }
+            )
         }
     }
 

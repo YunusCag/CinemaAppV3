@@ -26,7 +26,7 @@
 
     <!--OnBoarding Page-->
     <string name="on_boarding_first_title">Film Dünyasına Hoş Geldiniz!</string>
-    <string name="on_boarding_first_description">CinemaApp, film ve dizi tutkunları için özel olarak tasarlanmış bir mobil uygulamadır. Sinema dünyasının heyecan verici atmosferini avuçlarınıza getiren bu uygulama, kullanıcı dostu arayüzü ve güçlü TheMoviedb API entegrasyonu sayesinde kullanıcılarına benzersiz bir deneyim sunmaktadır.</string>
+    <string name="on_boarding_first_description">Cinema Tracker, film ve dizi tutkunları için özel olarak tasarlanmış bir mobil uygulamadır. Sinema dünyasının heyecan verici atmosferini avuçlarınıza getiren bu uygulama, kullanıcı dostu arayüzü ve güçlü TheMoviedb API entegrasyonu sayesinde kullanıcılarına benzersiz bir deneyim sunmaktadır.</string>
 
     <string name="on_boarding_second_title">Sinematik Serüvene Hazır Mısınız?</string>
     <string name="on_boarding_second_description"> En sevdiğiniz filmleri ve dizileri keşfedebilir, fragmanları izleyebilir, oyuncular hakkında bilgi edinebilir ve detaylı film bilgilerini görüntüleyebilirsiniz.</string>
@@ -63,4 +63,5 @@
     <string name="movie_detail_crew">Prodüksiyon</string>
     <string name="movie_detail_similar">Benzer Filmler</string>
     <string name="movie_detail_see_trailer_button">Fragmanı İzle</string>
+    <string name="movie_detail_trailer_title">Fragmanlar</string>
 </resources>
