@@ -86,7 +86,7 @@ fun MovieGridView(
                     LazyVerticalStaggeredGrid(
                         columns = StaggeredGridCells.Fixed(column.columnCount),
                         modifier = Modifier.fillMaxSize(),
-                        verticalArrangement = Arrangement.spacedBy(if (isSingleItem) 12.dp else 0.dp),
+                        verticalItemSpacing = if (isSingleItem) 12.dp else 0.dp,
                         horizontalArrangement = Arrangement.spacedBy(if (isSingleItem) 8.dp else 0.dp),
                         contentPadding = contentPaddingValues
                     ) {

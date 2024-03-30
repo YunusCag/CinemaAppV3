@@ -50,12 +50,14 @@ android {
 }
 
 dependencies {
-    implementation(Compose.compiler)
-    implementation(Compose.ui)
-    implementation(Compose.uiToolingPreview)
+    implementation(Compose.activityCompose)
+    implementation(platform(Compose.composeBOM))
+    implementation(Compose.composeUI)
+    implementation(Compose.composeUIGraphic)
+    implementation(Compose.composeToolingPreview)
+
     implementation(Compose.hiltNavigationCompose)
     implementation(Compose.material)
-    implementation(Compose.runtime)
     implementation(Compose.navigation)
     implementation(Compose.viewModelCompose)
     implementation(Compose.activityCompose)
@@ -75,6 +77,7 @@ dependencies {
     implementation Google.firebaseAnalytics
     implementation Google.firebaseCrashlytics
     implementation Google.adMob
+    implementation Google.ump
 
     implementation(Retrofit.okHttp)
     implementation(Retrofit.retrofit)

@@ -2,6 +2,8 @@
 <resources>
 
     <style name="Theme.CinemaApp.Splash" parent="Theme.SplashScreen">
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
         <item name="windowSplashScreenBackground">#FF0A1823</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_app_logo</item>
         <item name="windowSplashScreenAnimationDuration">2000</item>

@@ -1,14 +1,20 @@
 apply from: '../scripts/common.gradle'
 
 dependencies {
-    implementation Compose.runtime
+    implementation(Compose.activityCompose)
+    implementation(platform(Compose.composeBOM))
+    implementation(Compose.composeUI)
+    implementation(Compose.composeUIGraphic)
+    implementation(Compose.composeToolingPreview)
     implementation Compose.paging
+
     implementation Retrofit.okHttp
     implementation Retrofit.retrofit
     implementation Retrofit.okHttpLoggingInterceptor
     implementation Retrofit.moshiConverter
     implementation Retrofit.moshiKotlin
     implementation Retrofit.moshiConverter
+    implementation Google.ump
 
     implementation Room.roomRuntime
     kapt Room.roomCompiler

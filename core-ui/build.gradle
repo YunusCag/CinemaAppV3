@@ -22,15 +22,16 @@ dependencies {
 
     implementation Kotlin.kotlin
 
-    implementation Compose.compiler
-    implementation Compose.ui
-    implementation Compose.uiToolingPreview
+    implementation(Compose.activityCompose)
+    implementation(platform(Compose.composeBOM))
+    implementation(Compose.composeUI)
+    implementation(Compose.composeUIGraphic)
+    implementation(Compose.composeToolingPreview)
+
     implementation Compose.hiltNavigationCompose
     implementation Compose.material
-    implementation Compose.runtime
     implementation Compose.navigation
     implementation Compose.viewModelCompose
-    implementation Compose.activityCompose
     implementation Compose.paging
 
 
