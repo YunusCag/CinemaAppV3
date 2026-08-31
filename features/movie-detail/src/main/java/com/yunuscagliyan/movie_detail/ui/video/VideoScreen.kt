@@ -53,6 +53,15 @@ import com.yunuscagliyan.movie_detail.viewmodel.video.VideoViewModel
 
 
 object VideoScreen : CoreScreen<VideoViewModel>() {
+
+    /**
+     * The player page is loaded into the web view with this value as its base URL, so it is
+     * also the origin the iframe reports to YouTube. It must not be youtube.com - the page
+     * would then claim to be YouTube itself and the embed is refused with error 152
+     * ("This video is unavailable").
+     */
+    private const val PLAYER_ORIGIN = "https://cinemaapp.yunuscagliyan.com"
+
     override val route: String
         get() = RootScreenRoute.Video.route
 
@@ -140,12 +149,11 @@ object VideoScreen : CoreScreen<VideoViewModel>() {
                     )
                     setBackgroundColor(ContextCompat.getColor(context, android.R.color.black))
 
-                    // Initialised by hand so the iframe gets an explicit origin: without
-                    // it YouTube rejects the embed and the player shows error 152.
+                    // Initialised by hand so the iframe gets an explicit origin.
                     enableAutomaticInitialization = false
                     val options = IFramePlayerOptions.Builder()
                         .controls(1)
-                        .origin("https://www.youtube.com")
+                        .origin(PLAYER_ORIGIN)
                         .build()
 
                     initialize(
