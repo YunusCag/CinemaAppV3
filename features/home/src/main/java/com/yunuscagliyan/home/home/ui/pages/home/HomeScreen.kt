@@ -7,9 +7,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import coil.annotation.ExperimentalCoilApi
-import com.google.accompanist.pager.ExperimentalPagerApi
 import com.yunuscagliyan.core_ui.components.list.HorizontalMovieListView
 import com.yunuscagliyan.core_ui.navigation.CoreScreen
 import com.yunuscagliyan.core.R
@@ -26,7 +25,7 @@ object HomeScreen : CoreScreen<HomeViewModel>() {
     @Composable
     override fun viewModel(): HomeViewModel = hiltViewModel()
 
-    @OptIn(ExperimentalPagerApi::class, ExperimentalCoilApi::class)
+    @OptIn(ExperimentalCoilApi::class)
     @Composable
     override fun Content(viewModel: HomeViewModel) {
         val upComingMovies = viewModel.upComingMovies

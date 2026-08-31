@@ -13,28 +13,35 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.ui.Modifier
+import androidx.core.content.ContextCompat
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.options.IFramePlayerOptions
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 import com.yunuscagliyan.core.R
+import timber.log.Timber
 import com.yunuscagliyan.core.navigation.RootScreenRoute
 import com.yunuscagliyan.core.util.Constants
 import com.yunuscagliyan.core.util.Constants.StringParameter.EMPTY_STRING
@@ -118,6 +125,9 @@ object VideoScreen : CoreScreen<VideoViewModel>() {
         videoId: String?,
         onStateChange: (Boolean) -> Unit
     ) {
+        val currentVideoId = videoId ?: EMPTY_STRING
+        var loadedVideoId by remember { mutableStateOf<String?>(null) }
+
         AndroidView(
             modifier = Modifier
                 .fillMaxSize()
@@ -128,80 +138,52 @@ object VideoScreen : CoreScreen<VideoViewModel>() {
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.MATCH_PARENT
                     )
-                    getYouTubePlayerWhenReady(object : YouTubePlayerCallback {
-                        override fun onYouTubePlayer(youTubePlayer: YouTubePlayer) {
-                            youTubePlayer.loadVideo(
-                                videoId = videoId ?: EMPTY_STRING,
-                                0f
-                            )
-                        }
-                    })
-                    setBackgroundColor(resources.getColor(android.R.color.black))
-                    enterFullScreen()
+                    setBackgroundColor(ContextCompat.getColor(context, android.R.color.black))
 
+                    // Initialised by hand so the iframe gets an explicit origin: without
+                    // it YouTube rejects the embed and the player shows error 152.
+                    enableAutomaticInitialization = false
+                    val options = IFramePlayerOptions.Builder()
+                        .controls(1)
+                        .origin("https://www.youtube.com")
+                        .build()
+
+                    initialize(
+                        object : AbstractYouTubePlayerListener() {
+                            override fun onReady(youTubePlayer: YouTubePlayer) {
+                                loadedVideoId = currentVideoId
+                                youTubePlayer.loadVideo(currentVideoId, 0f)
+                            }
+
+                            override fun onStateChange(
+                                youTubePlayer: YouTubePlayer,
+                                state: PlayerConstants.PlayerState
+                            ) {
+                                onStateChange(state == PlayerConstants.PlayerState.PLAYING)
+                            }
+
+                            override fun onError(
+                                youTubePlayer: YouTubePlayer,
+                                error: PlayerConstants.PlayerError
+                            ) {
+                                Timber.e("YouTube player error: $error (videoId=$currentVideoId)")
+                            }
+                        },
+                        options
+                    )
+                    enterFullScreen()
                 }
             },
             update = { player ->
-                player.apply {
-                    getYouTubePlayerWhenReady(object : YouTubePlayerCallback {
+                // Only reload when the video actually changes, otherwise every
+                // recomposition would restart playback from the beginning.
+                if (loadedVideoId != currentVideoId) {
+                    loadedVideoId = currentVideoId
+                    player.getYouTubePlayerWhenReady(object : YouTubePlayerCallback {
                         override fun onYouTubePlayer(youTubePlayer: YouTubePlayer) {
-                            youTubePlayer.loadVideo(
-                                videoId = videoId ?: EMPTY_STRING,
-                                0f
-                            )
-                            youTubePlayer.addListener(
-                                listener = object : YouTubePlayerListener {
-                                    override fun onApiChange(youTubePlayer: YouTubePlayer) = Unit
-
-                                    override fun onCurrentSecond(
-                                        youTubePlayer: YouTubePlayer,
-                                        second: Float
-                                    ) = Unit
-
-                                    override fun onError(
-                                        youTubePlayer: YouTubePlayer,
-                                        error: PlayerConstants.PlayerError
-                                    ) = Unit
-
-                                    override fun onPlaybackQualityChange(
-                                        youTubePlayer: YouTubePlayer,
-                                        playbackQuality: PlayerConstants.PlaybackQuality
-                                    ) = Unit
-
-                                    override fun onPlaybackRateChange(
-                                        youTubePlayer: YouTubePlayer,
-                                        playbackRate: PlayerConstants.PlaybackRate
-                                    ) = Unit
-
-                                    override fun onReady(youTubePlayer: YouTubePlayer) = Unit
-
-                                    override fun onStateChange(
-                                        youTubePlayer: YouTubePlayer,
-                                        state: PlayerConstants.PlayerState
-                                    ) {
-                                        onStateChange(state == PlayerConstants.PlayerState.PLAYING)
-                                    }
-
-                                    override fun onVideoDuration(
-                                        youTubePlayer: YouTubePlayer,
-                                        duration: Float
-                                    ) = Unit
-
-                                    override fun onVideoId(
-                                        youTubePlayer: YouTubePlayer,
-                                        videoId: String
-                                    ) = Unit
-
-                                    override fun onVideoLoadedFraction(
-                                        youTubePlayer: YouTubePlayer,
-                                        loadedFraction: Float
-                                    ) = Unit
-
-                                }
-                            )
+                            youTubePlayer.loadVideo(currentVideoId, 0f)
                         }
                     })
-                    enterFullScreen()
                 }
                 youtubePlayer = player
             }
@@ -214,13 +196,15 @@ object VideoScreen : CoreScreen<VideoViewModel>() {
         onBackPress: () -> Unit
     ) {
         SimpleTopBar(
+            // The player draws edge to edge, so the bar keeps clear of the status bar.
+            modifier = Modifier.statusBarsPadding(),
             title = videoName ?: EMPTY_STRING,
             backgroundColor = CinemaAppTheme.colors.blackColor.copy(
                 alpha = 0.6f
             ),
             rightActions = {
                 Icon(
-                    imageVector = Icons.Default.ArrowBack,
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = stringResource(id = R.string.common_back_button_description),
                     modifier = Modifier
                         .size(24.dp),
@@ -233,7 +217,7 @@ object VideoScreen : CoreScreen<VideoViewModel>() {
                     interactionSource = NoRippleInteractionSource()
                 ) {
                     Icon(
-                        imageVector = Icons.Default.ArrowBack,
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         contentDescription = stringResource(id = R.string.common_back_button_description),
                         modifier = Modifier
                             .size(24.dp),

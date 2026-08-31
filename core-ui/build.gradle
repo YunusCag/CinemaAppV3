@@ -33,9 +33,6 @@ dependencies {
 
 
     implementation Coil.coilCompose
-    implementation Google.accompanistPager
-    implementation Google.accompanistSystemUIController
-    implementation Google.accompanistNavigationAnimation
     implementation Google.adMob
 
     ksp DaggerHilt.hiltCompiler

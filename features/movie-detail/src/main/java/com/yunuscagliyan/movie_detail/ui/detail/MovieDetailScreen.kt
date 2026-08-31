@@ -8,14 +8,14 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
@@ -190,7 +190,7 @@ object MovieDetailScreen : CoreScreen<MovieDetailViewModel>() {
         val backgroundColor = if (state.movieDetailError != null) {
             CinemaAppTheme.colors.primary
         } else {
-            if (scrollValue() == 0) Color.Unspecified else CinemaAppTheme.colors.primary
+            if (scrollValue() == 0) Color.Transparent else CinemaAppTheme.colors.primary
         }
 
         SimpleTopBar(
@@ -216,7 +216,7 @@ object MovieDetailScreen : CoreScreen<MovieDetailViewModel>() {
                     interactionSource = NoRippleInteractionSource()
                 ) {
                     Icon(
-                        imageVector = Icons.Default.ArrowBack,
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         contentDescription = stringResource(id = R.string.common_back_button_description),
                         modifier = Modifier
                             .size(24.dp),

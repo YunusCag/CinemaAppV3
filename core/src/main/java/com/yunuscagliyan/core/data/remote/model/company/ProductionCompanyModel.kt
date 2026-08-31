@@ -8,8 +8,8 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 @JsonClass(generateAdapter = true)
 data class ProductionCompanyModel(
-    @Json(name = "id") var id: Int? = null,
-    @Json(name = "logo_path") var logoPath: String? = null,
-    @Json(name = "name") var name: String? = null,
-    @Json(name = "origin_country") var originCountry: String? = null
+    @param:Json(name = "id") var id: Int? = null,
+    @param:Json(name = "logo_path") var logoPath: String? = null,
+    @param:Json(name = "name") var name: String? = null,
+    @param:Json(name = "origin_country") var originCountry: String? = null
 ) : Parcelable

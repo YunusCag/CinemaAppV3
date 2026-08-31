@@ -114,7 +114,7 @@ private fun VideoThumbnail(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(150.dp),
-            backgroundColor = Color.Unspecified,
+            backgroundColor = Color.Transparent,
             shape = CinemaAppTheme.shapes.defaultSmallShape,
             elevation = 0.dp
         ) {

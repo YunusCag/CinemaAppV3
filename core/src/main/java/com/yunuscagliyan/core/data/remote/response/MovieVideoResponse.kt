@@ -9,5 +9,5 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 @JsonClass(generateAdapter = true)
 data class MovieVideoResponse(
-    @Json(name = "results") val results: List<MovieVideoModel>? = null
+    @param:Json(name = "results") val results: List<MovieVideoModel>? = null
 ) : Parcelable

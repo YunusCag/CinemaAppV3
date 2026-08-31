@@ -16,7 +16,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.yunuscagliyan.core.navigation.RootScreenRoute
 import com.yunuscagliyan.core.util.Constants.DurationUTil.SPLASH_DURATION
 import com.yunuscagliyan.core_ui.navigation.CoreScreen

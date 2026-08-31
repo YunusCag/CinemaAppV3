@@ -8,6 +8,6 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 @JsonClass(generateAdapter = true)
 data class GenreModel(
-    @Json(name = "id") val id: Int? = null,
-    @Json(name = "name") val name: String? = null
+    @param:Json(name = "id") val id: Int? = null,
+    @param:Json(name = "name") val name: String? = null
 ) : Parcelable

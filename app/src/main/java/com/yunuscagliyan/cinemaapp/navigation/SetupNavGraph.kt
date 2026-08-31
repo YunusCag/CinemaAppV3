@@ -6,7 +6,7 @@ import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
-import com.google.accompanist.navigation.animation.AnimatedNavHost
+import androidx.navigation.compose.NavHost
 import com.yunuscagliyan.core.navigation.RootScreenRoute
 import com.yunuscagliyan.core.util.Constants.DurationUTil.TRANSITION_DURATION
 import com.yunuscagliyan.home.home.ui.pages.main.MainScreen
@@ -21,7 +21,7 @@ import com.yunuscagliyan.splash.ui.SplashScreen
 fun SetupNavGraph(
     navController: NavHostController,
 ) {
-    AnimatedNavHost(
+    NavHost(
         navController = navController,
         startDestination = RootScreenRoute.Splash.route,
         enterTransition = {

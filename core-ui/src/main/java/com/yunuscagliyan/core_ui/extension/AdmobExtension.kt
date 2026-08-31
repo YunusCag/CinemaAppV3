@@ -10,6 +10,7 @@ import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.yunuscagliyan.core.extension.findActivity
 import com.yunuscagliyan.core_ui.BuildConfig
 import com.yunuscagliyan.core_ui.helper.AdmobHelper
+import timber.log.Timber
 
 
 fun Context.loadInterstitial() {
@@ -22,11 +23,13 @@ fun Context.loadInterstitial() {
         object : InterstitialAdLoadCallback() {
             override fun onAdFailedToLoad(adError: LoadAdError) {
                 super.onAdFailedToLoad(adError)
+                Timber.e("Interstitial ad failed to load: ${adError.code} ${adError.message}")
                 AdmobHelper.clearInterstitialAd()
             }
 
             override fun onAdLoaded(interstitialAd: InterstitialAd) {
                 super.onAdLoaded(interstitialAd)
+                Timber.d("Interstitial ad loaded")
                 AdmobHelper.loadInterstitialAd(interstitialAd)
             }
         }
@@ -41,6 +44,7 @@ fun Context.showInterstitial(onAdDismissed: () -> Unit) {
         AdmobHelper.setInterstitialFullScreenCallback(object : FullScreenContentCallback() {
             override fun onAdFailedToShowFullScreenContent(e: AdError) {
                 super.onAdFailedToShowFullScreenContent(e)
+                Timber.e("Interstitial ad failed to show: ${e.code} ${e.message}")
                 AdmobHelper.clearInterstitialAd()
                 onAdDismissed()
             }

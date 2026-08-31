@@ -106,7 +106,6 @@ dependencies {
 
     implementation(Google.material)
     implementation(Coil.coilCompose)
-    implementation Google.accompanistNavigationAnimation
     implementation(Compose.splash)
 
     implementation platform(Google.firebaseBOM)

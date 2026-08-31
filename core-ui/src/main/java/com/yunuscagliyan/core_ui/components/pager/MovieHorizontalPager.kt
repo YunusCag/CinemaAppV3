@@ -2,13 +2,15 @@ package com.yunuscagliyan.core_ui.components.pager
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -27,10 +29,6 @@ import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil.annotation.ExperimentalCoilApi
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.PagerScope
-import com.google.accompanist.pager.rememberPagerState
 import com.yunuscagliyan.core.R
 import com.yunuscagliyan.core.data.remote.model.movie.MovieModel
 import com.yunuscagliyan.core.util.Constants.DurationUTil.HOME_AUTO_SCROLL_DURATION
@@ -46,7 +44,6 @@ import kotlinx.coroutines.yield
 import kotlin.math.absoluteValue
 
 @ExperimentalCoilApi
-@ExperimentalPagerApi
 @Composable
 fun MovieHorizontalPager(
     movies: Flow<PagingData<MovieModel>>,
@@ -78,7 +75,7 @@ fun MovieHorizontalPager(
             )
 
             Icon(
-                Icons.Default.KeyboardArrowRight,
+                Icons.AutoMirrored.Filled.KeyboardArrowRight,
                 contentDescription = null,
                 modifier = Modifier
                     .size(24.dp),
@@ -88,7 +85,7 @@ fun MovieHorizontalPager(
         Column(
             modifier = modifier.height(250.dp)
         ) {
-            val pagerState = rememberPagerState()
+            val pagerState = rememberPagerState { lazyMovieItems.itemCount }
 
             LaunchedEffect(key1 = Unit) {
                 while (true) {
@@ -115,7 +112,6 @@ fun MovieHorizontalPager(
                 HorizontalPager(
                     modifier = Modifier
                         .fillMaxWidth(),
-                    count = lazyMovieItems.itemCount,
                     state = pagerState,
                 ) { index ->
                     val movie = lazyMovieItems[index]

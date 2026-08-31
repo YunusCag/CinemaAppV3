@@ -8,5 +8,5 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 @JsonClass(generateAdapter = true)
 data class SpokenLanguageModel(
-    @Json(name = "name") var name: String? = null
+    @param:Json(name = "name") var name: String? = null
 ): Parcelable

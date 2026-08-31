@@ -101,7 +101,7 @@ fun MovieLargeCard(
                     start = 8.dp,
                     bottom = 8.dp,
                 ),
-            backgroundColor = Color.Unspecified,
+            backgroundColor = Color.Transparent,
             shape = CinemaAppTheme.shapes.defaultSmallShape,
             elevation = 0.dp
         ) {

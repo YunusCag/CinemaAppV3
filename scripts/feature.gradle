@@ -30,9 +30,6 @@ dependencies {
     implementation Compose.constraintLayout
 
     implementation Coil.coilCompose
-    implementation Google.accompanistPager
-    implementation Google.accompanistPagerIndicator
-    implementation Google.accompanistNavigationAnimation
     implementation Google.adMob
 
     implementation Retrofit.okHttp

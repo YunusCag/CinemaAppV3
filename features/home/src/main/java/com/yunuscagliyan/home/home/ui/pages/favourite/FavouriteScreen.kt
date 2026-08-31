@@ -18,7 +18,7 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.yunuscagliyan.core.data.local.entity.MovieEntity
 import com.yunuscagliyan.core.data.mapper.toMovieModel
 import com.yunuscagliyan.core.data.remote.model.movie.MovieModel
@@ -135,6 +135,9 @@ object FavouriteScreen : CoreScreen<FavouriteViewModel>() {
     }
 
     @Composable
+    // Material 2 has no non-deprecated swipe threshold API; the full-width threshold is
+    // kept on purpose so that a half swipe cannot delete a favourite by accident.
+    @Suppress("DEPRECATION")
     @OptIn(ExperimentalMaterialApi::class)
     private fun MovieItem(
         modifier: Modifier = Modifier,
