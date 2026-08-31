@@ -123,7 +123,7 @@ object FavouriteScreen : CoreScreen<FavouriteViewModel>() {
 
 
                 MovieItem(
-                    modifier = Modifier.animateItemPlacement(),
+                    modifier = Modifier.animateItem(),
                     index = index,
                     entity = entity,
                     movie = movie,

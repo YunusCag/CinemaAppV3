@@ -17,6 +17,6 @@ dependencies {
     implementation Google.ump
 
     implementation Room.roomRuntime
-    kapt Room.roomCompiler
+    ksp Room.roomCompiler
     implementation Room.roomKtx
 }

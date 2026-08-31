@@ -1,7 +1,7 @@
 package com.yunuscagliyan.home.home.ui.pages.main
 
 import androidx.annotation.StringRes
-import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
@@ -109,7 +109,7 @@ object MainScreen : CoreScreen<MainViewModel>() {
             startDestination = MainScreenRoute.Home.route,
             enterTransition = {
                 slideIntoContainer(
-                    AnimatedContentScope.SlideDirection.Left,
+                    AnimatedContentTransitionScope.SlideDirection.Left,
                     animationSpec = tween(
                         Constants.DurationUTil.TRANSITION_DURATION,
                         easing = LinearEasing
@@ -118,7 +118,7 @@ object MainScreen : CoreScreen<MainViewModel>() {
             },
             exitTransition = {
                 slideOutOfContainer(
-                    AnimatedContentScope.SlideDirection.Left,
+                    AnimatedContentTransitionScope.SlideDirection.Left,
                     animationSpec = tween(
                         Constants.DurationUTil.TRANSITION_DURATION,
                         easing = LinearEasing
@@ -127,7 +127,7 @@ object MainScreen : CoreScreen<MainViewModel>() {
             },
             popEnterTransition = {
                 slideIntoContainer(
-                    AnimatedContentScope.SlideDirection.Right,
+                    AnimatedContentTransitionScope.SlideDirection.Right,
                     animationSpec = tween(
                         Constants.DurationUTil.TRANSITION_DURATION,
                         easing = LinearEasing
@@ -136,7 +136,7 @@ object MainScreen : CoreScreen<MainViewModel>() {
             },
             popExitTransition = {
                 slideOutOfContainer(
-                    AnimatedContentScope.SlideDirection.Right,
+                    AnimatedContentTransitionScope.SlideDirection.Right,
                     animationSpec = tween(
                         Constants.DurationUTil.TRANSITION_DURATION,
                         easing = LinearEasing

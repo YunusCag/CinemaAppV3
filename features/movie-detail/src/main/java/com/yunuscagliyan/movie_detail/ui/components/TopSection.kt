@@ -10,6 +10,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -116,7 +117,7 @@ fun TopSection(
                         Spacer(modifier = Modifier.width(4.dp))
                         Text(
                             text = "${
-                                NumberFormat.getInstance(Locale.getDefault()).format(budget)
+                                NumberFormat.getInstance(LocalConfiguration.current.locales[0]).format(budget)
                             } ${
                                 stringResource(
                                     id = R.string.movie_detail_currency
@@ -141,7 +142,7 @@ fun TopSection(
                         Spacer(modifier = Modifier.width(4.dp))
                         Text(
                             text = "${
-                                NumberFormat.getInstance(Locale.getDefault()).format(revenue)
+                                NumberFormat.getInstance(LocalConfiguration.current.locales[0]).format(revenue)
                             } ${
                                 stringResource(
                                     id = R.string.movie_detail_currency

@@ -1,15 +1,11 @@
 apply plugin: 'com.android.library'
 apply plugin: 'org.jetbrains.kotlin.android'
+apply plugin: 'org.jetbrains.kotlin.plugin.compose'
 apply plugin: 'dagger.hilt.android.plugin'
-apply plugin: 'kotlin-kapt'
-apply plugin: 'kotlin-parcelize'
 
 apply from: '../../scripts/common.gradle'
 
 android {
-    composeOptions {
-        kotlinCompilerExtensionVersion = Compose.composeCompilerVersion
-    }
     buildFeatures {
         compose true
     }
@@ -19,7 +15,6 @@ dependencies {
     api project(Modules.core)
     api project(Modules.core_ui)
 
-    implementation(Compose.activityCompose)
     implementation(platform(Compose.composeBOM))
     implementation(Compose.composeUI)
     implementation(Compose.composeUIGraphic)
@@ -27,6 +22,7 @@ dependencies {
 
     implementation Compose.hiltNavigationCompose
     implementation Compose.material
+    implementation Compose.materialIcons
     implementation Compose.navigation
     implementation Compose.viewModelCompose
     implementation Compose.activityCompose
@@ -44,11 +40,12 @@ dependencies {
     implementation Retrofit.okHttpLoggingInterceptor
     implementation Retrofit.moshiConverter
 
-    kapt DaggerHilt.hiltCompiler
+    ksp DaggerHilt.hiltCompiler
     implementation DaggerHilt.hiltAndroid
     debugImplementation Compose.composeDebugTest
 
     testImplementation(Testing.junit4)
     androidTestImplementation(Testing.junitAndroidExt)
+    androidTestImplementation(platform(Compose.composeBOM))
     androidTestImplementation(Compose.composeUnitTest)
 }

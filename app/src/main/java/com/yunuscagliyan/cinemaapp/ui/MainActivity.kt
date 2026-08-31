@@ -3,6 +3,7 @@ package com.yunuscagliyan.cinemaapp.ui
 import android.os.Bundle
 import androidx.compose.runtime.getValue
 import androidx.activity.ComponentActivity
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -36,6 +37,7 @@ class MainActivity : ComponentActivity() {
 
     @OptIn(ExperimentalAnimationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         MobileAds.initialize(this)
         val splash = installSplashScreen()

@@ -1,9 +1,12 @@
 package com.yunuscagliyan.core_ui.theme
 
+import android.app.Activity
+import android.content.ContextWrapper
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import androidx.compose.ui.platform.LocalView
+import androidx.core.view.WindowCompat
 
 object CinemaAppTheme {
     val colors: CinemaAppColors
@@ -78,15 +81,24 @@ fun CinemaAppTheme(
         LightColorPalette
     }
 
-    val systemUiController = rememberSystemUiController()
-    systemUiController.setSystemBarsColor(
-        color = colors.primaryDark,
-        darkIcons = false
-    )
-    systemUiController.setNavigationBarColor(
-        color = colors.background,
-        darkIcons = !darkTheme
-    )
+    // System bar colors are drawn by the app (see MainUIFrame); only the icon
+    // appearance is still controlled from here.
+    val view = LocalView.current
+    if (!view.isInEditMode) {
+        SideEffect {
+            var context = view.context
+            while (context is ContextWrapper && context !is Activity) {
+                context = context.baseContext
+            }
+            (context as? Activity)?.let { activity ->
+                WindowCompat.getInsetsController(activity.window, view).apply {
+                    // The top bar is dark in both themes, so status bar icons stay light.
+                    isAppearanceLightStatusBars = false
+                    isAppearanceLightNavigationBars = !darkTheme
+                }
+            }
+        }
+    }
 
     val rememberedColors = remember { colors.copy() }.apply { update(colors) }
     CompositionLocalProvider(
