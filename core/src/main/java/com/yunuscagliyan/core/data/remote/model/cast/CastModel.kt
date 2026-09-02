@@ -8,16 +8,16 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 @JsonClass(generateAdapter = true)
 data class CastModel(
-    @Json(name = "adult") var adult: Boolean? = null,
-    @Json(name = "gender") var gender: Int? = null,
-    @Json(name = "id") var id: Int? = null,
-    @Json(name = "known_for_department") var knownForDepartment: String? = null,
-    @Json(name = "name") var name: String? = null,
-    @Json(name = "original_name") var originalName: String? = null,
-    @Json(name = "popularity") var popularity: Double? = null,
-    @Json(name = "profile_path") var profilePath: String? = null,
-    @Json(name = "cast_id") var castId: Int? = null,
-    @Json(name = "character") var character: String? = null,
-    @Json(name = "credit_id") var creditId: String? = null,
-    @Json(name = "order") var order: Int? = null,
+    @param:Json(name = "adult") var adult: Boolean? = null,
+    @param:Json(name = "gender") var gender: Int? = null,
+    @param:Json(name = "id") var id: Int? = null,
+    @param:Json(name = "known_for_department") var knownForDepartment: String? = null,
+    @param:Json(name = "name") var name: String? = null,
+    @param:Json(name = "original_name") var originalName: String? = null,
+    @param:Json(name = "popularity") var popularity: Double? = null,
+    @param:Json(name = "profile_path") var profilePath: String? = null,
+    @param:Json(name = "cast_id") var castId: Int? = null,
+    @param:Json(name = "character") var character: String? = null,
+    @param:Json(name = "credit_id") var creditId: String? = null,
+    @param:Json(name = "order") var order: Int? = null,
 ) : Parcelable

@@ -3,14 +3,15 @@ package com.yunuscagliyan.cinemaapp.ui
 import android.os.Bundle
 import androidx.compose.runtime.getValue
 import androidx.activity.ComponentActivity
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.lifecycleScope
-import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import androidx.navigation.compose.rememberNavController
 import com.google.android.gms.ads.MobileAds
 import com.yunuscagliyan.cinemaapp.navigation.SetupNavGraph
 import com.yunuscagliyan.core.data.enums.ThemeType
@@ -36,6 +37,7 @@ class MainActivity : ComponentActivity() {
 
     @OptIn(ExperimentalAnimationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         MobileAds.initialize(this)
         val splash = installSplashScreen()
@@ -63,7 +65,7 @@ class MainActivity : ComponentActivity() {
             CinemaAppTheme(
                 darkTheme = darkTheme
             ) {
-                val navController = rememberAnimatedNavController()
+                val navController = rememberNavController()
                 SetupNavGraph(navController = navController)
             }
         }

@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
@@ -14,8 +14,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import com.google.accompanist.pager.*
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PagerState
+import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.ui.graphics.Color
 import com.yunuscagliyan.core.data.ui.OnBoardingModel
 import com.yunuscagliyan.core.navigation.RootScreenRoute
 import com.yunuscagliyan.core_ui.components.button.SecondaryMediumTextButton
@@ -36,11 +39,10 @@ object OnBoardingScreen : CoreScreen<OnBoardingViewModel>() {
     @Composable
     override fun viewModel(): OnBoardingViewModel = hiltViewModel()
 
-    @OptIn(ExperimentalPagerApi::class)
     @Composable
     override fun Content(viewModel: OnBoardingViewModel) {
         val state by viewModel.state
-        val pagerState = rememberPagerState()
+        val pagerState = rememberPagerState { state.introduceList.size }
         val coroutineScope = rememberCoroutineScope()
 
 
@@ -82,7 +84,7 @@ object OnBoardingScreen : CoreScreen<OnBoardingViewModel>() {
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
-                            Icons.Default.ArrowForward,
+                            Icons.AutoMirrored.Filled.ArrowForward,
                             contentDescription = null,
                             modifier = Modifier
                                 .size(24.dp),
@@ -111,7 +113,6 @@ object OnBoardingScreen : CoreScreen<OnBoardingViewModel>() {
         }
     }
 
-    @OptIn(ExperimentalPagerApi::class)
     @Composable
     private fun IntroductionPager(
         modifier: Modifier = Modifier,
@@ -129,7 +130,6 @@ object OnBoardingScreen : CoreScreen<OnBoardingViewModel>() {
             HorizontalPager(
                 modifier = Modifier
                     .weight(1f),
-                count = introduceList.size,
                 state = pagerState
             ) { index ->
                 val model = introduceList[index]
@@ -140,7 +140,7 @@ object OnBoardingScreen : CoreScreen<OnBoardingViewModel>() {
                 )
             }
             Spacer(modifier = Modifier.height(8.dp))
-            HorizontalPagerIndicator(
+            PagerIndicator(
                 pagerState = pagerState,
                 activeColor = CinemaAppTheme.colors.secondary,
                 inactiveColor = CinemaAppTheme.colors.primary
@@ -148,4 +148,31 @@ object OnBoardingScreen : CoreScreen<OnBoardingViewModel>() {
             Spacer(modifier = Modifier.height(50.dp))
         }
     }
+
+    /** Replaces the deprecated accompanist HorizontalPagerIndicator. */
+    @Composable
+    private fun PagerIndicator(
+        pagerState: PagerState,
+        activeColor: Color,
+        inactiveColor: Color,
+        modifier: Modifier = Modifier,
+    ) {
+        Row(
+            modifier = modifier,
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            repeat(pagerState.pageCount) { page ->
+                Box(
+                    modifier = Modifier
+                        .size(8.dp)
+                        .background(
+                            color = if (page == pagerState.currentPage) activeColor else inactiveColor,
+                            shape = CircleShape
+                        )
+                )
+            }
+        }
+    }
+
 }

@@ -1,15 +1,19 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'org.jetbrains.kotlin.plugin.compose'
     id 'dagger.hilt.android.plugin'
-    id 'kotlin-kapt'
+    id 'com.google.devtools.ksp'
     id 'com.google.gms.google-services'
     id 'com.google.firebase.crashlytics'
 }
 
 android {
+    namespace AppConfig.applicationId
+    compileSdk AppConfig.compileSdk
+
     defaultConfig {
-        compileSdk AppConfig.compileSdk
+        applicationId AppConfig.applicationId
         minSdk AppConfig.minSdk
         targetSdk AppConfig.targetSdk
         versionCode AppConfig.versionCode
@@ -20,12 +24,32 @@ android {
             useSupportLibrary true
         }
     }
+    // Signing credentials are read from local.properties (not version controlled);
+    // gradle.properties is used as a fallback for backwards compatibility.
+    def localProperties = new Properties()
+    def localPropertiesFile = rootProject.file("local.properties")
+    if (localPropertiesFile.exists()) {
+        localPropertiesFile.withInputStream { localProperties.load(it) }
+    }
+    def signingProperty = { String key, String defaultValue ->
+        def value = localProperties.getProperty(key)
+        if (value == null || value.trim().isEmpty()) {
+            value = project.hasProperty(key) ? project.property(key) : defaultValue
+        }
+        return value?.toString()?.trim()
+    }
+
+    def releaseStoreFile = signingProperty("RELEASE_STORE_FILE", "")
+    def releaseKeystore = releaseStoreFile ? file(releaseStoreFile) : null
+
     signingConfigs {
-        release {
-            storeFile file(RELEASE_STORE_FILE)
-            storePassword RELEASE_STORE_PASSWORD
-            keyAlias RELEASE_KEY_ALIAS
-            keyPassword RELEASE_KEY_PASSWORD
+        if (releaseKeystore != null && releaseKeystore.exists()) {
+            release {
+                storeFile releaseKeystore
+                storePassword signingProperty("RELEASE_STORE_PASSWORD", "")
+                keyAlias signingProperty("RELEASE_KEY_ALIAS", "")
+                keyPassword signingProperty("RELEASE_KEY_PASSWORD", "")
+            }
         }
     }
 
@@ -33,16 +57,26 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
+            // The keystore is not checked in; build unsigned when it is unavailable
+            // so that the release variant still compiles on a fresh machine.
+            if (releaseKeystore != null && releaseKeystore.exists()) {
+                signingConfig signingConfigs.release
+            } else {
+                logger.warn("Release keystore not found (RELEASE_STORE_FILE=${releaseStoreFile}); building release unsigned.")
+            }
         }
     }
     buildFeatures {
         compose true
+        buildConfig true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion Compose.composeCompilerVersion
+    compileOptions {
+        coreLibraryDesugaringEnabled true
+
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
-    packagingOptions {
+    packaging {
         resources {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
@@ -50,6 +84,8 @@ android {
 }
 
 dependencies {
+    coreLibraryDesugaring(Desugar.jdkLibs)
+
     implementation(Compose.activityCompose)
     implementation(platform(Compose.composeBOM))
     implementation(Compose.composeUI)
@@ -66,11 +102,10 @@ dependencies {
     implementation(AndroidX.appCompat)
 
     implementation(DaggerHilt.hiltAndroid)
-    kapt(DaggerHilt.hiltCompiler)
+    ksp(DaggerHilt.hiltCompiler)
 
     implementation(Google.material)
     implementation(Coil.coilCompose)
-    implementation Google.accompanistNavigationAnimation
     implementation(Compose.splash)
 
     implementation platform(Google.firebaseBOM)
@@ -84,7 +119,7 @@ dependencies {
     implementation(Retrofit.okHttpLoggingInterceptor)
     implementation(Retrofit.moshiConverter)
 
-    kapt(Room.roomCompiler)
+    ksp(Room.roomCompiler)
     implementation(Room.roomKtx)
     implementation(Room.roomRuntime)
 
@@ -99,6 +134,7 @@ dependencies {
 
     testImplementation(Testing.junit4)
     androidTestImplementation(Testing.junitAndroidExt)
+    androidTestImplementation(platform(Compose.composeBOM))
     androidTestImplementation(Compose.composeUnitTest)
     debugImplementation(Compose.composeDebugTest)
     debugImplementation(Compose.composeDebugTestManifest)

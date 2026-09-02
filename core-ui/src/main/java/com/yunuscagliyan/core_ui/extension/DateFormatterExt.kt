@@ -13,7 +13,7 @@ fun String.formatDate(
     val input = SimpleDateFormat(inputFormat)
     val output = SimpleDateFormat(outputFormat)
     return try {
-        val date = input.parse(this)
+        val date = input.parse(this) ?: return null
         output.format(date)
     } catch (e: Exception) {
         Timber.e(e.message)

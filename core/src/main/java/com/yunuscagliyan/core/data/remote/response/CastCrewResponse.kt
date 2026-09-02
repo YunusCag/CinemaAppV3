@@ -10,7 +10,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 @JsonClass(generateAdapter = true)
 data class CastCrewResponse(
-    @Json(name = "id") var id: Int? = null,
-    @Json(name = "cast") var cast: List<CastModel>? = null,
-    @Json(name = "crew") var crew: List<CrewModel>? = null,
+    @param:Json(name = "id") var id: Int? = null,
+    @param:Json(name = "cast") var cast: List<CastModel>? = null,
+    @param:Json(name = "crew") var crew: List<CrewModel>? = null,
 ) : Parcelable

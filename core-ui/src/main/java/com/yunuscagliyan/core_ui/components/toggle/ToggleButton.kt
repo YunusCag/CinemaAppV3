@@ -63,13 +63,13 @@ fun ToggleButton(
     val backgroundColorAnim = animateColorAsState(
         targetValue = if (isSelected)
             color else
-            Color.Unspecified,
+            Color.Transparent,
         animationSpec = tween(DEFAULT_ANIMATION_DURATION)
     )
 
     val strokeColorAnim = animateColorAsState(
         targetValue = if (isSelected)
-            Color.Unspecified
+            Color.Transparent
         else
             color,
         animationSpec = tween(DEFAULT_ANIMATION_DURATION)

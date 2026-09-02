@@ -1,7 +1,7 @@
 package com.yunuscagliyan.home.home.ui.pages.main
 
 import androidx.annotation.StringRes
-import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
@@ -23,14 +23,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.google.accompanist.navigation.animation.AnimatedNavHost
-import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
 import com.yunuscagliyan.core.R
 import com.yunuscagliyan.core.navigation.MainScreenRoute
 import com.yunuscagliyan.core.navigation.RootScreenRoute
@@ -55,7 +55,7 @@ object MainScreen : CoreScreen<MainViewModel>() {
     @OptIn(ExperimentalAnimationApi::class)
     @Composable
     override fun Content(viewModel: MainViewModel) {
-        val bottomBarNavController = rememberAnimatedNavController()
+        val bottomBarNavController = rememberNavController()
         MainUIFrame(
             topBar = {
                 TopBar(
@@ -104,12 +104,12 @@ object MainScreen : CoreScreen<MainViewModel>() {
         bottomBarNavController: NavHostController,
         rootNavHostController: NavHostController
     ) {
-        AnimatedNavHost(
+        NavHost(
             navController = bottomBarNavController,
             startDestination = MainScreenRoute.Home.route,
             enterTransition = {
                 slideIntoContainer(
-                    AnimatedContentScope.SlideDirection.Left,
+                    AnimatedContentTransitionScope.SlideDirection.Left,
                     animationSpec = tween(
                         Constants.DurationUTil.TRANSITION_DURATION,
                         easing = LinearEasing
@@ -118,7 +118,7 @@ object MainScreen : CoreScreen<MainViewModel>() {
             },
             exitTransition = {
                 slideOutOfContainer(
-                    AnimatedContentScope.SlideDirection.Left,
+                    AnimatedContentTransitionScope.SlideDirection.Left,
                     animationSpec = tween(
                         Constants.DurationUTil.TRANSITION_DURATION,
                         easing = LinearEasing
@@ -127,7 +127,7 @@ object MainScreen : CoreScreen<MainViewModel>() {
             },
             popEnterTransition = {
                 slideIntoContainer(
-                    AnimatedContentScope.SlideDirection.Right,
+                    AnimatedContentTransitionScope.SlideDirection.Right,
                     animationSpec = tween(
                         Constants.DurationUTil.TRANSITION_DURATION,
                         easing = LinearEasing
@@ -136,7 +136,7 @@ object MainScreen : CoreScreen<MainViewModel>() {
             },
             popExitTransition = {
                 slideOutOfContainer(
-                    AnimatedContentScope.SlideDirection.Right,
+                    AnimatedContentTransitionScope.SlideDirection.Right,
                     animationSpec = tween(
                         Constants.DurationUTil.TRANSITION_DURATION,
                         easing = LinearEasing

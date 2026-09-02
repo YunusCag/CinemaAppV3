@@ -36,7 +36,15 @@ object RetrofitModule {
         application: Application
     ): OkHttpClient {
         val loggingInterceptor = HttpLoggingInterceptor().apply {
-            setLevel(HttpLoggingInterceptor.Level.BODY)
+            // Request and response bodies are useful while developing, but logging them in a
+            // release build costs time on every call and spills the whole catalogue into logcat.
+            setLevel(
+                if (BuildConfig.DEBUG) {
+                    HttpLoggingInterceptor.Level.BODY
+                } else {
+                    HttpLoggingInterceptor.Level.NONE
+                }
+            )
         }
         val httpCacheDirectory = File(application.cacheDir, CACHE_FILE_NAME)
         val cache = Cache(httpCacheDirectory, 10L * 1024L * 1024L)

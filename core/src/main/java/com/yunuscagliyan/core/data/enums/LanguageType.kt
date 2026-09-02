@@ -5,7 +5,7 @@ import com.yunuscagliyan.core.R
 
 enum class LanguageType(
     val code: String,
-    @StringRes val text: Int
+    @param:StringRes val text: Int
 ) {
     TR("tr", R.string.common_turkish),
     EN("en", R.string.common_english);

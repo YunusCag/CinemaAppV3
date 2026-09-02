@@ -1,64 +1,85 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
+apply plugin: 'com.google.devtools.ksp'
 apply plugin: 'kotlin-parcelize'
 
 android {
+    // Derived from the module name: core-ui -> com.yunuscagliyan.core_ui
+    namespace "com.yunuscagliyan.${project.name.replace('-', '_')}"
     compileSdk AppConfig.compileSdk
 
     defaultConfig {
-        compileSdk AppConfig.compileSdk
         minSdk AppConfig.minSdk
-        targetSdk AppConfig.targetSdk
-        versionCode AppConfig.versionCode
-        versionName AppConfig.versionName
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
 
+    buildFeatures {
+        buildConfig true
+        resValues true
+    }
+
     buildTypes {
         def localProperties = new Properties()
-        localProperties.load(new FileInputStream(rootProject.file("local.properties")))
+        def localPropertiesFile = rootProject.file("local.properties")
+        if (localPropertiesFile.exists()) {
+            localPropertiesFile.withInputStream { localProperties.load(it) }
+        }
+
+        // Reads a value from local.properties, falling back to the given default
+        // when the key is missing so the build never fails on a fresh checkout.
+        def stringProperty = { String key, String defaultValue ->
+            def value = localProperties.getProperty(key)
+            if (value == null || value.trim().isEmpty()) {
+                value = defaultValue
+            }
+            value = value.trim()
+            if (value.startsWith("\"") && value.endsWith("\"")) {
+                value = value.substring(1, value.length() - 1)
+            }
+            return value
+        }
 
         debug {
-            buildConfigField("String", "API_KEY", localProperties["API_KEY"])
-            buildConfigField("String", "BASE_URL", localProperties["BASE_URL"])
-            buildConfigField("String", "POSTER_BASE_URL", localProperties["POSTER_BASE_URL"])
-            buildConfigField("String", "ADMOB_APP_ID", localProperties["ADMOB_APP_TEST_ID"])
-            resValue("string", "admob_app_id", localProperties["ADMOB_APP_TEST_ID"])
-            buildConfigField("String", "ADMOB_BANNER_ID", localProperties["ADMOB_BANNER_TEST_ID"])
-            buildConfigField("String", "ADMOB_INTERSTITIAL_ID", localProperties["ADMOB_INTERSTITIAL_TEST_ID"])
+            buildConfigField("String", "API_KEY", "\"${stringProperty("API_KEY", "")}\"")
+            buildConfigField("String", "BASE_URL", "\"${stringProperty("BASE_URL", "https://api.themoviedb.org/3/")}\"")
+            buildConfigField("String", "POSTER_BASE_URL", "\"${stringProperty("POSTER_BASE_URL", "https://image.tmdb.org/t/p/w500")}\"")
+            buildConfigField("String", "ADMOB_APP_ID", "\"${stringProperty("ADMOB_APP_TEST_ID", "ca-app-pub-3940256099942544~3347511713")}\"")
+            resValue("string", "admob_app_id", stringProperty("ADMOB_APP_TEST_ID", "ca-app-pub-3940256099942544~3347511713"))
+            buildConfigField("String", "ADMOB_BANNER_ID", "\"${stringProperty("ADMOB_BANNER_TEST_ID", "ca-app-pub-3940256099942544/6300978111")}\"")
+            buildConfigField("String", "ADMOB_INTERSTITIAL_ID", "\"${stringProperty("ADMOB_INTERSTITIAL_TEST_ID", "ca-app-pub-3940256099942544/1033173712")}\"")
         }
 
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
-            buildConfigField("String", "API_KEY", localProperties["API_KEY"])
-            buildConfigField("String", "BASE_URL", localProperties["BASE_URL"])
-            buildConfigField("String", "POSTER_BASE_URL", localProperties["POSTER_BASE_URL"])
-            buildConfigField("String", "ADMOB_APP_ID", localProperties["ADMOB_APP_PROD_ID"])
-            resValue("string", "admob_app_id", localProperties["ADMOB_APP_PROD_ID"])
-            buildConfigField("String", "ADMOB_BANNER_ID", localProperties["ADMOB_BANNER_PROD_ID"])
-            buildConfigField("String", "ADMOB_INTERSTITIAL_ID", localProperties["ADMOB_INTERSTITIAL_PROD_ID"])
+            buildConfigField("String", "API_KEY", "\"${stringProperty("API_KEY", "")}\"")
+            buildConfigField("String", "BASE_URL", "\"${stringProperty("BASE_URL", "https://api.themoviedb.org/3/")}\"")
+            buildConfigField("String", "POSTER_BASE_URL", "\"${stringProperty("POSTER_BASE_URL", "https://image.tmdb.org/t/p/w500")}\"")
+            buildConfigField("String", "ADMOB_APP_ID", "\"${stringProperty("ADMOB_APP_PROD_ID", stringProperty("ADMOB_APP_TEST_ID", "ca-app-pub-3940256099942544~3347511713"))}\"")
+            resValue("string", "admob_app_id", stringProperty("ADMOB_APP_PROD_ID", stringProperty("ADMOB_APP_TEST_ID", "ca-app-pub-3940256099942544~3347511713")))
+            buildConfigField("String", "ADMOB_BANNER_ID", "\"${stringProperty("ADMOB_BANNER_PROD_ID", stringProperty("ADMOB_BANNER_TEST_ID", "ca-app-pub-3940256099942544/6300978111"))}\"")
+            buildConfigField("String", "ADMOB_INTERSTITIAL_ID", "\"${stringProperty("ADMOB_INTERSTITIAL_PROD_ID", stringProperty("ADMOB_INTERSTITIAL_TEST_ID", "ca-app-pub-3940256099942544/1033173712"))}\"")
         }
     }
+
     compileOptions {
         coreLibraryDesugaringEnabled true
 
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = '1.8'
-        freeCompilerArgs = ['-Xjvm-default=compatibility']
-    }
+}
 
-    dependencies {
-        kapt DaggerHilt.hiltCompiler
-        implementation DaggerHilt.hiltAndroid
+dependencies {
+    coreLibraryDesugaring Desugar.jdkLibs
 
-        implementation Timber.timber
-    }
+    ksp DaggerHilt.hiltCompiler
+    implementation DaggerHilt.hiltAndroid
+
+    implementation Timber.timber
+
+    testImplementation Testing.junit4
+    androidTestImplementation Testing.junitAndroidExt
 }

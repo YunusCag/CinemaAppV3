@@ -9,5 +9,5 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 @JsonClass(generateAdapter = true)
 data class GenreListResponse(
-    @Json(name = "genres") val genres: List<GenreModel>? = null
+    @param:Json(name = "genres") val genres: List<GenreModel>? = null
 ) : Parcelable
