@@ -64,4 +64,8 @@
     <string name="movie_detail_similar">Benzer Filmler</string>
     <string name="movie_detail_see_trailer_button">Fragmanı İzle</string>
     <string name="movie_detail_trailer_title">Fragmanlar</string>
+
+    <!--- Video Player -->
+    <string name="video_landscape_button_description">Yatay moda geç</string>
+    <string name="video_portrait_button_description">Dikey moda dön</string>
 </resources>

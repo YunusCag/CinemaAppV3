@@ -64,4 +64,8 @@
     <string name="movie_detail_similar">Similar Movies</string>
     <string name="movie_detail_see_trailer_button">See Trailer</string>
     <string name="movie_detail_trailer_title">Trailers</string>
+
+    <!--- Video Player -->
+    <string name="video_landscape_button_description">Switch to landscape</string>
+    <string name="video_portrait_button_description">Switch to portrait</string>
 </resources>
